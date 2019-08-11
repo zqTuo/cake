@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="renren-admin:war">
+    <output-path>$PROJECT_DIR$/renren-admin/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>renren-admin</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="cake-admin.war">
+      <element id="artifact" artifact-name="renren-admin:war exploded" />
+    </root>
+  </artifact>
+</component>
