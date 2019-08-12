@@ -1,4 +1,4 @@
-create tables wxuser(
+create table wxuser(
 id BIGINT(20) AUTO_INCREMENT,
 userName VARCHAR(200) not null default '' COMMENT '用户昵称',
 userImg VARCHAR(200) not null default '' COMMENT '用户头像',

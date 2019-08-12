@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.common.exception.RRException;
 import io.renren.common.validator.Assert;
 import io.renren.dao.UserDao;
+import io.renren.entity.Driver;
 import io.renren.entity.TokenEntity;
 import io.renren.entity.UserEntity;
 import io.renren.form.LoginForm;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("userService")
@@ -55,5 +57,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
 		return map;
 	}
+
+    @Override
+    public List<Driver> queryDrver() {
+        return baseMapper.queryDrver();
+    }
 
 }

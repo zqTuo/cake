@@ -9,8 +9,11 @@
 package io.renren.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.renren.entity.Driver;
 import io.renren.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 用户
@@ -20,4 +23,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserDao extends BaseMapper<UserEntity> {
 
+    List<Driver> queryDrver();
 }
