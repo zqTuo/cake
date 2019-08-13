@@ -11,7 +11,10 @@ import lombok.Data;
  */
 @Data
 public class Driver {
-    private String tempPic;
-    private String country;
-    private String forgeryPic;
+    private String tempPic; // 驾照图片
+    private String forgeryPic;//防伪图片
+    private String country;//国家
+    private String remark;//国家缩写
+    private String prov;//省
+
 }

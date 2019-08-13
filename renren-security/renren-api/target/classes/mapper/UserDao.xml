@@ -5,11 +5,12 @@
 
 
     <select id="queryDrver" resultType="io.renren.entity.Driver">
-        select a.thumb_path as tempPic,c.country,d.thumb_path as forgeryPic
+        select a.thumb_path as tempPic,d.thumb_path as forgeryPic,c.id,c.country,c.remark,b.issuing_body,e.country as prov
         from zx_template_albums a
                  left join zx_driving_license_template b on a.template_id=b.id
                  left join zx_country_category c on b.country_id=c.id
                  left join zx_forgery_proof_albums d on a.template_id=d.template_id
-        order by a.id asc
+                 left join zx_country_category e on e.id=b.issuing_body
+        order by a.id;
     </select>
 </mapper>
