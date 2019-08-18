@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="0a4619ed-e3ba-4d5d-bf2f-d8e8ad6a5d1f" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="0a4619ed-e3ba-4d5d-bf2f-d8e8ad6a5d1f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/renren-admin/db/api.sql" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/db/api.sql" afterDir="false" />
+    </list>
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/renren-admin/target/" />
     <ignored path="$PROJECT_DIR$/renren-common/target/" />
@@ -66,8 +73,13 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/renren-admin/db/api.sql">
               <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
                 <state relative-caret-position="681">
                   <caret line="51" column="12" selection-start-line="51" selection-start-column="12" selection-end-line="51" selection-end-column="12" />
+=======
+                <state relative-caret-position="666">
+                  <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
                 </state>
               </provider>
             </entry>
@@ -114,8 +126,13 @@
       </MavenImportingSettings>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
+=======
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1912" />
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -125,6 +142,11 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+=======
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -136,8 +158,11 @@
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="PackagesPane" />
       <pane id="Scope" />
+=======
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -194,11 +219,17 @@
       <updated>1565683525149</updated>
       <workItem from="1565683531198" duration="13684000" />
       <workItem from="1565878882795" duration="5152000" />
+<<<<<<< HEAD
       <workItem from="1566123372035" duration="599000" />
+=======
+      <workItem from="1565936660816" duration="673000" />
+      <workItem from="1565947055780" duration="4911000" />
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="19435000" />
   </component>
   <component name="ToolWindowManager">
@@ -206,6 +237,15 @@
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2521322" />
+=======
+    <option name="totallyTimeSpent" value="24420000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25493333" />
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -338,8 +378,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/TestController.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="656">
           <caret line="157" column="31" selection-start-line="157" selection-start-column="31" selection-end-line="157" selection-end-column="31" />
+=======
+        <state relative-caret-position="666">
+          <caret line="99" column="1" lean-forward="true" selection-start-line="99" selection-start-column="1" selection-end-line="99" selection-end-column="1" />
+>>>>>>> 8fa4a605144c6d621d33ebc53a6fd9eb9f3f2c9f
         </state>
       </provider>
     </entry>
