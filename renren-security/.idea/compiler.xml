@@ -8,9 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="renren-admin" />
         <module name="renren-api" />
+        <module name="renren-generator" />
         <module name="renren-common" />
         <module name="renren-dynamic-datasource" />
-        <module name="renren-generator" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

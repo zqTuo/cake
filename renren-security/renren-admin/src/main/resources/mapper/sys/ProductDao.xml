@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.ProductDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.ProductEntity" id="productMap">
+        <result property="id" column="id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productCateid" column="product_cateid"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productOrigin" column="product_origin"/>
+        <result property="productSku" column="product_sku"/>
+        <result property="productImg" column="product_img"/>
+        <result property="productBanner" column="product_banner"/>
+        <result property="productDesc" column="product_desc"/>
+        <result property="productInfo" column="product_info"/>
+        <result property="productFlag" column="product_flag"/>
+        <result property="productHot" column="product_hot"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+
+</mapper>

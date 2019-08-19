@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>商品表</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("sys:product:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:product:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:product:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productName" placeholder="商品名称"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品类型ID</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productCateid" placeholder="商品类型ID"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品售价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productPrice" placeholder="商品售价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品原价</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productOrigin" placeholder="商品原价"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品SKU，主要是为了匹配美团套餐</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productSku" placeholder="商品SKU，主要是为了匹配美团套餐"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品主图</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productImg" placeholder="商品主图"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品副图</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productBanner" placeholder="商品副图"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品描述</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productDesc" placeholder="商品描述"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品详情HTML代码</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productInfo" placeholder="商品详情HTML代码"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">商品状态 0：下架 1：上架</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productFlag" placeholder="商品状态 0：下架 1：上架"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">热销标记(展示在首页) 0：不推荐 1：推荐</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.productHot" placeholder="热销标记(展示在首页) 0：不推荐 1：推荐"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">所属门店</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.shopId" placeholder="所属门店"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.createTime" placeholder="创建时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">修改时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.updateTime" placeholder="修改时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">修改管理员</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="product.updateBy" placeholder="修改管理员"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/product.js?_${.now?long}"></script>
+</body>
+</html>

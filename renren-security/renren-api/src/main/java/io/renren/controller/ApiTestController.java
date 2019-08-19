@@ -30,6 +30,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @Api(tags="测试接口")
 public class ApiTestController {
 
+
     @Login
     @GetMapping("userInfo")
     @ApiOperation(value="获取用户信息", response=UserEntity.class)

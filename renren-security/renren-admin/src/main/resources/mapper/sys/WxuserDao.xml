@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.WxuserDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.WxuserEntity" id="wxuserMap">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userHead" column="user_head"/>
+        <result property="userMember" column="user_member"/>
+        <result property="userOpenid" column="user_openid"/>
+        <result property="userUnionid" column="user_unionid"/>
+        <result property="userLastip" column="user_lastIp"/>
+        <result property="userLastlogintime" column="user_lastLoginTime"/>
+        <result property="userState" column="user_state"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+
+</mapper>

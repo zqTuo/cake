@@ -1,3 +1,4 @@
+-- 微信用户表
 create table wxuser(
 id BIGINT(20) AUTO_INCREMENT,
 user_name VARCHAR(200) not null default '' COMMENT '用户昵称',
@@ -12,8 +13,9 @@ create_time datetime not null COMMENT '创建时间',
 update_time datetime COMMENT '修改时间',
 update_by VARCHAR(100) default '' comment '修改管理员',
 PRIMARY KEY(id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
+-- 商品表
 create table product(
   id bigint(20) AUTO_INCREMENT,
   product_name varchar(200) not null default '' comment '商品名称',
@@ -27,12 +29,14 @@ create table product(
   product_info text not null comment '商品详情HTML代码',
   product_flag int not null default 1 comment '商品状态 0：下架 1：上架',
   product_hot int not null default 0 comment '热销标记(展示在首页) 0：不推荐 1：推荐',
+  shop_id bigint(20) not null default 0 comment '所属门店',
   create_time datetime not null COMMENT '创建时间',
   update_time datetime COMMENT '修改时间',
   update_by VARCHAR(100) default '' comment '修改管理员',
   primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
 
+-- 商品规格（详情）表
 create table product_detail(
   id bigint(20) AUTO_INCREMENT,
   detail_cover varchar(200) not null default '' comment '商品规格图片',
@@ -46,8 +50,9 @@ create table product_detail(
   update_time datetime COMMENT '修改时间',
   update_by VARCHAR(100) default '' comment '修改管理员',
   primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品详情表';
 
+-- 商品种类表
 create table product_category(
   id bigint(20) AUTO_INCREMENT,
   category_name varchar(100) not null default '' comment '分类名称',
@@ -57,8 +62,9 @@ create table product_category(
   update_time datetime COMMENT '修改时间',
   update_by VARCHAR(100) default '' comment '修改管理员',
   primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品种类表';
 
+-- 订单表
 create table shop_order(
     id bigint(20) AUTO_INCREMENT,
     order_no varchar(200) not null default '' comment '订单编号',
@@ -70,23 +76,26 @@ create table shop_order(
     order_state int not null default -1 comment '订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收',
     order_source_type int not null default 0 comment '订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员',
     order_remark varchar(500) default '' comment '备注',
-    addr_pro varchar(100) not null default '' comment '配送省份',
-    addr_city varchar(100) not null default '' comment '配送城市',
-    addr_dis varchar(100) not null default '' comment '配送区域',
-    addr_detail varchar(100) not null default '' comment '配送详细地址',
+    addr_pro varchar(100) default '' comment '配送省份',
+    addr_city varchar(100) default '' comment '配送城市',
+    addr_dis varchar(100) default '' comment '配送区域',
+    addr_detail varchar(100) default '' comment '配送详细地址',
     addr_receiver varchar(100) default '' comment '收货人',
+    send_type int not null default 0 comment '配送方式 0：送货上门 1：门店自取',
     addr_phone varchar(20) default '' comment '联系方式',
-    send_time datetime default '' comment '派送时间',
+    send_time datetime comment '派送时间',
     create_time datetime not null COMMENT '创建时间',
     pay_time datetime comment '支付时间',
     pay_type int default 0 comment '支付方式 0：微信支付',
+    shop_id bigint(20) not null default 0 comment '门店ID',
     cancel_time datetime comment '取消时间',
     finish_time datetime comment '签收时间',
     update_time datetime COMMENT '修改时间',
     update_by VARCHAR(100) default '' comment '修改管理员',
     primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
+-- 订单详情表
 create table shop_order_item(
     id bigint(20) AUTO_INCREMENT,
     order_no varchar(200) not null default '' comment '订单编号',
@@ -100,8 +109,9 @@ create table shop_order_item(
     user_member int default 0 comment '购买会员等级',
     course_id bigint(20) default 0 comment '购买课程ID',
     primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
+-- 购物车表
 create table shopping_cart(
   id bigint(20) auto_increment,
   user_id bigint(20) not null default 0 comment '用户id',
@@ -114,8 +124,9 @@ create table shopping_cart(
   detail_taste varchar(100) not null default '' comment '商品口味',
   buy_num int not null default 1 comment '购买数量',
   primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
+-- 优惠券表
 create table coupon(
   id bigint(20) auto_increment,
   coupon_name varchar(200) not null default '' comment '优惠券名称',
@@ -124,6 +135,46 @@ create table coupon(
   start_time datetime comment '开始时间',
   end_time datetime comment '截止时间',
   date_flag int not null default 0 comment '是否限时 0：不限时 1:限时',
-  remark varchar(200) default '' comment '限制标识'
-)
+  primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券表';
+
+-- 优惠券用户表
+create table coupon_user(
+    id bigint(20) auto_increment,
+    coupon_id bigint(20) not null default 0 comment '优惠券ID',
+    user_id bigint(20) not null default 0 comment '用户ID',
+    source_from int not null default 0 comment '获得来源 0：商城后台赠送',
+    get_time datetime not null comment '获得时间',
+    use_time datetime comment '使用时间',
+    end_time datetime comment '截止时间',
+    state int not null default 0 comment '使用状态 1：可用 0：不可用',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券用户表';
+
+-- 门店表
+create table shop(
+    id bigint(20) auto_increment,
+    shop_name varchar(200) not null default '' comment '门店名称',
+    shop_addr varchar(500) not null default '' comment '门店详细地址',
+    shop_location varchar(100) not null default '' comment '所在地 经纬度',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='门店表';
+
+-- 配送时间表
+create table send_time(
+    id bigint(20) auto_increment,
+    time_area datetime not null comment '派送时间点 HH:mm',
+    max_order int not null comment '最大预约订单数',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配送时间表';
+
+-- 运费表
+create table send_freight(
+    id bigint(20) auto_increment,
+    max_distance int not null default 0 comment '最大距离',
+    freight decimal(11,2) not null default 0 comment '运费',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运费表'
+
+
 
