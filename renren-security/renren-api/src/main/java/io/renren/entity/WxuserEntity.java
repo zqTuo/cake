@@ -2,7 +2,10 @@ package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +19,9 @@ import java.util.Date;
  */
 @Data
 @TableName("wxuser")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class WxuserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +58,10 @@ public class WxuserEntity implements Serializable {
 	 * 上次登录时间
 	 */
 	private Date userLastlogintime;
+	/**
+	 * 用户手机号
+	 */
+	private String userPhone;
 	/**
 	 * 用户状态
 	 */

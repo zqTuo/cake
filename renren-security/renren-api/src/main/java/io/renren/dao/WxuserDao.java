@@ -1,8 +1,10 @@
 package io.renren.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.renren.dto.UserDto;
 import io.renren.entity.WxuserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户表
@@ -13,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface WxuserDao extends BaseMapper<WxuserEntity> {
-	
+
+    UserDto getUserInfo(@Param("id") long id);
 }

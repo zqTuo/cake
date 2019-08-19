@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/renren-dynamic-datasource/renren-dynamic-datasource.iml" filepath="$PROJECT_DIR$/renren-dynamic-datasource/renren-dynamic-datasource.iml" />
       <module fileurl="file://$PROJECT_DIR$/renren-generator/renren-generator.iml" filepath="$PROJECT_DIR$/renren-generator/renren-generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/renren-security.iml" filepath="$PROJECT_DIR$/renren-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security.iml" filepath="$PROJECT_DIR$/renren-security.iml" />
     </modules>
   </component>
 </project>
