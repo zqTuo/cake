@@ -10,7 +10,8 @@ $(function () {
 			{ label: '获得时间', name: 'getTime', index: 'get_time', width: 80 }, 			
 			{ label: '使用时间', name: 'useTime', index: 'use_time', width: 80 }, 			
 			{ label: '截止时间', name: 'endTime', index: 'end_time', width: 80 }, 			
-			{ label: '使用状态 1：可用 0：不可用', name: 'state', index: 'state', width: 80 }			
+			{ label: '使用状态 1：可用 0：不可用', name: 'state', index: 'state', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,

@@ -48,10 +48,14 @@ spring:
 # 项目配置
 project:
   url_pre: https://test.eliteon.com.hk
+  pic_pre: https://test.eliteon.com.hk/images/
+  video_pre: https://test.eliteon.com.hk/mv/
 
 # 微信公众号
 weCat:
   appId: wx06bec68a22884722
   appSecret: 6843ff60906c16f658f724a2fb894e43
-  accessTokenUrl: https://api.weixin.qq.com/sns/oauth2/access_token
+  accessTokenByCodeUrl: https://api.weixin.qq.com/sns/oauth2/access_token
   userInfoUrl: https://api.weixin.qq.com/sns/userinfo
+  accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
+  ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket

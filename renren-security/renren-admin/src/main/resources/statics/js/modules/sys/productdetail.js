@@ -8,7 +8,6 @@ $(function () {
 			{ label: '商品规格名称', name: 'detailName', index: 'detail_name', width: 80 }, 			
 			{ label: '所属商品ID', name: 'productId', index: 'product_id', width: 80 }, 			
 			{ label: '商品规格价格', name: 'detailPrice', index: 'detail_price', width: 80 }, 			
-			{ label: '商品规格价格区间', name: 'detailPriceRegion', index: 'detail_price_region', width: 80 }, 			
 			{ label: '商品尺寸', name: 'detailSize', index: 'detail_size', width: 80 }, 			
 			{ label: '商品口味', name: 'detailTaste', index: 'detail_taste', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			

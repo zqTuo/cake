@@ -12,10 +12,10 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-19 16:35:41
+ * @date 2019-08-21 16:22:06
  */
 @Data
-@TableName("coupon_user")
+@TableName("tb_coupon_user")
 public class CouponUserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -52,5 +52,9 @@ public class CouponUserEntity implements Serializable {
 	 * 使用状态 1：可用 0：不可用
 	 */
 	private Integer state;
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
 
 }

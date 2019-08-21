@@ -10,7 +10,6 @@
         <result property="detailName" column="detail_name"/>
         <result property="productId" column="product_id"/>
         <result property="detailPrice" column="detail_price"/>
-        <result property="detailPriceRegion" column="detail_price_region"/>
         <result property="detailSize" column="detail_size"/>
         <result property="detailTaste" column="detail_taste"/>
         <result property="createTime" column="create_time"/>

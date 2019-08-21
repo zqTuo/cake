@@ -12,10 +12,10 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-19 16:35:41
+ * @date 2019-08-21 16:22:06
  */
 @Data
-@TableName("wxuser")
+@TableName("tb_wxuser")
 public class WxuserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -53,7 +53,11 @@ public class WxuserEntity implements Serializable {
 	 */
 	private Date userLastlogintime;
 	/**
-	 * 用户状态
+	 * 手机号
+	 */
+	private String userPhone;
+	/**
+	 * 用户状态 1：正常使用 0：禁用
 	 */
 	private Integer userState;
 	/**

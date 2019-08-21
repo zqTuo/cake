@@ -13,6 +13,7 @@
         <result property="useTime" column="use_time"/>
         <result property="endTime" column="end_time"/>
         <result property="state" column="state"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
 

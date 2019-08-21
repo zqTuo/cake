@@ -1,5 +1,5 @@
 -- 微信用户表
-create table wxuser(
+create table tb_wxuser(
 id BIGINT(20) AUTO_INCREMENT,
 user_name VARCHAR(200) not null default '' COMMENT '用户昵称',
 user_head VARCHAR(200) not null default '' COMMENT '用户头像',
@@ -17,14 +17,16 @@ PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- 商品表
-create table product(
+create table tb_product(
   id bigint(20) AUTO_INCREMENT,
   product_name varchar(200) not null default '' comment '商品名称',
   product_cateid bigint(20) not null default 0 comment '商品类型ID',
   product_price decimal(11,2) not null default 0 comment '商品售价',
+  product_price_region varchar(100) not null default '' comment '商品规格价格区间',
   product_origin decimal(11,2) not null default 0 comment '商品原价',
   product_sku varchar(20) not null default '' comment '商品SKU，主要是为了匹配美团套餐',
   product_img varchar(200) not null default '' comment '商品主图',
+  product_video varchar(200) default '' comment '商品视频',
   product_banner varchar(200) not null default '' comment '商品副图',
   product_desc varchar(500) not null default '' comment '商品描述',
   product_info text not null comment '商品详情HTML代码',
@@ -38,13 +40,12 @@ create table product(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- 商品规格（详情）表
-create table product_detail(
+create table tb_product_detail(
   id bigint(20) AUTO_INCREMENT,
   detail_cover varchar(200) not null default '' comment '商品规格图片',
   detail_name varchar(200) not null default '' comment '商品规格名称',
   product_id bigint(20) not null default 0 comment '所属商品ID',
   detail_price decimal(11,2) not null default 0 comment '商品规格价格',
-  detail_price_region varchar(100) not null default '' comment '商品规格价格区间',
   detail_size varchar(100) not null default '' comment '商品尺寸',
   detail_taste varchar(100) not null default '' comment '商品口味',
   create_time datetime not null COMMENT '创建时间',
@@ -54,7 +55,7 @@ create table product_detail(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品详情表';
 
 -- 商品种类表
-create table product_category(
+create table tb_product_category(
   id bigint(20) AUTO_INCREMENT,
   category_name varchar(100) not null default '' comment '分类名称',
   category_parentid bigint(20) not null default 0 comment '父类ID',
@@ -66,7 +67,7 @@ create table product_category(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品种类表';
 
 -- 订单表
-create table shop_order(
+create table tb_shop_order(
     id bigint(20) AUTO_INCREMENT,
     order_no varchar(200) not null default '' comment '订单编号',
     user_id bigint(20) not null default 0 comment  '用户ID',
@@ -97,7 +98,7 @@ create table shop_order(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- 订单详情表
-create table shop_order_item(
+create table tb_shop_order_item(
     id bigint(20) AUTO_INCREMENT,
     order_no varchar(200) not null default '' comment '订单编号',
     product_name varchar(200) default '' comment '商品名称',
@@ -113,10 +114,11 @@ create table shop_order_item(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
 -- 购物车表
-create table shopping_cart(
+create table tb_shopping_cart(
   id bigint(20) auto_increment,
   user_id bigint(20) not null default 0 comment '用户id',
   product_id bigint(20) not null default 0 comment '商品ID',
+  product_detail_id bigint(20) not null default 0 comment '商品详情ID',
   product_name varchar(200) not null default '' comment '商品名称',
   detail_cover varchar(200) not null default '' comment '商品规格图片',
   detail_name varchar(200) not null default '' comment '商品规格名称',
@@ -124,11 +126,13 @@ create table shopping_cart(
   detail_size varchar(100) not null default '' comment '商品尺寸',
   detail_taste varchar(100) not null default '' comment '商品口味',
   buy_num int not null default 1 comment '购买数量',
+  create_time datetime not null COMMENT '创建时间',
+  update_time datetime COMMENT '修改时间',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
 -- 优惠券表
-create table coupon(
+create table tb_coupon(
   id bigint(20) auto_increment,
   coupon_name varchar(200) not null default '' comment '优惠券名称',
   coupon_price decimal(11,2) not null default 0 comment '触发价格',
@@ -136,11 +140,14 @@ create table coupon(
   start_time datetime comment '开始时间',
   end_time datetime comment '截止时间',
   date_flag int not null default 0 comment '是否限时 0：不限时 1:限时',
+  create_time datetime not null COMMENT '创建时间',
+  update_time datetime COMMENT '修改时间',
+  update_by VARCHAR(100) default '' comment '修改管理员',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券表';
 
 -- 优惠券用户表
-create table coupon_user(
+create table tb_coupon_user(
     id bigint(20) auto_increment,
     coupon_id bigint(20) not null default 0 comment '优惠券ID',
     user_id bigint(20) not null default 0 comment '用户ID',
@@ -149,33 +156,89 @@ create table coupon_user(
     use_time datetime comment '使用时间',
     end_time datetime comment '截止时间',
     state int not null default 0 comment '使用状态 1：可用 0：不可用',
+    create_time datetime not null COMMENT '创建时间',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券用户表';
 
 -- 门店表
-create table shop(
+create table tb_shop(
     id bigint(20) auto_increment,
     shop_name varchar(200) not null default '' comment '门店名称',
     shop_addr varchar(500) not null default '' comment '门店详细地址',
-    shop_location varchar(100) not null default '' comment '所在地 经纬度',
+    shop_longitude varchar(100) not null default '' comment '所在地 经度',
+    shop_latitude varchar(100) not null default '' comment '所在地 纬度',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='门店表';
 
 -- 配送时间表
-create table send_time(
+create table tb_send_time(
     id bigint(20) auto_increment,
     time_area datetime not null comment '派送时间点 HH:mm',
     max_order int not null comment '最大预约订单数',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配送时间表';
 
 -- 运费表
-create table send_freight(
+create table tb_send_freight(
     id bigint(20) auto_increment,
     max_distance int not null default 0 comment '最大距离',
     freight decimal(11,2) not null default 0 comment '运费',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
     primary key (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运费表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运费表';
+
+-- 系统配置表
+create table tb_base_data(
+    id bigint(20) auto_increment,
+    source_type int not null default 0 comment '配置类型 0：首页菜单icon',
+    content text not null comment '配置数据内容',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置表';
+
+-- banner图表
+create table tb_banner(
+    id bigint(20) auto_increment,
+    banner_pic varchar(200) not null default '' comment '图片地址',
+    link_url varchar(200) not null default '' comment '跳转地址',
+    banner_type int not null default 0 comment '展示位置 0：首页',
+    banner_state int not null default 1 comment '使用状态 0：禁用 1：启用',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='banner表';
+
+-- 首页热销栏目表
+create table tb_hot_column(
+    id bigint(20) auto_increment,
+    hot_title varchar(100) not null default '' comment '栏目标题',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='首页热销栏目表';
+
+-- 热销栏目与商品关联表
+create table tb_hot_relation(
+    id bigint(20) auto_increment,
+    hot_id bigint(20) not null default 0 comment '热销栏目ID',
+    product_id bigint(20) not null default 0 comment '商品ID',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='热销栏目与商品关联表';
 
 
 

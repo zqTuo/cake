@@ -8,6 +8,7 @@
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="productId" column="product_id"/>
+        <result property="productDetailId" column="product_detail_id"/>
         <result property="productName" column="product_name"/>
         <result property="detailCover" column="detail_cover"/>
         <result property="detailName" column="detail_name"/>
@@ -15,6 +16,8 @@
         <result property="detailSize" column="detail_size"/>
         <result property="detailTaste" column="detail_taste"/>
         <result property="buyNum" column="buy_num"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
 

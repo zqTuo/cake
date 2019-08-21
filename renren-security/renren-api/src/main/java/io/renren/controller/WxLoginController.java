@@ -10,12 +10,12 @@ package io.renren.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import io.renren.config.LoginConfig;
+import io.renren.common.config.WechatConfig;
+import io.renren.common.utils.*;
 import io.renren.entity.TokenEntity;
 import io.renren.entity.WxuserEntity;
 import io.renren.service.TokenService;
 import io.renren.service.WxuserService;
-import io.renren.utils.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,7 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
-@RestController
+@Controller
 @RequestMapping("/wx")
 @Api(tags="微信登录接口")
 public class WxLoginController {
@@ -53,7 +54,7 @@ public class WxLoginController {
     @Value("${project.url_pre}")
     private String url_pre;
     @Resource
-    private LoginConfig loginConfig;
+    private WechatConfig wechatConfig;
 
     @Autowired
     private WxuserService userService;
@@ -74,7 +75,7 @@ public class WxLoginController {
 
         String url = URLEncoder.encode(url_pre + "/wx/wxAuthRedirect","UTF-8");
         cotent2Aes = URLEncoder.encode(cotent2Aes,"UTF-8");
-        String tourl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + loginConfig.getWeCatAppId() + "&redirect_uri=" + url
+        String tourl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wechatConfig.getWeCatAppId() + "&redirect_uri=" + url
                 + "&response_type=code&scope=snsapi_userinfo&state=" + cotent2Aes + "&connect_redirect=1#wechat_redirect";
 
         log.info("tourl:" + tourl);
@@ -97,7 +98,7 @@ public class WxLoginController {
         }
 
         //*************************   获取openid   ***********************************
-        JSONObject openidJson = getWebAccessTokenJson(loginConfig.getWeCatAppId(), loginConfig.getWeCatAppSecret(), code);
+        JSONObject openidJson = getWebAccessTokenJson(wechatConfig.getWeCatAppId(), wechatConfig.getWeCatAppSecret(), code);
         if(!openidJson.containsKey("openid")) {
             log.error("未请求到openid，用户授权失败，" + openidJson);
             return "redirect:" + url_pre;
@@ -162,7 +163,7 @@ public class WxLoginController {
      * @return
      */
     private JSONObject getWebAccessTokenJson(String appID, String appSecret, String code){
-        String url = loginConfig.getWeCatAccessTokenUrl();
+        String url = wechatConfig.getAccessTokenByCodeUrl();
 
         Map<String,String> param = new HashMap<>();
         param.put("appid",appID);
@@ -183,7 +184,7 @@ public class WxLoginController {
      * @return
      */
     private JSONObject getBaseUserInfo(String access_token, String openid,int unConcern) {
-        String url = loginConfig.getWeCatUserInfoUrl();
+        String url = wechatConfig.getWeCatUserInfoUrl();
 
         Map<String,String> param = new HashMap<>();
         param.put("access_token",access_token);

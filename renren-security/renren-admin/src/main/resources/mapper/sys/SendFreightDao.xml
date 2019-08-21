@@ -8,6 +8,9 @@
         <result property="id" column="id"/>
         <result property="maxDistance" column="max_distance"/>
         <result property="freight" column="freight"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
     </resultMap>
 
 

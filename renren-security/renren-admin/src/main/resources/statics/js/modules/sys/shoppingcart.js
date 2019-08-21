@@ -12,7 +12,9 @@ $(function () {
 			{ label: '商品规格价格', name: 'detailPrice', index: 'detail_price', width: 80 }, 			
 			{ label: '商品尺寸', name: 'detailSize', index: 'detail_size', width: 80 }, 			
 			{ label: '商品口味', name: 'detailTaste', index: 'detail_taste', width: 80 }, 			
-			{ label: '购买数量', name: 'buyNum', index: 'buy_num', width: 80 }			
+			{ label: '购买数量', name: 'buyNum', index: 'buy_num', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,

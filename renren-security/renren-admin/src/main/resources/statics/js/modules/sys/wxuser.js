@@ -11,7 +11,8 @@ $(function () {
 			{ label: 'unionid', name: 'userUnionid', index: 'user_unionid', width: 80 }, 			
 			{ label: '上次登录IP地址', name: 'userLastip', index: 'user_lastIp', width: 80 }, 			
 			{ label: '上次登录时间', name: 'userLastlogintime', index: 'user_lastLoginTime', width: 80 }, 			
-			{ label: '用户状态', name: 'userState', index: 'user_state', width: 80 }, 			
+			{ label: '手机号', name: 'userPhone', index: 'user_phone', width: 80 }, 			
+			{ label: '用户状态 1：正常使用 0：禁用', name: 'userState', index: 'user_state', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			

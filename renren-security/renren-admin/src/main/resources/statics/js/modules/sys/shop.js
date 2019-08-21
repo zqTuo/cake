@@ -6,7 +6,11 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '门店名称', name: 'shopName', index: 'shop_name', width: 80 }, 			
 			{ label: '门店详细地址', name: 'shopAddr', index: 'shop_addr', width: 80 }, 			
-			{ label: '所在地 经纬度', name: 'shopLocation', index: 'shop_location', width: 80 }			
+			{ label: '所在地 经度', name: 'shopLongitude', index: 'shop_longitude', width: 80 }, 			
+			{ label: '所在地 纬度', name: 'shopLatitude', index: 'shop_latitude', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
+			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,

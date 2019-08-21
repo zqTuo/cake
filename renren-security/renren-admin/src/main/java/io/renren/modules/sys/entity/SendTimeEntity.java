@@ -12,10 +12,10 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-19 16:35:41
+ * @date 2019-08-21 16:22:06
  */
 @Data
-@TableName("send_time")
+@TableName("tb_send_time")
 public class SendTimeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,5 +32,17 @@ public class SendTimeEntity implements Serializable {
 	 * 最大预约订单数
 	 */
 	private Integer maxOrder;
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+	/**
+	 * 修改时间
+	 */
+	private Date updateTime;
+	/**
+	 * 修改管理员
+	 */
+	private String updateBy;
 
 }

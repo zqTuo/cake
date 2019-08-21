@@ -13,10 +13,10 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-19 16:35:41
+ * @date 2019-08-21 16:22:06
  */
 @Data
-@TableName("shopping_cart")
+@TableName("tb_shopping_cart")
 public class ShoppingCartEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,10 @@ public class ShoppingCartEntity implements Serializable {
 	 * 商品ID
 	 */
 	private Long productId;
+	/**
+	 * 商品详情ID
+	 */
+	private Long productDetailId;
 	/**
 	 * 商品名称
 	 */
@@ -61,5 +65,13 @@ public class ShoppingCartEntity implements Serializable {
 	 * 购买数量
 	 */
 	private Integer buyNum;
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+	/**
+	 * 修改时间
+	 */
+	private Date updateTime;
 
 }

@@ -9,9 +9,11 @@
         <result property="productName" column="product_name"/>
         <result property="productCateid" column="product_cateid"/>
         <result property="productPrice" column="product_price"/>
+        <result property="productPriceRegion" column="product_price_region"/>
         <result property="productOrigin" column="product_origin"/>
         <result property="productSku" column="product_sku"/>
         <result property="productImg" column="product_img"/>
+        <result property="productVideo" column="product_video"/>
         <result property="productBanner" column="product_banner"/>
         <result property="productDesc" column="product_desc"/>
         <result property="productInfo" column="product_info"/>

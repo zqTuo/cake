@@ -13,10 +13,10 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-19 16:35:41
+ * @date 2019-08-21 21:51:22
  */
 @Data
-@TableName("product")
+@TableName("tb_product")
 public class ProductEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +38,10 @@ public class ProductEntity implements Serializable {
 	 */
 	private BigDecimal productPrice;
 	/**
+	 * 商品规格价格区间
+	 */
+	private String productPriceRegion;
+	/**
 	 * 商品原价
 	 */
 	private BigDecimal productOrigin;
@@ -49,6 +53,10 @@ public class ProductEntity implements Serializable {
 	 * 商品主图
 	 */
 	private String productImg;
+	/**
+	 * 商品视频
+	 */
+	private String productVideo;
 	/**
 	 * 商品副图
 	 */

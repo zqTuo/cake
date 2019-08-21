@@ -5,7 +5,10 @@ $(function () {
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '最大距离', name: 'maxDistance', index: 'max_distance', width: 80 }, 			
-			{ label: '运费', name: 'freight', index: 'freight', width: 80 }			
+			{ label: '运费', name: 'freight', index: 'freight', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
+			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,

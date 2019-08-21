@@ -25,6 +25,6 @@ public class UserController {
     @GetMapping("userInfo")
     @ApiOperation(value="获取用户信息", response= UserDto.class)
     public R userInfo(@ApiIgnore @LoginUser UserDto user){
-        return R.ok().put("user", user);
+        return R.ok().put("data", user);
     }
 }

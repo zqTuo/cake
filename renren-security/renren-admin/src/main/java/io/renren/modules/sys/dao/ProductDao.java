@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-19 16:35:41
+ * @date 2019-08-21 21:51:22
  */
 @Mapper
 public interface ProductDao extends BaseMapper<ProductEntity> {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.ProductCategoryDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.ProductCategoryEntity" id="productCategoryMap">
+        <result property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="categoryParentid" column="category_parentid"/>
+        <result property="categoryFlag" column="category_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <resultMap id="ProCateMap" type="io.renren.dto.CategoryDto" autoMapping="true">
+        <collection property="categoryList" ofType="io.renren.dto.ProductCateDto" autoMapping="true">
+            <result property="id" column="id"/>
+        </collection>
+    </resultMap>
+    <select id="getProCateData" resultMap="ProCateMap">
+        select c.category_name as parentName, c1.id,c1.category_name
+               from tb_product_category c
+                left join tb_product_category c1 on c.id=c1.category_parentid
+        order by c.id,c1.id
+    </select>
+
+
+</mapper>

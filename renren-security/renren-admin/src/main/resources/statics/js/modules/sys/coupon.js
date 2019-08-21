@@ -9,7 +9,10 @@ $(function () {
 			{ label: '优惠券类型 0：商品优惠券 1：课程优惠券', name: 'couponType', index: 'coupon_type', width: 80 }, 			
 			{ label: '开始时间', name: 'startTime', index: 'start_time', width: 80 }, 			
 			{ label: '截止时间', name: 'endTime', index: 'end_time', width: 80 }, 			
-			{ label: '是否限时 0：不限时 1:限时', name: 'dateFlag', index: 'date_flag', width: 80 }			
+			{ label: '是否限时 0：不限时 1:限时', name: 'dateFlag', index: 'date_flag', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
+			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
