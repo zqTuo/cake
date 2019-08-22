@@ -44,12 +44,12 @@ public class ProductDetailEntity implements Serializable {
 	/**
 	 * 商品尺寸
 	 * size：尺寸  price：额外加价  flag：是否默认选项 0：否 1：是
-	 * {"size":"6寸","price":"20","flag":1}
+	 * {"size":"6寸","extraPrice":"20","flag":1}
 	 */
 	private String detailSize;
 	/**
 	 * 商品口味
-	 * {"taste":"标准口味","price":"20","flag":1}
+	 * {"taste":"标准口味","extraPrice":"20","flag":1}
 	 */
 	private String detailTaste;
 	/**

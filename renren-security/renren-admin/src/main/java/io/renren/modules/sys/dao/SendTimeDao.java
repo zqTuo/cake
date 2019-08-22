@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 16:22:06
+ * @date 2019-08-22 21:10:39
  */
 @Mapper
 public interface SendTimeDao extends BaseMapper<SendTimeEntity> {

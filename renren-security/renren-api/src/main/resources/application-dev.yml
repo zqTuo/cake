@@ -1,3 +1,5 @@
+server:
+  port: 8081
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -47,9 +49,9 @@ spring:
 
 # 项目配置
 project:
-  url_pre: https://test.eliteon.com.hk
-  pic_pre: https://test.eliteon.com.hk/images/
-  video_pre: https://test.eliteon.com.hk/mv/
+  url_pre: http://localhost
+  pic_pre: http://localhost/images/
+  video_pre: http://localhost/mv/
 
 # 微信公众号
 weCat:

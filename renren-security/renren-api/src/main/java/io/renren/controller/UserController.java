@@ -17,7 +17,7 @@ import springfox.documentation.annotations.ApiIgnore;
  * @Date: 2019/8/19 23:55.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @Api(tags="用户接口")
 public class UserController {
 

@@ -1,9 +1,11 @@
+server:
+  port: 8081
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/cake_db?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      url: jdbc:mysql://localhost:3306/cake_testdb?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
       username: root
       password: 123456
       initial-size: 10
@@ -47,11 +49,15 @@ spring:
 
 # 项目配置
 project:
-  url_pre: https://test.eliteon.com.hk
+  url_pre: http://test.zuoyanglife.com
+  pic_pre: http://test.zuoyanglife.com/images/
+  video_pre: http://test.zuoyanglife.com/mv/
 
 # 微信公众号
 weCat:
   appId: wx06bec68a22884722
   appSecret: 6843ff60906c16f658f724a2fb894e43
-  accessTokenUrl: https://api.weixin.qq.com/sns/oauth2/access_token
+  accessTokenByCodeUrl: https://api.weixin.qq.com/sns/oauth2/access_token
   userInfoUrl: https://api.weixin.qq.com/sns/userinfo
+  accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
+  ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket

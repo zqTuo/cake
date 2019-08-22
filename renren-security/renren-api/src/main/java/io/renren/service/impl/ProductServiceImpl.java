@@ -20,8 +20,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductDao, ProductEntity> i
     }
 
     @Override
-    public List<ProductDto> findHotProduct(PageForm form) {
-        return baseMapper.findHotProduct(form);
+    public List<ProductDto> findProduct(PageForm form) {
+        return baseMapper.findProduct(form);
     }
 
 }

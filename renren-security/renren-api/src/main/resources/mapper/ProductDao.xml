@@ -40,9 +40,9 @@
             left join tb_product p on r.product_id=p.id order by c.id desc ,p.id desc
     </select>
 
-    <select id="findHotProduct" resultType="io.renren.dto.ProductDto">
+    <select id="findProduct" resultType="io.renren.dto.ProductDto">
         select id,product_name,product_desc,product_price,product_img from tb_product
-        where product_flag = 1
+        where product_flag = 1 and shop_id = #{form.shopId}
           <if test="form.sourceType == 0">and product_hot = 1</if>
           <if test="form.sourceType == 1">and product_cateid = #{form.cateid} </if>
         order by id desc

@@ -4,7 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '派送时间点 HH:mm', name: 'timeArea', index: 'time_area', width: 80 }, 			
+			{ label: '派送时间点 HH:mm', name: 'startTime', index: 'start_time', width: 80 }, 			
+			{ label: '派送时间点 HH:mm', name: 'endTime', index: 'end_time', width: 80 }, 			
 			{ label: '最大预约订单数', name: 'maxOrder', index: 'max_order', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			

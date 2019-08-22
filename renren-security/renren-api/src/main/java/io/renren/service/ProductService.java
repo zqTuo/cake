@@ -21,6 +21,6 @@ public interface ProductService extends IService<ProductEntity> {
 
     List<HotColumnDto> findAllHotColumn();
 
-    List<ProductDto> findHotProduct(PageForm form);
+    List<ProductDto> findProduct(PageForm form);
 }
 

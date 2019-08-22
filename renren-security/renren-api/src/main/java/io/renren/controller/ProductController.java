@@ -1,6 +1,5 @@
 package io.renren.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.common.utils.R;
@@ -17,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
  * 功能描述: <br>
@@ -63,7 +63,7 @@ public class ProductController {
 
         form.setPageNo(form.getPageNo() > 0 ? (form.getPageNo()-1) * form.getPageSize() : 0);
 
-        List<ProductDto> productDtoList = productService.findHotProduct(form);
+        List<ProductDto> productDtoList = productService.findProduct(form);
 
         for (ProductDto productDto:productDtoList){
             productDto.setProductImg(pic_pre + productDto.getProductImg());
@@ -82,16 +82,49 @@ public class ProductController {
             productEntity.setProductVideo(video_pre + productEntity.getProductVideo());
         }
 
-        List<ProductDetailEntity> productDetailEntityList = productDetailService.list(new QueryWrapper<ProductDetailEntity>().eq("product_id",id));
+        try {
+            List<ProductDetailEntity> productDetailEntityList = productDetailService.list(new QueryWrapper<ProductDetailEntity>().eq("product_id",id));
 
-        JSONArray sizeArr = new JSONArray();
-        JSONArray tasteArr = new JSONArray();
+            Set<JSONObject> sizeArr = new HashSet<>(); // 所有尺寸列表 [{"size":"6寸","extraPrice":"20","flag":1,"id":1}]
+            Set<JSONObject> tasteArr = new HashSet<>(); // 所有口味列表 [{"taste":"标准口味","extraPrice":"20","flag":1,"id":1}]
+            JSONObject price = new JSONObject(); // 尺寸、口味对应对象 格式{"id_id":{"price":11,"detailId":1}}
 
-        for (ProductDetailEntity productDetailEntity:productDetailEntityList){
-            productDetailEntity.setDetailCover(pic_pre + productDetailEntity.getDetailCover());
+            for (ProductDetailEntity productDetailEntity:productDetailEntityList){
+                productDetailEntity.setDetailCover(pic_pre + productDetailEntity.getDetailCover());
 
-            JSONObject size = new JSONObject();
+                JSONObject size = JSONObject.parseObject(productDetailEntity.getDetailSize());
+                size.put("id",productDetailEntity.getId());
+                sizeArr.add(size);
 
+                JSONObject taste = JSONObject.parseObject(productDetailEntity.getDetailTaste());
+                taste.put("id",productDetailEntity.getId());
+                tasteArr.add(taste);
+
+                StringBuilder key = new StringBuilder(productDetailEntity.getId() + "_");
+                for (ProductDetailEntity detailEntity:productDetailEntityList){
+                    key.append(detailEntity.getId());
+                    if(!price.containsKey(key.toString())){
+                        JSONObject productDetail = new JSONObject();
+                        productDetail.put("price",detailEntity.getDetailPrice());
+                        productDetail.put("detailId",detailEntity.getId());
+                        price.put(String.valueOf(key),productDetail);
+                    }
+                }
+            }
+
+            ProductDto productDto = new ProductDto();
+            BeanUtils.copyProperties(productDto,productEntity);
+
+            Map<String,Object> map = new HashMap<>();
+            map.put("product",productDto);
+            map.put("sizeArr",sizeArr);
+            map.put("tasteArr",tasteArr);
+            map.put("price",price);
+
+            return R.ok(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error(500,"系统错误");
         }
     }
 }

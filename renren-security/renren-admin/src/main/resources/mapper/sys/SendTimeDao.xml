@@ -6,7 +6,8 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="io.renren.modules.sys.entity.SendTimeEntity" id="sendTimeMap">
         <result property="id" column="id"/>
-        <result property="timeArea" column="time_area"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
         <result property="maxOrder" column="max_order"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>

@@ -41,4 +41,20 @@ public class ProductDto {
      * 商品主图
      */
     private String productImg;
+    /**
+     * 商品视频
+     */
+    private String productVideo;
+    /**
+     * 商品副图
+     */
+    private String productBanner;
+    /**
+     * 商品规格价格区间
+     */
+    private String productPriceRegion;
+    /**
+     * 商品详情HTML代码
+     */
+    private String productInfo;
 }

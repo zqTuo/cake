@@ -63,7 +63,7 @@ var vm = new Vue({
 			$.get(baseURL + "sys/config/info/"+id, function(r){
                 vm.showList = false;
                 vm.title = "修改";
-                vm.config = r.config;
+                vm.config = io.renren.common.config;
             });
 		},
 		del: function (event) {

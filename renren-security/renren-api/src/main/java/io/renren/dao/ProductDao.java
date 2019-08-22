@@ -22,5 +22,5 @@ public interface ProductDao extends BaseMapper<ProductEntity> {
 
     List<HotColumnDto> findAllHotColumn();
 
-    List<ProductDto> findHotProduct(@Param("form") PageForm form);
+    List<ProductDto> findProduct(@Param("form") PageForm form);
 }

@@ -176,7 +176,8 @@ create table tb_shop(
 -- 配送时间表
 create table tb_send_time(
     id bigint(20) auto_increment,
-    time_area datetime not null comment '派送时间点 HH:mm',
+    start_time datetime not null comment '派送时间点 HH:mm',
+    end_time datetime not null comment '派送时间点 HH:mm',
     max_order int not null comment '最大预约订单数',
     create_time datetime not null COMMENT '创建时间',
     update_time datetime COMMENT '修改时间',
@@ -239,6 +240,20 @@ create table tb_hot_relation(
     update_by VARCHAR(100) default '' comment '修改管理员',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='热销栏目与商品关联表';
+
+-- 收货地址表
+create table tb_address(
+    id bigint(20) auto_increment,
+    user_id bigint(20) not null default 0 comment '用户ID',
+    province varchar(200) not null default '' comment '省份',
+    city varchar(100) not null default '' comment '市',
+    district varchar(100) not null default '' comment '区',
+    address varchar(250) not null default '' comment '详细地址',
+    contract varchar(100) not null default '' comment '收货人',
+    phone varchar(20) not null default '' comment '手机号',
+    defaultFlag int not null default 0 comment '默认地址 0：否 1：是',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
 
 
 

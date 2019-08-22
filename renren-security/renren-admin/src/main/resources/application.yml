@@ -4,13 +4,13 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 8080
+
   servlet:
     context-path: /cake-admin
 
 spring:
   profiles:
-    active: dev
+    active: test
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

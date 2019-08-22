@@ -24864,7 +24864,7 @@ SwaggerUi.partials.signature = (function () {
 
   var createArrayXML = function (descriptor) {
     var name = descriptor.name;
-    var config = descriptor.config;
+    var config = io.renren.common.config;
     var definition = descriptor.definition;
     var models = descriptor.models;
     var value;
@@ -24953,9 +24953,9 @@ SwaggerUi.partials.signature = (function () {
   function createObjectXML (descriptor) {
     var name = descriptor.name;
     var definition = descriptor.definition;
-    var config = descriptor.config;
+    var config = io.renren.common.config;
     var models = descriptor.models;
-    var isParam = descriptor.config.isParam;
+    var isParam = io.renren.common.config.isParam;
     var serializedProperties;
     var attrs = [];
     var properties = definition.properties;

@@ -1,4 +1,4 @@
-package io.renren.modules.sys.entity;
+package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

@@ -29,4 +29,7 @@ public class PageForm {
 
     @ApiModelProperty(value = "类别ID，查询分类商品时必传")
     private long cateid;
+
+    @ApiModelProperty(value = "门店ID",required = true)
+    private long shopId;
 }
