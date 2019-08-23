@@ -2,48 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3fe8eece-a808-4956-9b3e-c54412e952d4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/63dce60c-713d-46d8-bda4-21967e6370af.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/63dce60c-713d-46d8-bda4-21967e6370af.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/db/api.sql" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/db/api.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/SendTimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/SendTimeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/dao/SendTimeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/dao/SendTimeDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/SendTimeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/SendTimeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/service/SendTimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/service/SendTimeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/application-prod.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/application-test.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/mapper/sys/SendTimeDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/mapper/sys/SendTimeDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/sendtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/sendtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/sendtime.html" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/sendtime.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/application-test.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/public/swagger/swagger-ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/public/swagger/swagger-ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/public/swagger/swagger-ui.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/public/swagger/swagger-ui.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/index1.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/index1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/modules/oss/oss.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/modules/oss/oss.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/modules/sys/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/statics/js/modules/sys/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/statics/libs/vue-validator.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/statics/libs/vue-validator.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/templates/index1.html" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/templates/index1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/templates/modules/oss/oss.html" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/templates/modules/oss/oss.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ApiTestController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dao/ProductDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dao/ProductDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductDetailEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductDetailEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/PageForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/PageForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/ProductServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BannerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BannerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BaseDataServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BaseDataServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-api/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/resources/application-dev.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-api/src/main/resources/application-prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/resources/application-prod.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-api/src/main/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/resources/application-test.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renren-api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ProductDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ProductDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ShopDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ShopDao.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/renren-admin/target/" />
@@ -81,77 +54,62 @@
     </checked>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5323015">
+    <splitter split-orientation="horizontal" split-proportion="0.6248313">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1755">
-                  <caret line="65" column="63" selection-start-line="65" selection-start-column="63" selection-end-line="65" selection-end-column="63" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShopController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="378">
-                  <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="388">
-                  <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/IndexController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="189">
-                  <caret line="32" selection-start-line="32" selection-end-line="34" selection-end-column="20" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="486">
-                  <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+                <state relative-caret-position="561">
+                  <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application.yml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="621">
-                  <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/renren-admin/db/api.sql">
+            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/SendTimeForm.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="211">
-                  <caret line="175" column="9" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+                <state relative-caret-position="332">
+                  <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/SendTimeService.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="432">
+                  <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/SendTimeServiceImpl.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="270">
+                  <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/SendTimeDto.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="648">
+                  <caret line="24" column="55" lean-forward="true" selection-start-line="24" selection-start-column="55" selection-end-line="24" selection-end-column="55" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -161,33 +119,9 @@
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/CategoryDto.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="621">
-                  <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductCateDto.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="486">
-                  <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductDto.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="714">
+                <state relative-caret-position="1431">
                   <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
                 </state>
               </provider>
@@ -196,7 +130,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductEntity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="41">
+                <state relative-caret-position="2052">
                   <caret line="82" column="24" selection-start-line="82" selection-start-column="24" selection-end-line="82" selection-end-column="24" />
                 </state>
               </provider>
@@ -205,7 +139,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductDetailEntity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="357">
+                <state relative-caret-position="1215">
                   <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
                 </state>
               </provider>
@@ -214,7 +148,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ShoppingCartEntity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="27">
+                <state relative-caret-position="351">
                   <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
                 </state>
               </provider>
@@ -223,8 +157,26 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/AddressEntity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="317">
-                  <caret line="82" selection-start-line="82" selection-end-line="82" />
+                <state relative-caret-position="614">
+                  <caret line="79" column="28" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-admin/db/api.sql">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="508">
+                  <caret line="253" column="15" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="15" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/SendTimeEntity.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="587">
+                  <caret line="37" column="28" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="28" />
                 </state>
               </provider>
             </entry>
@@ -241,13 +193,13 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/WxLoginController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="282">
+                <state relative-caret-position="405">
                   <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/WxTicketController.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="282">
@@ -276,6 +228,7 @@
       <find>renren.c</find>
       <find>findHotProduct</find>
       <find>.modules.sys</find>
+      <find>bannerType</find>
     </findStrings>
     <replaceStrings>
       <replace>xkygame.com</replace>
@@ -291,15 +244,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductCategoryEntity.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductCateDto.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/ProductCategoryService.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/ProductCategoryServiceImpl.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dao/ProductCategoryDao.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/CategoryDto.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ProductCategoryDao.xml" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/common/utils/Query.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/PageForm.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/IndexController.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShopController.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/common/config/WechatConfig.java" />
@@ -316,12 +260,10 @@
         <option value="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ShoppingCartDao.xml" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ShoppingCartEntity.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/ShoppingCartForm.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductEntity.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductDto.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductDetailEntity.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/PageForm.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/ProductServiceImpl.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ProductDao.xml" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/AddressEntity.java" />
@@ -329,19 +271,30 @@
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/AddressServiceImpl.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dao/AddressDao.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/resources/mapper/AddressDao.xml" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/AddressController.java" />
         <option value="$PROJECT_DIR$/renren-api/src/main/resources/mapper/ShopDao.xml" />
         <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/UserController.java" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java" />
-        <option value="$PROJECT_DIR$/renren-admin/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/renren-admin/db/api.sql" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/SendTimeEntity.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dao/SendTimeDao.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/resources/mapper/SendTimeDao.xml" />
+        <option value="$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml" />
         <option value="$PROJECT_DIR$/renren-admin/src/main/resources/application-test.yml" />
         <option value="$PROJECT_DIR$/renren-admin/src/main/resources/application-prod.yml" />
-        <option value="$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/renren-api/src/main/resources/application-dev.yml" />
-        <option value="$PROJECT_DIR$/renren-api/src/main/resources/application-test.yml" />
         <option value="$PROJECT_DIR$/renren-api/src/main/resources/application-prod.yml" />
-        <option value="$PROJECT_DIR$/renren-admin/db/api.sql" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/resources/application-test.yml" />
+        <option value="$PROJECT_DIR$/renren-admin/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BaseDataServiceImpl.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BannerServiceImpl.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/AddressController.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/SendTimeDto.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/SendTimeService.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/SendTimeServiceImpl.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java" />
+        <option value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/SendTimeForm.java" />
       </list>
     </option>
   </component>
@@ -394,8 +347,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -453,6 +406,41 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="renren" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
+              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="renren" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="sys" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
+              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="renren" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="sys" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
+              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="renren" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="sys" type="462c0819:PsiDirectoryNode" />
+              <item name="entity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
@@ -546,6 +534,16 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="renren" type="462c0819:PsiDirectoryNode" />
+              <item name="dto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
+              <item name="renren-api" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="renren" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -557,26 +555,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="renren" type="462c0819:PsiDirectoryNode" />
               <item name="form" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="interceptor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="resolver" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
@@ -607,15 +585,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-api" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -631,7 +600,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566231170013" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/renren-api/src/main/resources/mapper" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -647,10 +616,10 @@
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\project\cake_zuofang\renren-security\renren-api\src\main\resources\mapper" />
-      <recent name="D:\project\cake_zuofang\renren-security\renren-api\src\main\java\io\renren\entity" />
       <recent name="D:\project\cake_zuofang\renren-security\renren-api\src\main\java\io\renren\service\impl" />
       <recent name="D:\project\cake_zuofang\renren-security\renren-api\src\main\java\io\renren\service" />
       <recent name="D:\project\cake_zuofang\renren-security\renren-api\src\main\java\io\renren\dao" />
+      <recent name="D:\project\cake_zuofang\renren-security\renren-api\src\main\java\io\renren\entity" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -665,7 +634,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GeneratorApplication">
+  <component name="RunManager" selected="Spring Boot.ApiApplication">
     <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="renren-admin" />
       <extension name="coverage">
@@ -727,18 +696,19 @@
       <workItem from="1566227262361" duration="3986000" />
       <workItem from="1566351300861" duration="20402000" />
       <workItem from="1566376806506" duration="18744000" />
-      <workItem from="1566436301486" duration="22042000" />
+      <workItem from="1566436301486" duration="22680000" />
+      <workItem from="1566529096961" duration="10383000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="82335000" />
+    <option name="totallyTimeSpent" value="93356000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20746666" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2096" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -749,7 +719,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.43167028" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37744033" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -777,7 +747,7 @@
       <window_info anchor="right" id="Bean Validation" order="11" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20746666" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2096" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -787,8 +757,8 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.43167028" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37744033" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -805,7 +775,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Maven" order="3" visible="true" weight="0.3296" />
+      <window_info anchor="right" id="Maven" order="3" visible="true" weight="0.3296" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Mybatis datasource" order="6" side_tool="true" />
@@ -820,177 +790,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/JsWechatConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/ShoppingCartEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="33" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="38" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/mapper/sys/ShoppingCartDao.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="71" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/ShoppingCartController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="89" column="5" lean-forward="true" selection-start-line="57" selection-start-column="4" selection-end-line="89" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/ProductEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-81">
-          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/ShoppingCartService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/ShoppingCartServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/HotColumnEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/HotColumnDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="22" column="27" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductCategoryEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/CategoryDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductCateDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductDetailEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/UserDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/WxuserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/resolver/LoginUserHandlerMethodArgumentResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/PageForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ShoppingCartEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/mapper/ProductDao.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="641">
-          <caret line="42" column="16" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/ShoppingCartForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/ProductServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="567">
@@ -1007,13 +806,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="82" column="24" selection-start-line="82" selection-start-column="24" selection-end-line="82" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1070,48 +862,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ApiTestController.java">
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ApiTestController.java" />
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShopController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        <state relative-caret-position="378">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/AddressEntity.java">
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/CategoryDto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/AddressController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1809">
-          <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/IndexController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="32" selection-start-line="32" selection-end-line="34" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1755">
-          <caret line="65" column="63" selection-start-line="65" selection-start-column="63" selection-end-line="65" selection-end-column="63" />
+        <state relative-caret-position="621">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShopController.java">
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductCateDto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        <state relative-caret-position="486">
+          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/ProductDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1431">
+          <caret line="58" column="31" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2052">
+          <caret line="82" column="24" selection-start-line="82" selection-start-column="24" selection-end-line="82" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ProductDetailEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1215">
+          <caret line="51" column="34" selection-start-line="51" selection-start-column="34" selection-end-line="51" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/ShoppingCartEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -1124,8 +927,79 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/WxLoginController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
+        <state relative-caret-position="405">
           <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dao/SendTimeDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/mapper/SendTimeDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/SendTimeEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/RegisterForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="22" selection-start-line="22" selection-end-line="23" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-prod.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-test.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-prod.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/entity/BaseDataEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/mapper/sys/BaseDataDao.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/mapper/BaseDataDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="49" selection-start-line="6" selection-start-column="49" selection-end-line="6" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/BaseDataEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="29" column="30" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BaseDataServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="16" column="83" selection-start-line="16" selection-start-column="83" selection-end-line="16" selection-end-column="83" />
         </state>
       </provider>
     </entry>
@@ -1136,86 +1010,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java">
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/AddressEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-prod.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-test.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="1" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="2" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-test.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-prod.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="614">
+          <caret line="79" column="28" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/db/api.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="175" column="9" selection-start-line="175" selection-start-column="9" selection-end-line="175" selection-end-column="9" />
+        <state relative-caret-position="508">
+          <caret line="253" column="15" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-test.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="21" column="24" lean-forward="true" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-358">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ShoppingCartController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="34" column="11" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/ProductController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="60" column="24" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/AddressController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="27" column="11" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/BannerServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/ApiApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="521">
+          <caret line="48" column="18" selection-start-line="48" selection-start-column="18" selection-end-line="48" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-dev.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="61" selection-start-line="61" selection-end-line="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/entity/SendTimeEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="37" column="28" selection-start-line="37" selection-start-column="20" selection-end-line="37" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/dto/SendTimeDto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="24" column="55" lean-forward="true" selection-start-line="24" selection-start-column="55" selection-end-line="24" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/SendTimeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/service/impl/SendTimeServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/controller/OrderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-api/src/main/java/io/renren/form/SendTimeForm.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -25,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/addr")
-@Api(value = "用户地址接口控制器")
+@Api(tags = "用户地址接口控制器")
 public class AddressController {
     @Resource
     private AddressService addressService;
@@ -76,7 +76,7 @@ public class AddressController {
     @GetMapping("getDefault")
     public R getDefault(@ApiIgnore @RequestAttribute("userId")long userId){
         AddressEntity addressEntity = addressService.getOne(new QueryWrapper<AddressEntity>().eq("user_id",userId)
-                .eq("defaultflag",1));
+                .eq("default_flag",1));
 
         return R.ok().put("data",addressEntity);
     }

@@ -14,6 +14,6 @@ public class BaseDataServiceImpl extends ServiceImpl<BaseDataDao, BaseDataEntity
 
     @Override
     public BaseDataEntity getBySourceType(int sourceType) {
-        return baseMapper.selectOne(new QueryWrapper<BaseDataEntity>().eq("sourceType",sourceType));
+        return baseMapper.selectOne(new QueryWrapper<BaseDataEntity>().eq("source_type",sourceType));
     }
 }

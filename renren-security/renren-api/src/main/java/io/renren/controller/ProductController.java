@@ -33,7 +33,7 @@ import java.util.*;
  * @Author:Created By Clarence
  * @Date: 2019/8/21 17:37
  */
-@Api(value = "商品控制器")
+@Api(tags = "商品控制器")
 @RestController
 @RequestMapping("/api/goods")
 public class ProductController {

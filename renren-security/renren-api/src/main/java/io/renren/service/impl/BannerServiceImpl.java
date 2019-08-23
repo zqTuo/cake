@@ -14,6 +14,6 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
 
     @Override
     public List<BannerEntity> getIndexBanner() {
-        return baseMapper.selectList(new QueryWrapper<BannerEntity>().eq("bannerType",0));
+        return baseMapper.selectList(new QueryWrapper<BannerEntity>().eq("banner_type",0));
     }
 }

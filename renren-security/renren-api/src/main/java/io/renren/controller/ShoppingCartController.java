@@ -32,7 +32,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api/buy")
-@Api(value = "购物车接口控制器")
+@Api(tags = "购物车接口控制器")
 public class ShoppingCartController {
     @Resource
     private ShoppingCartService shoppingCartService;
