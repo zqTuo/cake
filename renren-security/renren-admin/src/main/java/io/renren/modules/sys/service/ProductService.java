@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 21:51:22
+ * @date 2019-08-25 22:57:11
  */
 public interface ProductService extends IService<ProductEntity> {
 

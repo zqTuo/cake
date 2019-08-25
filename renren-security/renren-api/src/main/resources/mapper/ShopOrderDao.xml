@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.ShopOrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.ShopOrderEntity" id="shopOrderMap">
+        <result property="id" column="id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="userId" column="user_id"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="orderDiscount" column="order_discount"/>
+        <result property="orderDiscountType" column="order_discount_type"/>
+        <result property="couponUserId" column="coupon_user_id"/>
+        <result property="orderState" column="order_state"/>
+        <result property="orderSourceType" column="order_source_type"/>
+        <result property="orderRemark" column="order_remark"/>
+        <result property="addrPro" column="addr_pro"/>
+        <result property="addrCity" column="addr_city"/>
+        <result property="addrDis" column="addr_dis"/>
+        <result property="addrDetail" column="addr_detail"/>
+        <result property="addrReceiver" column="addr_receiver"/>
+        <result property="sendType" column="send_type"/>
+        <result property="addrPhone" column="addr_phone"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="payTime" column="pay_time"/>
+        <result property="payType" column="pay_type"/>
+        <result property="shopId" column="shop_id"/>
+        <result property="cancelTime" column="cancel_time"/>
+        <result property="finishTime" column="finish_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+
+    <select id="countToday" resultType="int">
+        select count(*) from tb_shop_order where order_state > 0
+        and date_format(send_time,'%y-%m-%d %H:%m') >= #{startTime}
+        and date_format(send_time,'%y-%m-%d %H:%m') <![CDATA[<]]> #{endTime}
+    </select>
+
+
+</mapper>

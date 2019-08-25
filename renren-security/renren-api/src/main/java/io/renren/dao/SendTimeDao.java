@@ -1,8 +1,11 @@
 package io.renren.dao;
 
+import io.renren.dto.SendTimeDto;
 import io.renren.entity.SendTimeEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 配送时间表
@@ -13,5 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SendTimeDao extends BaseMapper<SendTimeEntity> {
-	
+
+    List<SendTimeDto> getData();
 }

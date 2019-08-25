@@ -13,7 +13,7 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 21:51:22
+ * @date 2019-08-25 22:57:11
  */
 @Data
 @TableName("tb_product")
@@ -77,6 +77,10 @@ public class ProductEntity implements Serializable {
 	 * 热销标记(展示在首页) 0：不推荐 1：推荐
 	 */
 	private Integer productHot;
+	/**
+	 * 加购标记 0：不设为加购 1：设为加购
+	 */
+	private Integer productExtra;
 	/**
 	 * 所属门店
 	 */

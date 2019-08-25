@@ -1,21 +1,22 @@
 package io.renren.modules.sys.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import io.renren.common.validator.ValidatorUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.modules.sys.entity.ShopEntity;
-import io.renren.modules.sys.service.ShopService;
+import com.alibaba.fastjson.JSONObject;
+import io.renren.common.utils.LocationUtils;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
+import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.ShopEntity;
+import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.service.ShopService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 
 
@@ -31,6 +32,8 @@ import io.renren.common.utils.R;
 public class ShopController {
     @Autowired
     private ShopService shopService;
+    @Resource
+    private LocationUtils locationUtils;
 
     /**
      * 列表
@@ -61,6 +64,20 @@ public class ShopController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:shop:save")
     public R save(@RequestBody ShopEntity shop){
+        //获取经纬度
+        JSONObject addrRes = locationUtils.getLocation(shop.getShopAddr());
+
+        if(addrRes.getInteger("status") == 0) {
+            JSONObject locaJson = addrRes.getJSONArray("results").getJSONObject(0).getJSONObject("location");
+            shop.setShopLongitude(locaJson.getString("lng"));
+            shop.setShopLatitude(locaJson.getString("lat"));
+        }else{
+            return R.error(-3,addrRes.getString("message"));
+        }
+
+        shop.setCreateTime(new Date());
+        shop.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
+
         shopService.save(shop);
 
         return R.ok();
@@ -73,6 +90,21 @@ public class ShopController {
     @RequiresPermissions("sys:shop:update")
     public R update(@RequestBody ShopEntity shop){
         ValidatorUtils.validateEntity(shop);
+
+        //获取经纬度
+        JSONObject addrRes = locationUtils.getLocation(shop.getShopAddr());
+
+        if(addrRes.getInteger("status") == 0) {
+            JSONObject locaJson = addrRes.getJSONObject("location");
+            shop.setShopLongitude(locaJson.getString("lng"));
+            shop.setShopLatitude(locaJson.getString("lat"));
+        }else{
+            return R.error(-3,addrRes.getString("message"));
+        }
+
+        shop.setUpdateTime(new Date());
+        shop.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
+
         shopService.updateById(shop);
         
         return R.ok();

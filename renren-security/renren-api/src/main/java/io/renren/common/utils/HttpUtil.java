@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
 
 /**
  * @Author: Clarence
@@ -54,4 +55,8 @@ public class HttpUtil {
         return client.postForEntity(url, postData, JSONObject.class).getBody();
     }
 
+    public static JSONObject getByJson(String url, Map<String,String> postData){
+        RestTemplate client = new RestTemplate();
+        return client.getForEntity(url,JSONObject.class, postData).getBody();
+    }
 }

@@ -58,3 +58,24 @@ spring:
 #      url: jdbc:postgresql://localhost:5432/renren_security
 #      username: renren
 #      password: 123456
+
+# 项目配置
+project:
+  url_pre: http://localhost
+  pic_pre: http://localhost/images/
+  video_pre: http://localhost/mv/
+
+# 微信公众号
+weCat:
+  appId: wx06bec68a22884722
+  appSecret: 6843ff60906c16f658f724a2fb894e43
+  accessTokenByCodeUrl: https://api.weixin.qq.com/sns/oauth2/access_token
+  userInfoUrl: https://api.weixin.qq.com/sns/userinfo
+  accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
+  ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+
+# 百度地图
+baiduMap:
+  ak: SoQCCsGE9S8ILEvx1HCtV8S6oS4PYYXA
+  locationUrl: http://api.map.baidu.com/place/v2/search
+  distanceUrl: http://api.map.baidu.com/routematrix/v2/driving

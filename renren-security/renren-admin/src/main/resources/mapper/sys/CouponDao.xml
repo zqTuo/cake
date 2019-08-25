@@ -8,6 +8,7 @@
         <result property="id" column="id"/>
         <result property="couponName" column="coupon_name"/>
         <result property="couponPrice" column="coupon_price"/>
+        <result property="price" column="price"/>
         <result property="couponType" column="coupon_type"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>

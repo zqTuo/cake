@@ -26,15 +26,15 @@
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
 														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">派送时间点 HH:mm</div>
+                        <div class="col-sm-2 control-label">派送开始时间点</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.startTime" placeholder="派送时间点 HH:mm"/>
+                            <input type="text" class="form-control" v-model="sendTime.startTime" placeholder="派送开始时间点 HH:mm"/>
                         </div>
                     </div>
 											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">派送时间点 HH:mm</div>
+                        <div class="col-sm-2 control-label">派送结束时间点</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.endTime" placeholder="派送时间点 HH:mm"/>
+                            <input type="text" class="form-control" v-model="sendTime.endTime" placeholder="派送结束时间点 HH:mm"/>
                         </div>
                     </div>
 											                    <div class="form-group">
@@ -43,25 +43,7 @@
                             <input type="text" class="form-control" v-model="sendTime.maxOrder" placeholder="最大预约订单数"/>
                         </div>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
+			<div class="form-group">
                 <div class="col-sm-2 control-label"></div>
                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>

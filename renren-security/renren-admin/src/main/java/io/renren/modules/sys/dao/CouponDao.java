@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 16:22:06
+ * @date 2019-08-25 23:30:01
  */
 @Mapper
 public interface CouponDao extends BaseMapper<CouponEntity> {

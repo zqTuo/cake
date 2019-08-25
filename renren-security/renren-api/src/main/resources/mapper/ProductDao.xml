@@ -19,6 +19,7 @@
         <result property="productInfo" column="product_info"/>
         <result property="productFlag" column="product_flag"/>
         <result property="productHot" column="product_hot"/>
+        <result property="productExtra" column="productExtra"/>
         <result property="shopId" column="shop_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -47,6 +48,12 @@
           <if test="form.sourceType == 1">and product_cateid = #{form.cateid} </if>
         order by id desc
         limit #{form.pageNo} ,#{form.pageSize}
+    </select>
+
+    <select id="getExtraInfo" resultType="io.renren.dto.ProductDto">
+        select id,product_name,product_desc,product_price,product_img from tb_product
+        where product_flag = 1 and product_extra = 1
+        order by id desc
     </select>
 
 

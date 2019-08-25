@@ -15,5 +15,9 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="findAll" resultType="io.renren.dto.ShopDto">
+        select id,shop_name,shop_latitude,shop_longitude from tb_shop
+    </select>
+
 
 </mapper>

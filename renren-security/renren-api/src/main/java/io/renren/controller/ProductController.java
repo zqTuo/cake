@@ -127,4 +127,15 @@ public class ProductController {
             return R.error(500,"系统错误");
         }
     }
+
+    @GetMapping("getExtraInfo")
+    @ApiOperation(value = "获取加购商品接口")
+    public R getExtraInfo(){
+        List<ProductDto> productDtoList = productService.getExtraInfo();
+
+        for (ProductDto productDto:productDtoList){
+            productDto.setProductImg(pic_pre + productDto.getProductImg());
+        }
+        return R.ok().put("arrayData",productDtoList);
+    }
 }

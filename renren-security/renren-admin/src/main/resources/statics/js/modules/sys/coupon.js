@@ -6,6 +6,7 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '优惠券名称', name: 'couponName', index: 'coupon_name', width: 80 }, 			
 			{ label: '触发价格', name: 'couponPrice', index: 'coupon_price', width: 80 }, 			
+			{ label: '优惠金额', name: 'price', index: 'price', width: 80 }, 			
 			{ label: '优惠券类型 0：商品优惠券 1：课程优惠券', name: 'couponType', index: 'coupon_type', width: 80 }, 			
 			{ label: '开始时间', name: 'startTime', index: 'start_time', width: 80 }, 			
 			{ label: '截止时间', name: 'endTime', index: 'end_time', width: 80 }, 			

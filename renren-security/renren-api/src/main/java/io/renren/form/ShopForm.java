@@ -17,11 +17,11 @@ public class ShopForm {
     /**
      * 所在地 经度
      */
-    @ApiModelProperty(value = "经度")
-    private double longitude;
+    @ApiModelProperty(value = "经度",required = true)
+    private String longitude;
     /**
      * 所在地 纬度
      */
-    @ApiModelProperty(value = "纬度")
-    private double latitude;
+    @ApiModelProperty(value = "纬度",required = true)
+    private String latitude;
 }

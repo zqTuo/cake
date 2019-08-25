@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,14 +29,17 @@ public class SendTimeEntity implements Serializable {
 	/**
 	 * 派送时间点 HH:mm
 	 */
-	private Date startTime;
+	@NotBlank(message = "缺少开始时间点")
+	private String startTime;
 	/**
 	 * 派送时间点 HH:mm
 	 */
-	private Date endTime;
+	@NotBlank(message = "缺少结束时间点")
+	private String endTime;
 	/**
 	 * 最大预约订单数
 	 */
+	@Min(value = 1,message = "缺少最大预约订单数")
 	private Integer maxOrder;
 	/**
 	 * 创建时间

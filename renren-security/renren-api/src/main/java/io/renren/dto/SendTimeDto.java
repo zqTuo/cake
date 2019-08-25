@@ -20,7 +20,11 @@ import lombok.NoArgsConstructor;
 public class SendTimeDto {
     @ApiModelProperty(value = "时间段ID",required = true)
     private long id;
-    private String startTime;
-    private String endTime;
+    private String startTime; // 派送开始时间 10:00
+    private String endTime; // 派送截止时间 11:00
+    /**
+     * 最大预约订单数
+     */
+    private int maxOrder;
     private int state; // 是否可以预订 0：已约满 1：未在指定时间段 2：可以预约
 }

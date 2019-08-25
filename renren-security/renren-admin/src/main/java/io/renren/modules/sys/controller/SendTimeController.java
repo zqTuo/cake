@@ -1,21 +1,19 @@
 package io.renren.modules.sys.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import io.renren.common.validator.ValidatorUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.modules.sys.entity.SendTimeEntity;
-import io.renren.modules.sys.service.SendTimeService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
+import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.SendTimeEntity;
+import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.service.SendTimeService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 
 
@@ -31,6 +29,7 @@ import io.renren.common.utils.R;
 public class SendTimeController {
     @Autowired
     private SendTimeService sendTimeService;
+
 
     /**
      * 列表
@@ -61,6 +60,12 @@ public class SendTimeController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:sendtime:save")
     public R save(@RequestBody SendTimeEntity sendTime){
+
+        sendTime.setCreateTime(new Date());
+
+        String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();
+        sendTime.setUpdateBy(username);
+
         sendTimeService.save(sendTime);
 
         return R.ok();
@@ -73,6 +78,11 @@ public class SendTimeController {
     @RequiresPermissions("sys:sendtime:update")
     public R update(@RequestBody SendTimeEntity sendTime){
         ValidatorUtils.validateEntity(sendTime);
+
+        sendTime.setUpdateTime(new Date());
+        String username = ((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername();
+        sendTime.setUpdateBy(username);
+
         sendTimeService.updateById(sendTime);
         
         return R.ok();

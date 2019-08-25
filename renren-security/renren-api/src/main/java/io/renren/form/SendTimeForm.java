@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -33,5 +34,10 @@ public class SendTimeForm {
     private String addr;
 
     @ApiModelProperty(value = "派送日期，默认当天，格式yyyy-MM-dd")
+    @NotBlank(message = "请选择时间")
     private String selectedDate;
+
+    @ApiModelProperty(value = "店铺ID",required = true)
+    @Min(value = 1,message = "请传入店铺ID")
+    private long shopId;
 }

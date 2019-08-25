@@ -13,7 +13,7 @@ import java.util.Date;
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 16:22:06
+ * @date 2019-08-25 23:30:01
  */
 @Data
 @TableName("tb_coupon")
@@ -33,6 +33,10 @@ public class CouponEntity implements Serializable {
 	 * 触发价格
 	 */
 	private BigDecimal couponPrice;
+	/**
+	 * 优惠金额
+	 */
+	private BigDecimal price;
 	/**
 	 * 优惠券类型 0：商品优惠券 1：课程优惠券
 	 */

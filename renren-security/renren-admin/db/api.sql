@@ -32,6 +32,7 @@ create table tb_product(
   product_info text not null comment '商品详情HTML代码',
   product_flag int not null default 1 comment '商品状态 0：下架 1：上架',
   product_hot int not null default 0 comment '热销标记(展示在首页) 0：不推荐 1：推荐',
+  product_extra int not null default 0 comment '加购标记 0：不设为加购 1：设为加购',
   shop_id bigint(20) not null default 0 comment '所属门店',
   create_time datetime not null COMMENT '创建时间',
   update_time datetime COMMENT '修改时间',
@@ -136,6 +137,7 @@ create table tb_coupon(
   id bigint(20) auto_increment,
   coupon_name varchar(200) not null default '' comment '优惠券名称',
   coupon_price decimal(11,2) not null default 0 comment '触发价格',
+  price decimal(11,2) not null default 0 comment '优惠金额',
   coupon_type int not null default 0 comment '优惠券类型 0：商品优惠券 1：课程优惠券',
   start_time datetime comment '开始时间',
   end_time datetime comment '截止时间',
@@ -176,8 +178,8 @@ create table tb_shop(
 -- 配送时间表
 create table tb_send_time(
     id bigint(20) auto_increment,
-    start_time datetime not null comment '派送时间点 HH:mm',
-    end_time datetime not null comment '派送时间点 HH:mm',
+    start_time varchar(100) not null comment '派送时间点 HH:mm',
+    end_time varchar(100) not null comment '派送时间点 HH:mm',
     max_order int not null comment '最大预约订单数',
     create_time datetime not null COMMENT '创建时间',
     update_time datetime COMMENT '修改时间',

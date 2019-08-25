@@ -27,11 +27,11 @@ public class SendTimeEntity implements Serializable {
 	/**
 	 * 派送时间点 HH:mm
 	 */
-	private Date startTime;
+	private String startTime;
 	/**
 	 * 派送时间点 HH:mm
 	 */
-	private Date endTime;
+	private String endTime;
 	/**
 	 * 最大预约订单数
 	 */

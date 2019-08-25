@@ -17,6 +17,7 @@ $(function () {
 			{ label: '商品详情HTML代码', name: 'productInfo', index: 'product_info', width: 80 }, 			
 			{ label: '商品状态 0：下架 1：上架', name: 'productFlag', index: 'product_flag', width: 80 }, 			
 			{ label: '热销标记(展示在首页) 0：不推荐 1：推荐', name: 'productHot', index: 'product_hot', width: 80 }, 			
+			{ label: '加购标记 0：不设为加购 1：设为加购', name: 'productExtra', index: 'product_extra', width: 80 }, 			
 			{ label: '所属门店', name: 'shopId', index: 'shop_id', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			

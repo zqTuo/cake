@@ -19,6 +19,7 @@
         <result property="productInfo" column="product_info"/>
         <result property="productFlag" column="product_flag"/>
         <result property="productHot" column="product_hot"/>
+        <result property="productExtra" column="product_extra"/>
         <result property="shopId" column="shop_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>

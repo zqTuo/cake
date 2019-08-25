@@ -24,4 +24,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductDao, ProductEntity> i
         return baseMapper.findProduct(form);
     }
 
+    @Override
+    public List<ProductDto> getExtraInfo() {
+        return baseMapper.getExtraInfo();
+    }
+
 }

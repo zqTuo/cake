@@ -14,5 +14,9 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="getData" resultType="io.renren.dto.SendTimeDto">
+        select id,start_time,end_time,max_order  from tb_send_time order by start_time
+    </select>
+
 
 </mapper>

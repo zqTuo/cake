@@ -1,8 +1,10 @@
 package io.renren.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.renren.dto.SendTimeDto;
 import io.renren.entity.SendTimeEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -14,6 +16,8 @@ import java.util.List;
  */
 public interface SendTimeService extends IService<SendTimeEntity> {
 
-    void resolveTimeList(List<SendTimeEntity> sendTimeEntityList);
+    void resolveTimeList(List<SendTimeDto> sendTimeList, float distance, String selectedDate) throws ParseException;
+
+    List<SendTimeDto> getData();
 }
 
