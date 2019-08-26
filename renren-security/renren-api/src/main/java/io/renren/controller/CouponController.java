@@ -31,7 +31,7 @@ public class CouponController {
     public R getMyCoupon(@RequestBody CouponForm form,@ApiIgnore@RequestAttribute("userId")long userId){
         ValidatorUtils.validateEntity(form);
 
-        // 查询可用状态的优惠券
+        // todo 查询可用状态的优惠券
         List<CouponDto> couponDtoList = couponUserService.getMyCoupon(userId,form.getSourceType());
         for (CouponDto couponDto:couponDtoList){
             couponDto.setCouponName("满" + couponDto.getCouponPrice() + "减" + couponDto.getPrice());
@@ -39,5 +39,7 @@ public class CouponController {
 
             }
         }
+
+        return R.ok().put("arrayData",couponDtoList);
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -44,6 +45,16 @@ public class ShopController {
         PageUtils page = shopService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    /**
+     * 所有列表
+     */
+    @RequestMapping("/all")
+    public R all(){
+        List<ShopEntity> shopEntityList = shopService.list();
+
+        return R.ok().put("arrayData", shopEntityList);
     }
 
 

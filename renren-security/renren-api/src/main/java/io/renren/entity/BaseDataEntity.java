@@ -26,6 +26,7 @@ public class BaseDataEntity implements Serializable {
 	private Long id;
 	/**
 	 * 配置类型 0：首页菜单icon
+	 * {}
 	 */
 	private Integer sourceType;
 	/**

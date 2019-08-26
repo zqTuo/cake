@@ -17,6 +17,7 @@ PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- 商品表
+DROP TABLE IF EXISTS tb_product;
 create table tb_product(
   id bigint(20) AUTO_INCREMENT,
   product_name varchar(200) not null default '' comment '商品名称',

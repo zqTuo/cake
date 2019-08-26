@@ -44,3 +44,25 @@ spring:
         max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
+
+# 项目配置
+project:
+  url_pre: http://localhost
+  pic_pre: http://localhost/images/
+  video_pre: http://localhost/mv/
+  uploadFilePath: /home/test/images/
+
+# 微信公众号
+weCat:
+  appId: wx06bec68a22884722
+  appSecret: 6843ff60906c16f658f724a2fb894e43
+  accessTokenByCodeUrl: https://api.weixin.qq.com/sns/oauth2/access_token
+  userInfoUrl: https://api.weixin.qq.com/sns/userinfo
+  accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
+  ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+
+# 百度地图
+baiduMap:
+  ak: SoQCCsGE9S8ILEvx1HCtV8S6oS4PYYXA
+  locationUrl: http://api.map.baidu.com/place/v2/search
+  distanceUrl: http://api.map.baidu.com/routematrix/v2/driving

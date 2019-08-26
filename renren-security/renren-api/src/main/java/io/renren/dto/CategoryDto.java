@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel(value = "商品分类实体")
 public class CategoryDto {
+    private long id;
     /**
      * 大分类名称
      */

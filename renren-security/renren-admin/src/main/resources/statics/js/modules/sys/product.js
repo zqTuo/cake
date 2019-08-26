@@ -1,27 +1,46 @@
+var ue;
+
 $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/product/list',
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '商品名称', name: 'productName', index: 'product_name', width: 80 }, 			
-			{ label: '商品类型ID', name: 'productCateid', index: 'product_cateid', width: 80 }, 			
-			{ label: '商品售价', name: 'productPrice', index: 'product_price', width: 80 }, 			
-			{ label: '商品规格价格区间', name: 'productPriceRegion', index: 'product_price_region', width: 80 }, 			
-			{ label: '商品原价', name: 'productOrigin', index: 'product_origin', width: 80 }, 			
-			{ label: '商品SKU，主要是为了匹配美团套餐', name: 'productSku', index: 'product_sku', width: 80 }, 			
-			{ label: '商品主图', name: 'productImg', index: 'product_img', width: 80 }, 			
-			{ label: '商品视频', name: 'productVideo', index: 'product_video', width: 80 }, 			
-			{ label: '商品副图', name: 'productBanner', index: 'product_banner', width: 80 }, 			
-			{ label: '商品描述', name: 'productDesc', index: 'product_desc', width: 80 }, 			
-			{ label: '商品详情HTML代码', name: 'productInfo', index: 'product_info', width: 80 }, 			
-			{ label: '商品状态 0：下架 1：上架', name: 'productFlag', index: 'product_flag', width: 80 }, 			
-			{ label: '热销标记(展示在首页) 0：不推荐 1：推荐', name: 'productHot', index: 'product_hot', width: 80 }, 			
-			{ label: '加购标记 0：不设为加购 1：设为加购', name: 'productExtra', index: 'product_extra', width: 80 }, 			
-			{ label: '所属门店', name: 'shopId', index: 'shop_id', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
+            { label: '商品主图', name: 'productImg', index: 'product_img', width: 80 ,formatter:function (cellValue, options, rowObject) {
+                    return '<img class="img-thumbnail" width="80px" src="/images/'+cellValue+'" alt="商品图片">'
+                }},
+            { label: '商品名称', name: 'productName', index: 'product_name', width: 80},
+            { label: '商品类型', name: 'productCateid', index: 'product_cateid', width: 80 },
+            { label: '商品售价', name: 'productPrice', index: 'product_price', width: 80 ,formatter:function (cellValue) {
+                    return '￥' + cellValue;
+                }},
+            { label: '商品原价', name: 'productOrigin', index: 'product_origin', width: 80 ,formatter:function (cellValue) {
+                    return '￥' + cellValue;
+                }},
+            { label: '价格区间', name: 'productPriceRegion', index: 'product_price_region', width: 80 },
+            { label: '商品SKU', name: 'productSku', index: 'product_sku', width: 80 },
+			{ label: '商品状态', name: 'productFlag', index: 'product_flag', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已上架</span>";
+                    }else{
+                        return "<span class='label label-danger radius'>已下架</span>";
+                    }
+                }},
+			{ label: '热销标记', name: 'productHot', index: 'product_hot', width: 80  ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已推荐</span>";
+                    }else{
+                        return "<span class='label radius'>未推荐</span>";
+                    }
+                }},
+			{ label: '加购标记', name: 'productExtra', index: 'product_extra', width: 80  ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已添加</span>";
+                    }else{
+                        return "<span class='label radius'>未添加</span>";
+                    }
+                }},
+			{ label: '所属门店', name: 'shopId', index: 'shop_id', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -48,6 +67,25 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
+
+    // 文章内容 实例化百度富文本编辑器
+    ue = UE.getEditor('baseDataEditor',{
+        initialFrameWidth : 645
+    });
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    UE.Editor.prototype.getActionUrl = function (action) {
+        if (action === 'uploadimage') {
+            console.log("正在进行ueditor图片上传....");
+            return '/cake-admin/admin/upload/action';    /* 这里填上你自己的上传图片的接口地址 */
+        } else {
+            return this._bkGetActionUrl.call(this, action);
+        }
+    };
+
+    $("#banner_pic").takungaeImgup({
+        formData: {},
+        url:"/cake-admin/admin/upload/uploadFile.do" //上传路径
+    });
 });
 
 var vm = new Vue({
@@ -55,8 +93,24 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		product: {}
+		product: {},
+        cateList:[],
+        shopList:[],
+        bannerArr:['/cake-admin/statics/img/a11.png']
 	},
+    // created: function(){
+    //     //如果没有这句代码，select中初始化会是空白的，默认选中就无法实现
+    //     if(JSON.stringify(this.product) === '{}'){
+    //         this.product.productCateid = -1;
+    //     }else{
+    //         this.product = this.cateList[0].id;
+    //     }
+    // },
+    mounted: function(){
+        var that = this;
+        that.getCateList();
+        that.getShopList();
+    },
 	methods: {
 		query: function () {
 			vm.reload();
@@ -79,6 +133,25 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.product.id == null ? "sys/product/save" : "sys/product/update";
+
+                var content = "";
+                ue.ready(function () {
+                    content = ue.getContent();
+                });
+
+                vm.product.productInfo = content;
+
+                var banner_imgs = [];
+                var banner_imgsObj = $(".banner img[class='up-img']");
+                var banner_imgsLen=banner_imgsObj.length;
+                for(var i=0;i<banner_imgsLen;i++){
+                    var bannersPath=banner_imgsObj[i].src;
+                    banner_imgs.push(bannersPath);
+                }
+                vm.product.productBanner = banner_imgs.toString();
+
+                vm.product.productImg = $("#imgProDetail100").attr("src");
+
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
@@ -131,8 +204,28 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get(baseURL + "sys/product/info/"+id, function(r){
                 vm.product = r.product;
+                vm.bannerArr = r.bannerArr;
             });
 		},
+        getCateList: function (event) {
+            $.get(baseURL + "sys/productcategory/findAll", function(r){
+                vm.cateList = r.arrayData;
+            });
+        },
+        getShopList: function(e){
+            $.get(baseURL + "sys/shop/all", function(r){
+                vm.shopList = r.arrayData;
+            });
+        },
+        checkType: function (e) {
+            var lev = e.target.dataset.lev;
+            console.log(e)
+            console.log("改变事件" + lev)
+            if(lev === 0){
+                $(this).val(-1);
+                layer.msg("不能选择一级目录！",{icon:7,time:3000})
+            }
+        },
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
@@ -142,3 +235,6 @@ var vm = new Vue({
 		}
 	}
 });
+
+
+

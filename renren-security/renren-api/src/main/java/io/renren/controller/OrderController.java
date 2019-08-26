@@ -63,6 +63,5 @@ public class OrderController {
         return R.ok().put("arrayData",sendTimeEntityList);
     }
 
-    @GetMapping("getPay")
-    @ApiOperation(value = "获取配送时间接口")
+    // todo 计算订单接口
 }

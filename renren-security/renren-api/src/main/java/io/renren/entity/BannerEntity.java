@@ -2,6 +2,8 @@ package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,6 +18,7 @@ import java.util.Date;
  */
 @Data
 @TableName("tb_banner")
+@ApiModel(value = "banner实体")
 public class BannerEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,10 +30,12 @@ public class BannerEntity implements Serializable {
 	/**
 	 * 图片地址
 	 */
+	@ApiModelProperty(value = "图片地址",required = true)
 	private String bannerPic;
 	/**
 	 * 跳转地址
 	 */
+	@ApiModelProperty(value = "跳转地址",required = true)
 	private String linkUrl;
 	/**
 	 * 展示位置 0：首页

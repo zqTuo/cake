@@ -3,6 +3,10 @@
 <head>
     <title>商品表</title>
 		<#include "/header.html">
+    <!--都是图片上传的css-->
+    <link href="${request.contextPath}/statics/libs/imgUp/common.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/index.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -22,126 +26,164 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品名称</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productName" placeholder="商品名称"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品类型ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productCateid" placeholder="商品类型ID"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品售价</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productPrice" placeholder="商品售价"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品规格价格区间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productPriceRegion" placeholder="商品规格价格区间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品原价</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productOrigin" placeholder="商品原价"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品SKU，主要是为了匹配美团套餐</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productSku" placeholder="商品SKU，主要是为了匹配美团套餐"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品主图</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productImg" placeholder="商品主图"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品视频</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productVideo" placeholder="商品视频"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品副图</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productBanner" placeholder="商品副图"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品描述</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productDesc" placeholder="商品描述"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品详情HTML代码</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productInfo" placeholder="商品详情HTML代码"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品状态 0：下架 1：上架</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productFlag" placeholder="商品状态 0：下架 1：上架"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">热销标记(展示在首页) 0：不推荐 1：推荐</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productHot" placeholder="热销标记(展示在首页) 0：不推荐 1：推荐"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">加购标记 0：不设为加购 1：设为加购</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.productExtra" placeholder="加购标记 0：不设为加购 1：设为加购"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">所属门店</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.shopId" placeholder="所属门店"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="product.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品名称</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productName" placeholder="商品名称"/>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品类型</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="product.productCateid" @change="checkType($event)">
+                    <option :value="-1" selected >请选择类型</option>
+                    <option :value="item.id" v-for="(item,index) in cateList" :key="index" :data-lev="item.lev">{{item.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品售价</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productPrice" placeholder="商品售价"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">价格区间</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productPriceRegion" placeholder="商品规格价格区间，如: ￥199.00-￥299.00"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品原价</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productOrigin" placeholder="商品原价"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品SKU</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productSku" placeholder="商品SKU，匹配美团套餐，格式：#11"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品状态</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="product.productFlag">
+                    <option :value="1" selected >上架</option>
+                    <option :value="0" >下架</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">热销标记(展示在首页)</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="product.productHot">
+                    <option :value="0" selected>不推荐</option>
+                    <option :value="1" >推荐</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">加购标记</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="product.productExtra">
+                    <option :value="0" selected>不设为加购</option>
+                    <option :value="1" >设为加购商品</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">所属门店</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="product.shopId">
+                    <option :value="item.id" v-for="(item,index) in shopList" :key="index">{{item.shopName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品主图</div>
+            <div class="col-sm-10">
+                <div class="proDetailPic" style="width:230px;">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                            <div id="preview1" style="width: 190px;height: 180px;">
+                                <img id="imgProDetail100" border="0" :src="product.productImg != '' && product.productImg != undefined ? product.productImg : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg100').click();">
+                            </div>
+                            <input type="file" onchange="onePicUpLoad(this,100,190,180)" style="display: none;" id="previewImg100">
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品视频</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productVideo" placeholder="商品视频"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品副图</div>
+            <div class="col-sm-10">
+                <div class="banner">
+                    <div class="img-box full">
+                        <section class=" img-section">
+                            <div class="z_photo upimg-div clear">
+
+                                <section class="z_file fl" v-for="(item,index) in bannerArr">
+                                    <img :src="item" class="add-img">
+                                    <input type="file" name="file" id="banner_pic" class="file" value=""
+                                           accept="image/jpg,image/jpeg,image/png,image/bmp" multiple/>
+                                </section>
+
+                            </div>
+                        </section>
+                    </div>
+                    <aside class="mask works-mask">
+                        <div class="mask-content">
+                            <p class="del-p">您确定要删除该图片吗？</p>
+                            <p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品描述</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="product.productDesc" placeholder="商品描述"/>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品详情</div>
+            <div class="col-sm-10">
+                <div><script id="baseDataEditor" type="text/plain" style="width:100%;height:400px;"></script></div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
 </div>
 
-<script src="${request.contextPath}/statics/js/modules/sys/product.js?_${.now?long}"></script>
+<script type="text/javascript" src="${request.contextPath}/statics/libs/ueditor/1.4.3/ueditor.config.js?_${.now?long}"></script>
+<script type="text/javascript" src="${request.contextPath}/statics/libs/ueditor/1.4.3/ueditor.all.js?_${.now?long}"></script>
+<script type="text/javascript" src="${request.contextPath}/statics/libs/ueditor/1.4.3/lang/zh-cn/zh-cn.js?_${.now?long}"></script>
+<!--单图上传js-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgUp.js?_${.now?long}"></script>
+<!--多图上传js-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgPlugin.js?_${.now?long}"></script>
+
+<script type="text/javascript" src="${request.contextPath}/statics/js/modules/sys/product.js?_${.now?long}"></script>
 </body>
 </html>

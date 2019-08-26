@@ -15,14 +15,16 @@
     </resultMap>
 
     <resultMap id="ProCateMap" type="io.renren.dto.CategoryDto" autoMapping="true">
+        <id property="id" column="id"/>
         <collection property="categoryList" ofType="io.renren.dto.ProductCateDto" autoMapping="true">
-            <result property="id" column="id"/>
+            <id property="id" column="cid"/>
         </collection>
     </resultMap>
     <select id="getProCateData" resultMap="ProCateMap">
-        select c.category_name as parentName, c1.id,c1.category_name
+        select c.id,c.category_name as parentName, c1.id as cid,c1.category_name
                from tb_product_category c
                 left join tb_product_category c1 on c.id=c1.category_parentid
+        where c.category_parentid=0
         order by c.id,c1.id
     </select>
 

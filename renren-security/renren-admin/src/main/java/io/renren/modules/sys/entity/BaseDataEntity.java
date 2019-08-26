@@ -25,7 +25,13 @@ public class BaseDataEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 配置类型 0：首页菜单icon
+	 * 配置类型
+	 * 	0：首页菜单icon
+	 * 	{"cake":{"title":"生日蛋糕","icon":"http://cake.maojimall.com/images/cake.png"},
+	 * 	"tea":{"title":"元气下午茶","icon":"http://cake.maojimall.com/images/tea.png"},
+	 * 	 "hot":{"title":"人气推荐","icon":"http://cake.maojimall.com/images/hot.png"},
+	 * 	 "meituan":{"title":"使用美团/大众点评券","icon":"http://cake.maojimall.com/images/meituan.png"}
+	 * 	 }
 	 */
 	private Integer sourceType;
 	/**

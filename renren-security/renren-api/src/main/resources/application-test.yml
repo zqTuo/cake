@@ -36,7 +36,7 @@ spring:
     database: 0
     host: localhost
     port: 6379
-    password:      # 密码（默认为空）
+    password: cake!5149330      # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:
@@ -45,11 +45,11 @@ spring:
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
 
-# 项目配置
+# 项目配置 http://test.zuoyanglife.com
 project:
-  url_pre: http://test.zuoyanglife.com
-  pic_pre: http://test.zuoyanglife.com/images/
-  video_pre: http://test.zuoyanglife.com/mv/
+  url_pre: http://cake.maojimall.com
+  pic_pre: http://cake.maojimall.com/images/
+  video_pre: http://cake.maojimall.com/mv/
 
 # 微信公众号
 weCat:
@@ -59,3 +59,9 @@ weCat:
   userInfoUrl: https://api.weixin.qq.com/sns/userinfo
   accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
   ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+
+  # 百度地图
+baiduMap:
+  ak: SoQCCsGE9S8ILEvx1HCtV8S6oS4PYYXA
+  locationUrl: http://api.map.baidu.com/place/v2/search
+  distanceUrl: http://api.map.baidu.com/routematrix/v2/driving

@@ -6,7 +6,7 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '分类名称', name: 'categoryName', index: 'category_name', width: 80 }, 			
 			{ label: '父类ID', name: 'categoryParentid', index: 'category_parentid', width: 80 }, 			
-			{ label: '分类状态 0：禁用 1：启用', name: 'categoryFlag', index: 'category_flag', width: 80 }, 			
+			{ label: '状态', name: 'categoryFlag', index: 'category_flag', width: 80 },
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			

@@ -64,6 +64,7 @@ project:
   url_pre: http://localhost
   pic_pre: http://localhost/images/
   video_pre: http://localhost/mv/
+  uploadFilePath: D:/picImage/
 
 # 微信公众号
 weCat:
