@@ -132,12 +132,20 @@
                         <section class=" img-section">
                             <div class="z_photo upimg-div clear">
 
-                                <section class="z_file fl" v-for="(item,index) in bannerArr">
-                                    <img :src="item" class="add-img">
+                                <section class="up-section fl" v-for="(item,index) in bannerArr">
+                                    <span class="up-span imgIndex"></span>
+                                    <img class="close-upimg" src="/cake-admin/statics/img/a7.png">
+                                    <img class="up-img" :src="item">
+                                    <p class="img-name-p"></p>
+                                    <input class="prod_img" name="prod_img" value="" type="hidden">
+                                    <input class="ban_img" name="ban_img" value="" type="hidden">
+                                </section>
+
+                                <section class="z_file fl">
+                                    <img src="/cake-admin/statics/img/a11.png" class="add-img">
                                     <input type="file" name="file" id="banner_pic" class="file" value=""
                                            accept="image/jpg,image/jpeg,image/png,image/bmp" multiple/>
                                 </section>
-
                             </div>
                         </section>
                     </div>

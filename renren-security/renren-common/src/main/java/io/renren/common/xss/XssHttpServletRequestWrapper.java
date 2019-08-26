@@ -55,8 +55,14 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             return super.getInputStream();
         }
 
-        //xss过滤
-        json = xssEncode(json);
+        //无需 过滤
+        if(orgRequest.getHeader("auth") == null || !"ueditor".equals(orgRequest.getHeader("auth"))){
+            //xss html 过滤
+            json = xssEncode(json);
+        }
+
+
+
         final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
         return new ServletInputStream() {
             @Override
