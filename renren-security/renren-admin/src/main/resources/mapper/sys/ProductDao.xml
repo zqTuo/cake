@@ -26,5 +26,11 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="findByPage" resultType="io.renren.modules.sys.dto.ProductDto">
+        select p.*,c.category_name,s.shop_name
+        from tb_product p left join tb_product_category c on p.product_cateid=c.id
+        left join tb_shop s on p.shop_id=s.id
+    </select>
+
 
 </mapper>

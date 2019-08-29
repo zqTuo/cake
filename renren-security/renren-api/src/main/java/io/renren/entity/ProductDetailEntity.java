@@ -48,10 +48,18 @@ public class ProductDetailEntity implements Serializable {
 	 */
 	private String detailSize;
 	/**
+	 * 尺寸ID
+	 */
+	private Long sizeId;
+	/**
 	 * 商品口味
 	 * {"taste":"标准口味","extraPrice":"20","flag":1}
 	 */
 	private String detailTaste;
+	/**
+	 * 口味ID
+	 */
+	private Long tasteId;
 	/**
 	 * 创建时间
 	 */

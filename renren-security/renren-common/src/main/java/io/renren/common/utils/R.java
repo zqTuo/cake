@@ -8,6 +8,10 @@
 
 package io.renren.common.utils;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +22,7 @@ import java.util.Map;
  */
 public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
-	
+
 	public R() {
 		put("code", 0);
 		put("msg", "success");

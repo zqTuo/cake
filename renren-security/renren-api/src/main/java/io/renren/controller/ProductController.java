@@ -2,26 +2,25 @@ package io.renren.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.renren.common.utils.R;
+import io.renren.common.result.Result;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.dto.CategoryDto;
 import io.renren.dto.ProductDto;
+import io.renren.dto.ProductInfoDetailDto;
+import io.renren.dto.ProductInfoDto;
 import io.renren.entity.ProductDetailEntity;
 import io.renren.entity.ProductEntity;
+import io.renren.entity.ProductSizeEntity;
+import io.renren.entity.ProductTasteEntity;
 import io.renren.form.PageForm;
-import io.renren.service.ProductCategoryService;
-import io.renren.service.ProductDetailService;
-import io.renren.service.ProductService;
+import io.renren.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -43,6 +42,10 @@ public class ProductController {
     private ProductService productService;
     @Resource
     private ProductDetailService productDetailService;
+    @Resource
+    private ProductSizeService productSizeService;
+    @Resource
+    private ProductTasteService productTasteService;
 
     @Value("${project.pic_pre}")
     private String pic_pre;
@@ -51,14 +54,14 @@ public class ProductController {
 
     @GetMapping("cateInfo")
     @ApiOperation(value = "获取商品分类数据接口")
-    public R cateInfo(){
+    public Result<CategoryDto> cateInfo(){
         List<CategoryDto> categoryDtoList = productCategoryService.getProCateData();
-        return R.ok().put("arrayData",categoryDtoList);
+        return new Result<>().ok(categoryDtoList);
     }
 
-    @GetMapping("proInfo")
+    @PostMapping("proInfo")
     @ApiOperation(value = "获取商品数据接口")
-    public R proInfo(@RequestBody PageForm form){
+    public Result<ProductDto> proInfo(@RequestBody PageForm form){
         ValidatorUtils.validateEntity(form);
 
         form.setPageNo(form.getPageNo() > 0 ? (form.getPageNo()-1) * form.getPageSize() : 0);
@@ -68,74 +71,63 @@ public class ProductController {
         for (ProductDto productDto:productDtoList){
             productDto.setProductImg(pic_pre + productDto.getProductImg());
         }
-        return R.ok().put("arrayData",productDtoList);
+        return new Result<>().ok(productDtoList);
     }
 
     @GetMapping("productInfo")
-    @ApiOperation(value = "获取商品详情接口")
-    public R productInfo(@RequestBody @ApiParam(value = "商品ID",required = true)long id){
+    @ApiOperation(value = "获取商品详情接口",notes = "选择规格时，通过sizeId,tasteId在商品详情列表中匹配二者皆相等的数据，该数据的id为商品详情ID")
+    public Result<ProductInfoDto> productInfo(@RequestParam("id") @ApiParam(value = "商品ID",required = true)long id){
         ProductEntity productEntity = productService.getById(id);
 
         productEntity.setProductImg(pic_pre + productEntity.getProductImg());
+
+        String[] bannerArr = productEntity.getProductBanner().split(",");
+        for (int i = 0; i < bannerArr.length; i++) {
+            if(!bannerArr[i].equals("")){
+                bannerArr[i] = pic_pre + bannerArr[i];
+            }
+        }
 
         if(StringUtils.isNotBlank(productEntity.getProductVideo())){
             productEntity.setProductVideo(video_pre + productEntity.getProductVideo());
         }
 
         try {
-            List<ProductDetailEntity> productDetailEntityList = productDetailService.list(new QueryWrapper<ProductDetailEntity>().eq("product_id",id));
+            List<ProductInfoDetailDto> productDetailEntityList = productDetailService.getByProductId(id);
 
-            Set<JSONObject> sizeArr = new HashSet<>(); // 所有尺寸列表 [{"size":"6寸","extraPrice":"20","flag":1,"id":1}]
-            Set<JSONObject> tasteArr = new HashSet<>(); // 所有口味列表 [{"taste":"标准口味","extraPrice":"20","flag":1,"id":1}]
-            JSONObject price = new JSONObject(); // 尺寸、口味对应对象 格式{"id_id":{"price":11,"detailId":1}}
+            List<ProductSizeEntity> sizeArr = productSizeService.list(new QueryWrapper<ProductSizeEntity>()
+                    .eq("product_id",id).orderByAsc("id"));
 
-            for (ProductDetailEntity productDetailEntity:productDetailEntityList){
-                productDetailEntity.setDetailCover(pic_pre + productDetailEntity.getDetailCover());
+            List<ProductTasteEntity> tasteArr = productTasteService.list(new QueryWrapper<ProductTasteEntity>()
+                    .eq("product_id",id).orderByAsc("id"));
 
-                JSONObject size = JSONObject.parseObject(productDetailEntity.getDetailSize());
-                size.put("id",productDetailEntity.getId());
-                sizeArr.add(size);
 
-                JSONObject taste = JSONObject.parseObject(productDetailEntity.getDetailTaste());
-                taste.put("id",productDetailEntity.getId());
-                tasteArr.add(taste);
-
-                StringBuilder key = new StringBuilder(productDetailEntity.getId() + "_");
-                for (ProductDetailEntity detailEntity:productDetailEntityList){
-                    key.append(detailEntity.getId());
-                    if(!price.containsKey(key.toString())){
-                        JSONObject productDetail = new JSONObject();
-                        productDetail.put("price",detailEntity.getDetailPrice());
-                        productDetail.put("detailId",detailEntity.getId());
-                        price.put(String.valueOf(key),productDetail);
-                    }
-                }
+            for (ProductInfoDetailDto productInfoDto:productDetailEntityList){
+                productInfoDto.setDetailCover(pic_pre + productInfoDto.getDetailCover());
             }
 
             ProductDto productDto = new ProductDto();
             BeanUtils.copyProperties(productDto,productEntity);
 
-            Map<String,Object> map = new HashMap<>();
-            map.put("product",productDto);
-            map.put("sizeArr",sizeArr);
-            map.put("tasteArr",tasteArr);
-            map.put("price",price);
+            ProductInfoDto productInfoDto = ProductInfoDto.builder().productDto(productDto)
+                    .sizeList(sizeArr).tasteList(tasteArr).bannerArr(bannerArr)
+                    .detailList(productDetailEntityList).build();
 
-            return R.ok(map);
+            return new Result<>().ok(productInfoDto);
         } catch (Exception e) {
             e.printStackTrace();
-            return R.error(500,"系统错误");
+            return new Result<>().error("系统错误");
         }
     }
 
     @GetMapping("getExtraInfo")
     @ApiOperation(value = "获取加购商品接口")
-    public R getExtraInfo(){
+    public Result<ProductDto> getExtraInfo(){
         List<ProductDto> productDtoList = productService.getExtraInfo();
 
         for (ProductDto productDto:productDtoList){
             productDto.setProductImg(pic_pre + productDto.getProductImg());
         }
-        return R.ok().put("arrayData",productDtoList);
+        return new Result<>().ok(productDtoList);
     }
 }

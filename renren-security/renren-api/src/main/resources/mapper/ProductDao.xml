@@ -32,17 +32,21 @@
         <result property="id" column="id"/>
         <result property="hotTitle" column="hot_title"/>
         <collection property="productList" ofType="io.renren.dto.IndexProductDto" autoMapping="true">
-            <result property="pid" column="id"/>
+            <result property="id" column="pid"/>
         </collection>
     </resultMap>
     <select id="findAllHotColumn" resultMap="HotColumnDtoMap">
         select c.id,c.hot_title,p.id as pid,p.product_name,p.product_price,p.product_img from tb_hot_column c
             left join tb_hot_relation r on c.id=r.hot_id
-            left join tb_product p on r.product_id=p.id order by c.id desc ,p.id desc
+            left join tb_product p on r.product_id=p.id
+            where p.product_flag = 1
+        order by c.id desc ,p.id desc
     </select>
 
     <select id="findProduct" resultType="io.renren.dto.ProductDto">
-        select id,product_name,product_desc,product_price,product_img from tb_product
+        select id,product_name,product_desc,product_price,product_img,product_video,
+               product_banner,product_price_region,product_info
+        from tb_product
         where product_flag = 1 and shop_id = #{form.shopId}
           <if test="form.sourceType == 0">and product_hot = 1</if>
           <if test="form.sourceType == 1">and product_cateid = #{form.cateid} </if>
@@ -52,7 +56,7 @@
 
     <select id="getExtraInfo" resultType="io.renren.dto.ProductDto">
         select id,product_name,product_desc,product_price,product_img from tb_product
-        where product_flag = 1 and product_extra = 1
+        where product_flag = 2 and product_extra = 1
         order by id desc
     </select>
 

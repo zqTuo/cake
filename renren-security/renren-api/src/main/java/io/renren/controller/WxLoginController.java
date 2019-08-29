@@ -19,6 +19,7 @@ import io.renren.service.WxuserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,6 +57,8 @@ public class WxLoginController {
     private String url_pre;
     @Resource
     private WechatConfig wechatConfig;
+    @Resource
+    private AESHelper aesHelper;
 
     @Autowired
     private WxuserService userService;
@@ -64,16 +68,28 @@ public class WxLoginController {
 
     @ApiOperation(value = "请求微信登录")
     @GetMapping("/mallAuth")
-    public String auth() throws IOException {
-        return "redirect:" + getUrl();
+    public String auth(HttpServletRequest request) throws IOException {
+        String url = ServletRequestUtils.getStringParameter(request,"p","");
+        return "redirect:" + getUrl(url);
     }
 
-    private String getUrl() throws UnsupportedEncodingException {
+    private String getUrl(String o_url) throws UnsupportedEncodingException {
         String content = Constant.WECHAT_LOGIN_SALT + DateUtil.getYYYYMMdd();
         MD5 md5 = new MD5();
         String cotent2Aes = md5.toDigest(content);
-
-        String url = URLEncoder.encode(url_pre + "/wx/wxAuthRedirect","UTF-8");
+        if(StringUtils.isNotBlank(o_url)){
+            log.info("原路径：" + o_url);
+            if(o_url.contains("&")){
+                String param = o_url.split("[?]")[1];
+                log.info("原链接参数：" + param);
+                param = aesHelper.AESEncode(param);
+                log.info("原链接参数密文：" + param);
+                o_url = o_url.split("[?]")[0] + "?paramCode=" + URLEncoder.encode(param,"UTF-8");
+                log.info("加密后原链接：" + o_url);
+            }
+            o_url = "?url=" + o_url;
+        }
+        String url = URLEncoder.encode(url_pre + "/cake-api/wx/wxAuthRedirect" + o_url,"UTF-8");
         cotent2Aes = URLEncoder.encode(cotent2Aes,"UTF-8");
         String tourl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wechatConfig.getWeCatAppId() + "&redirect_uri=" + url
                 + "&response_type=code&scope=snsapi_userinfo&state=" + cotent2Aes + "&connect_redirect=1#wechat_redirect";
@@ -89,7 +105,9 @@ public class WxLoginController {
         int unConcern = ServletRequestUtils.getIntParameter(request, "unConcern", 0); //是否关注 0:关注  1：未关注
         String code = ServletRequestUtils.getStringParameter(request, "code", "");//微信返回回调地址带的code
         String state = ServletRequestUtils.getStringParameter(request, "state", "");//微信返回回调地址带的state
+        String url = ServletRequestUtils.getStringParameter(request, "url", "");//微信返回回调地址带的state
 
+        log.info("url是：" + url);
         log.info("state是：" + state);
         log.info("code是：" + code);
         if (org.springframework.util.StringUtils.isEmpty(code) || org.springframework.util.StringUtils.isEmpty(state)) {
@@ -110,7 +128,7 @@ public class WxLoginController {
         //******************** 获取用户个人信息 ************************
 
         JSONObject userinfoJson = getBaseUserInfo(accessToken, openid,unConcern);
-        log.info("获取用户个人信息："+userinfoJson);
+        log.info("获取用户个人信息：" + userinfoJson);
 
         if (!userinfoJson.containsKey("nickname")) {
             log.error("未请求到用户信息：" + userinfoJson);
@@ -127,8 +145,10 @@ public class WxLoginController {
         String ip = HttpUtil.getIpAddr(request);
 
         if (null == user) {
-            user = WxuserEntity.builder().userName(userName).userHead(headimgurl).userMember(0).userUnionid(unionid)
-                    .userLastip(ip).userLastlogintime(new Date()).userState(1).createTime(new Date()).build();
+            user = WxuserEntity.builder().userName(userName).userHead(headimgurl).userMember(0).userOpenid(openid)
+                    .userUnionid(unionid)
+                    .userLastip(ip).userLastlogintime(new Date()).userState(1)
+                    .createTime(new Date()).build();
 
             userService.save(user);
 
@@ -140,19 +160,40 @@ public class WxLoginController {
             userService.updateById(user);
         }
 
-//        SessionUser sessionUser = SessionUser.builder().id(user.getId()).build();
-//        request.getSession().setAttribute("sessionUser", sessionUser);
-
         //获取登录token
         TokenEntity tokenEntity = tokenService.createToken(user.getId());
         String token = tokenEntity.getToken();
         //存入cookie
         Cookie cookie = new Cookie("token",token);
-        cookie.setDomain(url_pre);
+        cookie.setDomain(url_pre.replaceAll("http://","").replaceAll("https://",""));
         cookie.setPath("/");
+        cookie.setMaxAge(36000);
         response.addCookie(cookie);
 
-        return "redirect:" + url_pre;
+        if(StringUtils.isNotBlank(url)){
+            if(user.getUserState() == 0){
+                //黑名单用户
+                log.info("用户："+user.getId()+"已被禁用");
+                response.setContentType("text/plain; charset=utf-8");
+                response.setContentType("text/html; charset=utf-8");
+                response.getWriter().write("   <span style=\"font-size:18px;color:red;\">您已被加入猫迹黑名单！禁止进入！</span>");
+                return "";
+            }
+
+            if(url.contains("paramCode")){
+                String encodeParam = url.split("=")[1];
+                log.info("参数密文：" + encodeParam);
+                encodeParam = aesHelper.AESDecode(encodeParam);
+                log.info("参数明文：" + encodeParam);
+                url = url.split("[?]")[0] + "?" + encodeParam;
+            }
+            log.info("最终跳转地址：" + url);
+            url = URLDecoder.decode(url, "UTF-8");
+        }else{
+            url = url_pre;
+        }
+
+        return "redirect:" + url;
     }
 
     /**

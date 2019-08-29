@@ -9,6 +9,7 @@
         <result property="categoryName" column="category_name"/>
         <result property="categoryParentid" column="category_parentid"/>
         <result property="categoryFlag" column="category_flag"/>
+        <result property="showFlag" column="show_flag"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>
@@ -24,7 +25,7 @@
         select c.id,c.category_name as parentName, c1.id as cid,c1.category_name
                from tb_product_category c
                 left join tb_product_category c1 on c.id=c1.category_parentid
-        where c.category_parentid=0
+        where c.category_parentid=0 and c1.show_flag = 1 and c.show_flag = 1
         order by c.id,c1.id
     </select>
 

@@ -1,6 +1,7 @@
 package io.renren.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,39 +23,43 @@ public class ProductDto {
     /**
      * 商品ID
      */
+    @ApiModelProperty(value = "商品ID",required = true,example = "1")
     private long id;
     /**
      * 商品名称
      */
+    @ApiModelProperty(value = "商品名称",required = true)
     private String productName;
     /**
      * 商品描述
      */
+    @ApiModelProperty(value = "商品描述",required = true)
     private String productDesc;
 
     /**
      * 商品售价
      */
+    @ApiModelProperty(value = "商品售价",required = true)
     private BigDecimal productPrice;
 
     /**
      * 商品主图
      */
+    @ApiModelProperty(value = "商品主图",required = true)
     private String productImg;
     /**
      * 商品视频
      */
+    @ApiModelProperty(value = "商品视频，若有需要放在副图之前展示")
     private String productVideo;
-    /**
-     * 商品副图
-     */
-    private String productBanner;
     /**
      * 商品规格价格区间
      */
+    @ApiModelProperty(value = "商品规格价格区间",required = true)
     private String productPriceRegion;
     /**
      * 商品详情HTML代码
      */
+    @ApiModelProperty(value = "商品详情html代码",required = true)
     private String productInfo;
 }

@@ -17,17 +17,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 @ApiModel(value = "地址表单")
 public class SendTimeForm {
-    @ApiModelProperty(value = "省份",required = true)
-    @NotBlank(message = "请选择派送省份")
-    private String province;
 
     @ApiModelProperty(value = "城市",required = true)
     @NotBlank(message = "请选择派送城市")
     private String city;
-
-    @ApiModelProperty(value = "地区",required = true)
-    @NotBlank(message = "请选择派送地区")
-    private String district;
 
     @ApiModelProperty(value = "详细地址",required = true)
     @NotBlank(message = "请选择派送详细地址")
@@ -37,7 +30,7 @@ public class SendTimeForm {
     @NotBlank(message = "请选择时间")
     private String selectedDate;
 
-    @ApiModelProperty(value = "店铺ID",required = true)
+    @ApiModelProperty(value = "店铺ID",required = true,example = "1")
     @Min(value = 1,message = "请传入店铺ID")
     private long shopId;
 }

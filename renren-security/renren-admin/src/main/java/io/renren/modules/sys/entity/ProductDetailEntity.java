@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class ProductDetailEntity implements Serializable {
 	/**
 	 * 商品规格图片
 	 */
+	@NotBlank(message = "商品规格图片不能为空")
 	private String detailCover;
 	/**
 	 * 商品规格名称
@@ -46,9 +48,17 @@ public class ProductDetailEntity implements Serializable {
 	 */
 	private String detailSize;
 	/**
+	 * 尺寸ID
+	 */
+	private Long sizeId;
+	/**
 	 * 商品口味
 	 */
 	private String detailTaste;
+	/**
+	 * 口味ID
+	 */
+	private Long tasteId;
 	/**
 	 * 创建时间
 	 */

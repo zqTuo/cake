@@ -37,6 +37,10 @@ public class ProductCategoryEntity implements Serializable {
 	 */
 	private Integer categoryFlag;
 	/**
+	 * 首页是否展示 0：不展示 1：展示
+	 */
+	private Integer showFlag;
+	/**
 	 * 创建时间
 	 */
 	private Date createTime;

@@ -43,7 +43,7 @@ public class ProductController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:product:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = productService.queryPage(params);
+        PageUtils page = productService.findByPage(params);
 
         return R.ok().put("page", page);
     }

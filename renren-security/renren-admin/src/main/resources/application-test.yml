@@ -45,11 +45,11 @@ spring:
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
 
-# 项目配置
+# 项目配置 http://test.zuoyanglife.com
 project:
-  url_pre: http://localhost
-  pic_pre: http://localhost/images/
-  video_pre: http://localhost/mv/
+  url_pre: http://cake.maojimall.com
+  pic_pre: http://cake.maojimall.com/images/
+  video_pre: http://cake.maojimall.com/mv/
   uploadFilePath: /home/test/images/
 
 # 微信公众号

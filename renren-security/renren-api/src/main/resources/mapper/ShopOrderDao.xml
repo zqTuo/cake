@@ -33,11 +33,42 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <resultMap id="OrderDtoMap" type="io.renren.dto.OrderDto" autoMapping="true">
+        <id property="id" column="id" />
+        <collection property="orderItemList" ofType="io.renren.dto.OrderItemDto" autoMapping="true">
+            <id property="id" column="oid" />
+        </collection>
+    </resultMap>
+
 
     <select id="countToday" resultType="int">
         select count(*) from tb_shop_order where order_state > 0
-        and date_format(send_time,'%y-%m-%d %H:%m') >= #{startTime}
-        and date_format(send_time,'%y-%m-%d %H:%m') <![CDATA[<]]> #{endTime}
+        and date_format(send_time,'%Y-%m-%d %H:%m') >= #{startTime}
+        and date_format(send_time,'%Y-%m-%d %H:%m') <![CDATA[<]]> #{endTime}
+    </select>
+
+    <select id="findMyOrder" resultMap="OrderDtoMap">
+        select o.id,o.order_no,o.order_state,date_format(o.create_time,'%Y/%m/%d %H:%m') as create_time,o.order_price,
+               ot.id as oid,ot.detail_cover,ot.product_name,ot.product_id
+        from tb_shop_order o
+            left join tb_shop_order_item ot on o.order_no=ot.order_no
+        where o.user_id=#{userid}
+        <if test="form.orderState == 0">and o.order_state = -1</if>
+        <if test="form.orderState == 1">and o.order_state = 1 and o.order_source_type = 0</if>
+        <if test="form.orderState == 2">and o.order_state = 1 and o.order_source_type = 1</if>
+        <if test="form.orderState == 3">and o.order_state = 3</if>
+        limit #{form.pageNo} ,#{form.pageSize}
+    </select>
+
+    <select id="findByOrderNo" resultMap="OrderDtoMap">
+        select o.id,o.order_no,o.order_state,date_format(o.create_time,'%Y.%m.%d') as create_time,
+               o.order_price,o.order_discount,o.order_remark,date_format(o.send_time,'%Y.%m.%d %H:%m') as send_time,
+               date_format(o.finish_time,'%Y.%m.%d %H:%m') as finish_time,
+               ot.id as oid,ot.detail_cover,ot.product_name,ot.product_id,ot.product_desc,
+                ot.detail_size,ot.detail_taste
+        from tb_shop_order o
+                 left join tb_shop_order_item ot on o.order_no=ot.order_no
+        where o.order_no=#{orderNo}
     </select>
 
 

@@ -49,12 +49,30 @@ create table tb_product_detail(
   product_id bigint(20) not null default 0 comment '所属商品ID',
   detail_price decimal(11,2) not null default 0 comment '商品规格价格',
   detail_size varchar(100) not null default '' comment '商品尺寸',
+  size_id bigint(11) not null default 0 comment '尺寸id',
   detail_taste varchar(100) not null default '' comment '商品口味',
+  taste_id bigint(11) not null default 0 comment '口味id',
   create_time datetime not null COMMENT '创建时间',
   update_time datetime COMMENT '修改时间',
   update_by VARCHAR(100) default '' comment '修改管理员',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品详情表';
+
+-- 商品尺寸表
+create table tb_product_size(
+    id bigint(11) auto_increment,
+    title varchar(100) not null default '' comment '标题',
+    product_id bigint(11) not null default 0 comment '商品ID',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品尺寸表';
+
+-- 商品口味表
+create table tb_product_taste(
+    id bigint(11) auto_increment,
+    title varchar(100) not null default '' comment '标题',
+    product_id bigint(11) not null default 0 comment '商品ID',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品口味表';
 
 -- 商品种类表
 create table tb_product_category(
@@ -62,6 +80,7 @@ create table tb_product_category(
   category_name varchar(100) not null default '' comment '分类名称',
   category_parentid bigint(20) not null default 0 comment '父类ID',
   category_flag int not null default 1 comment '分类状态 0：禁用 1：启用',
+  showFlag int not null default 0 comment '首页是否展示 0：不展示 1：展示 ',
   create_time datetime not null COMMENT '创建时间',
   update_time datetime COMMENT '修改时间',
   update_by VARCHAR(100) default '' comment '修改管理员',
@@ -87,7 +106,7 @@ create table tb_shop_order(
     addr_receiver varchar(100) default '' comment '收货人',
     send_type int not null default 0 comment '配送方式 0：送货上门 1：门店自取',
     addr_phone varchar(20) default '' comment '联系方式',
-    send_time datetime comment '派送时间',
+    send_time varchar(100) not null comment '派送时间',
     create_time datetime not null COMMENT '创建时间',
     pay_time datetime comment '支付时间',
     pay_type int default 0 comment '支付方式 0：微信支付',
@@ -128,6 +147,7 @@ create table tb_shopping_cart(
   detail_size varchar(100) not null default '' comment '商品尺寸',
   detail_taste varchar(100) not null default '' comment '商品口味',
   buy_num int not null default 1 comment '购买数量',
+  remark varchar(200) default '' comment '寄语',
   create_time datetime not null COMMENT '创建时间',
   update_time datetime COMMENT '修改时间',
   primary key (id)
@@ -139,7 +159,7 @@ create table tb_coupon(
   coupon_name varchar(200) not null default '' comment '优惠券名称',
   coupon_price decimal(11,2) not null default 0 comment '触发价格',
   price decimal(11,2) not null default 0 comment '优惠金额',
-  coupon_type int not null default 0 comment '优惠券类型 0：商品优惠券 1：课程优惠券',
+  coupon_type int not null default 0 comment '优惠券类型 0：商品优惠券 1：单次体验课程优惠券 2：会员套餐课程优惠券',
   start_time datetime comment '开始时间',
   end_time datetime comment '截止时间',
   date_flag int not null default 0 comment '是否限时 0：不限时 1:限时',
@@ -257,6 +277,20 @@ create table tb_address(
     defaultFlag int not null default 0 comment '默认地址 0：否 1：是',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
+
+-- 流水表
+create table tb_order_sales(
+    id bigint(20) auto_increment,
+    user_id bigint(20) not null default 0 comment '用户ID',
+    order_no varchar(200) not null default '' comment '订单编号',
+    order_price decimal(11,2) not null default 0 comment '订单金额',
+    order_discount decimal(11,2) not null default 0 comment '优惠金额',
+    source_type int(2) not null default 0 comment '业务类型 0：蛋糕订购 1：预约烘焙课程 2:购买会员 3:退款',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='财务流水表';
 
 
 

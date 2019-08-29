@@ -2,6 +2,7 @@ package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
  */
 @Data
 @TableName("tb_shop_order_item")
+@Builder
 public class ShopOrderItemEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +34,10 @@ public class ShopOrderItemEntity implements Serializable {
 	 * 商品名称
 	 */
 	private String productName;
+	/**
+	 * 商品描述
+	 */
+	private String productDesc;
 	/**
 	 * 商品ID
 	 */

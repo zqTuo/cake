@@ -1,5 +1,6 @@
 package io.renren.controller;
 
+import io.renren.annotation.Login;
 import io.renren.common.utils.R;
 import io.renren.common.config.WechatConfig;
 import io.renren.entity.JsWechatConfig;
@@ -34,7 +35,7 @@ public class WxTicketController {
     @Resource
     private WechatAuthService wechatAuthService;
 
-//    @Login
+    @Login
     @GetMapping("/getTicket")
     @ApiOperation(value = "获取微信票据接口",response = JsWechatConfig.class)
     public R getTicket(HttpServletRequest request){

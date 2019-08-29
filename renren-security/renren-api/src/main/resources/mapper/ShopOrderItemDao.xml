@@ -8,6 +8,7 @@
         <result property="id" column="id"/>
         <result property="orderNo" column="order_no"/>
         <result property="productName" column="product_name"/>
+        <result property="productDesc" column="product_desc"/>
         <result property="productId" column="product_id"/>
         <result property="detailCover" column="detail_cover"/>
         <result property="detailPrice" column="detail_price"/>

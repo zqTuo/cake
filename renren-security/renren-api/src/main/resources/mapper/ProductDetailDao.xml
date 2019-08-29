@@ -10,13 +10,39 @@
         <result property="detailName" column="detail_name"/>
         <result property="productId" column="product_id"/>
         <result property="detailPrice" column="detail_price"/>
-        <result property="detailPriceRegion" column="detail_price_region"/>
         <result property="detailSize" column="detail_size"/>
         <result property="detailTaste" column="detail_taste"/>
+        <result property="sizeId" column="size_id"/>
+        <result property="tasteId" column="taste_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>
     </resultMap>
+
+    <select id="countExtraPrice" resultType="java.math.BigDecimal">
+        select sum(detail_price) from tb_product_detail where id in
+        <foreach collection="idArr" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findPayInfo" resultType="io.renren.dto.ProductDetailDto">
+        select pd.id,pd.product_id,p.product_name,pd.detail_cover,pd.detail_price,pd.detail_size,
+               pd.detail_taste,p.product_flag
+        from tb_product_detail pd left join tb_product p on pd.product_id=p.id
+        where pd.id=#{detailId}
+    </select>
+
+    <select id="getByIds" resultMap="productDetailMap">
+        select * from tb_product_detail where id in
+        <foreach collection="idArr" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getByProductId" resultType="io.renren.dto.ProductInfoDetailDto">
+        select * from tb_product_detail where product_id=#{id}
+    </select>
 
 
 </mapper>

@@ -92,7 +92,7 @@ public class ShopOrderEntity implements Serializable {
 	/**
 	 * 派送时间
 	 */
-	private Date sendTime;
+	private String sendTime;
 	/**
 	 * 创建时间
 	 */

@@ -7,6 +7,8 @@
     <link href="${request.contextPath}/statics/libs/imgUp/common.css" type="text/css" rel="stylesheet"/>
     <link href="${request.contextPath}/statics/libs/imgUp/index.css" type="text/css" rel="stylesheet"/>
     <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
+    <!--产品展示-->
+    <link rel="stylesheet" href="${request.contextPath}/statics/libs/productShow/css/shouye.css">
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -28,7 +30,12 @@
 
 <div v-show="!showList" class="panel panel-default">
     <div class="panel-heading">{{title}}</div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" style="width: 798px">
+        <div class="form-group">
+            <div class="f_l black-div"></div>
+            <span class="f_l basic-data">基本信息</span>
+        </div>
+
         <div class="form-group">
             <div class="col-sm-2 control-label">商品名称</div>
             <div class="col-sm-10">
@@ -65,7 +72,7 @@
         <div class="form-group">
             <div class="col-sm-2 control-label">商品SKU</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="product.productSku" placeholder="商品SKU，匹配美团套餐，格式：#11"/>
+                <input type="text" class="form-control" v-model="product.productSku" placeholder="商品SKU，匹配美团套餐，规则：#开头，加上数字/英文，以#结尾"/>
             </div>
         </div>
         <div class="form-group">
@@ -73,6 +80,7 @@
             <div class="col-sm-10">
                 <select class="form-control" v-model="product.productFlag">
                     <option :value="1" selected >上架</option>
+                    <option :value="2">上架但不显示</option>
                     <option :value="0" >下架</option>
                 </select>
             </div>
@@ -103,6 +111,12 @@
                 </select>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="f_l black-div"></div>
+            <span class="f_l basic-data">图片与视频</span>
+        </div>
+
         <div class="form-group">
             <div class="col-sm-2 control-label">商品主图</div>
             <div class="col-sm-10">
@@ -158,14 +172,65 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
-            <div class="col-sm-2 control-label">商品描述</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="product.productDesc" placeholder="商品描述"/>
+            <div class="f_l black-div"></div>
+            <span class="f_l basic-data">产品属性</span>
+        </div>
+
+        <div class="form-group">
+            <a class="btn btn-primary radius" @click="prodetail_addOrUpdate('添加产品规格','modules/sys/productdetail.html','900','760')" href="javascript:;" style="margin-left: 159px;color: #fff">
+                <i class="fa fa-plus"></i> 添加产品规格
+            </a>
+            <div class="Xcontent" style="display: none;">
+                <ul class="Xcontent01">
+                    <!-- 展示大图 -->
+                    <div class="Xcontent06"><img src="" /></div>
+                    <!-- 右侧小图 -->
+                    <ol class="Xcontent08">
+
+                    </ol>
+                    <!-- 产品属性 -->
+                    <ol class="Xcontent13">
+                        <div class="Xcontent14"><a href="#"><p></p></a></div>
+                        <div class="Xcontent15"><img src="/cake-admin/statics/libs/productShow/img/X11.png"></div>
+                        <div class="Xcontent16"><p></p></div>
+                        <div class="Xcontent17">
+                            <p class="Xcontent18">售价</p>
+                            <p class="Xcontent19">￥<span>69.00</span></p>
+                        </div>
+<!--                        <div class="Xcontent26">-->
+<!--                            <p class="title">商品SKU：</p>-->
+<!--                            <p class="text pdsku"></p>-->
+<!--                        </div>-->
+                        <div class="Xcontent26">
+                            <p class="title">尺寸：</p>
+                            <p class="text pdsize"></p>
+                        </div>
+                        <div class="Xcontent26">
+                            <p class="title">口味：</p>
+                            <p class="text pdtaste"></p>
+                        </div>
+
+
+                        <div class="Xcontent34"><a href="javascript:;" @click="prodetail_addOrUpdate('修改产品规格','sys/productdetail/productdetail.html','900','760')"><img style="border: 1px solid #000;" src="/cake-admin/statics/libs/productShow/img/X17.png"></a></div>
+                        <div class="Xcontent35"><a href="javascript:;" class="delProdetail"><img src="/cake-admin/statics/libs/productShow/img/X18.png"></a></div>
+                    </ol>
+                </ul>
             </div>
         </div>
 
+        <div class="form-group">
+            <div class="f_l black-div"></div>
+            <span class="f_l basic-data">商品描述信息</span>
+        </div>
 
+        <div class="form-group">
+            <div class="col-sm-2 control-label">商品描述</div>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" v-model="product.productDesc" placeholder="商品描述"></textarea>
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-sm-2 control-label">商品详情</div>
@@ -191,6 +256,8 @@
 <script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgUp.js?_${.now?long}"></script>
 <!--多图上传js-->
 <script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgPlugin.js?_${.now?long}"></script>
+<!--产品展示-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/productShow/js/modernizr-custom-v2.7.1.min.js?_${.now?long}"></script>
 
 <script type="text/javascript" src="${request.contextPath}/statics/js/modules/sys/product.js?_${.now?long}"></script>
 </body>

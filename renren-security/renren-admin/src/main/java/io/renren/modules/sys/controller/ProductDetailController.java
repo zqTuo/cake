@@ -1,9 +1,15 @@
 package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.ProductSizeEntity;
+import io.renren.modules.sys.entity.ProductTasteEntity;
+import io.renren.modules.sys.service.ProductSizeService;
+import io.renren.modules.sys.service.ProductTasteService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +37,10 @@ import io.renren.common.utils.R;
 public class ProductDetailController {
     @Autowired
     private ProductDetailService productDetailService;
+    @Autowired
+    private ProductSizeService productSizeService;
+    @Autowired
+    private ProductTasteService productTasteService;
 
     /**
      * 列表
@@ -43,6 +53,17 @@ public class ProductDetailController {
         return R.ok().put("page", page);
     }
 
+    @RequestMapping("/sizeList")
+    public R sizeList(){
+        List<ProductSizeEntity> sizeEntityList = productSizeService.list();
+        return R.ok().put("sizeList",sizeEntityList);
+    }
+
+    @RequestMapping("/tasteList")
+    public R tasteList(){
+        List<ProductTasteEntity> tasteEntityList = productTasteService.list();
+        return R.ok().put("tasteList",tasteEntityList);
+    }
 
     /**
      * 信息
@@ -62,6 +83,37 @@ public class ProductDetailController {
     @RequiresPermissions("sys:productdetail:save")
     public R save(@RequestBody ProductDetailEntity productDetail){
         productDetailService.save(productDetail);
+
+        return R.ok();
+    }
+
+    /**
+     * 检测口味和尺寸是否存在该商品中
+     */
+    @RequestMapping("/saveSizeOrTaste")
+    @RequiresPermissions("sys:productdetail:save")
+    public R saveSizeOrTaste(@RequestBody ProductDetailEntity productDetail){
+        ProductSizeEntity sizeEntity = productSizeService.getOne(
+                new QueryWrapper<ProductSizeEntity>()
+                        .eq("product_id",productDetail.getProductId())
+                        .eq("title",productDetail.getDetailSize()));
+
+        if(sizeEntity == null){
+            sizeEntity = ProductSizeEntity.builder().title(productDetail.getDetailSize())
+                    .productId(productDetail.getProductId()).build();
+            productSizeService.save(sizeEntity);
+        }
+
+        ProductTasteEntity tasteEntity = productTasteService.getOne(
+                new QueryWrapper<ProductTasteEntity>()
+                        .eq("product_id",productDetail.getProductId())
+                        .eq("title",productDetail.getDetailSize()));
+
+        if(tasteEntity == null){
+            tasteEntity = ProductTasteEntity.builder().title(productDetail.getDetailSize())
+                    .productId(productDetail.getProductId()).build();
+            productTasteService.save(tasteEntity);
+        }
 
         return R.ok();
     }

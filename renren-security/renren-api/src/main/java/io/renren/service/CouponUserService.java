@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.dto.CouponDto;
 import io.renren.entity.CouponUserEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,5 +17,9 @@ import java.util.List;
 public interface CouponUserService extends IService<CouponUserEntity> {
 
     List<CouponDto> getMyCoupon(long userId, int sourceType);
+
+    CouponDto findById(long id);
+
+    BigDecimal calculate(long couponUserId, BigDecimal totalPrice);
 }
 

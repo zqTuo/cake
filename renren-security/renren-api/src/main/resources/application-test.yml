@@ -54,11 +54,16 @@ project:
 # 微信公众号
 weCat:
   appId: wx06bec68a22884722
-  appSecret: 6843ff60906c16f658f724a2fb894e43
+  appSecret: 5a9bc72b8e6d126757f4be79874bf54b
+  mchId: 1550620091
+  key: AABBCCDDEEFFGGHHJJKKLLMMNNOOQQPP
+  certP12: /opt/cert/apiclient_cert.p12
   accessTokenByCodeUrl: https://api.weixin.qq.com/sns/oauth2/access_token
   userInfoUrl: https://api.weixin.qq.com/sns/userinfo
   accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
   ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+  payApi: https://api.mch.weixin.qq.com/pay/unifiedorder
+  enterprisesPay_API: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
 
   # 百度地图
 baiduMap:

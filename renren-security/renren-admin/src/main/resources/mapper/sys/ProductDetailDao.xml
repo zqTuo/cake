@@ -11,6 +11,8 @@
         <result property="productId" column="product_id"/>
         <result property="detailPrice" column="detail_price"/>
         <result property="detailSize" column="detail_size"/>
+        <result property="sizeId" column="size_id"/>
+        <result property="tasteId" column="taste_id"/>
         <result property="detailTaste" column="detail_taste"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>

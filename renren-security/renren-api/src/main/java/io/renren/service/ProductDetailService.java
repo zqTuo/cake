@@ -1,10 +1,12 @@
 package io.renren.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.renren.common.utils.PageUtils;
+import io.renren.dto.ProductDetailDto;
+import io.renren.dto.ProductInfoDetailDto;
 import io.renren.entity.ProductDetailEntity;
 
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 商品详情表
@@ -15,6 +17,12 @@ import java.util.Map;
  */
 public interface ProductDetailService extends IService<ProductDetailEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    BigDecimal countExtraPrice(long[] extraIds);
+
+    ProductDetailDto findPayInfo(long detailId);
+
+    List<ProductDetailEntity> getByIds(long[] productDetailId);
+
+    List<ProductInfoDetailDto> getByProductId(long id);
 }
 

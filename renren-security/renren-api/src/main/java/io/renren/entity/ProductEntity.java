@@ -70,7 +70,7 @@ public class ProductEntity implements Serializable {
 	 */
 	private String productInfo;
 	/**
-	 * 商品状态 0：下架 1：上架
+	 * 商品状态 0：下架 1：上架 2:上架但不显示
 	 */
 	private Integer productFlag;
 	/**

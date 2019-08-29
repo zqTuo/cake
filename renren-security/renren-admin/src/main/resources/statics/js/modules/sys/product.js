@@ -5,12 +5,11 @@ $(function () {
         url: baseURL + 'sys/product/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
             { label: '商品主图', name: 'productImg', index: 'product_img', width: 80 ,formatter:function (cellValue, options, rowObject) {
                     return '<img class="img-thumbnail" width="80px" src="/images/'+cellValue+'" alt="商品图片">'
                 }},
             { label: '商品名称', name: 'productName', index: 'product_name', width: 80},
-            { label: '商品类型', name: 'productCateid', index: 'product_cateid', width: 80 },
+            { label: '商品类型', name: 'categoryName', index: 'category_name', width: 80 },
             { label: '商品售价', name: 'productPrice', index: 'product_price', width: 80 ,formatter:function (cellValue) {
                     return '￥' + cellValue;
                 }},
@@ -30,17 +29,17 @@ $(function () {
                     if(cellValue === 1){
                         return "<span class='label label-success radius'>已推荐</span>";
                     }else{
-                        return "<span class='label radius'>未推荐</span>";
+                        return "未推荐";
                     }
                 }},
 			{ label: '加购标记', name: 'productExtra', index: 'product_extra', width: 80  ,formatter:function (cellValue) {
                     if(cellValue === 1){
                         return "<span class='label label-success radius'>已添加</span>";
                     }else{
-                        return "<span class='label radius'>未添加</span>";
+                        return "未添加";
                     }
                 }},
-			{ label: '所属门店', name: 'shopId', index: 'shop_id', width: 80 }
+			{ label: '所属门店', name: 'shopName', index: 'shop_name', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -96,7 +95,8 @@ var vm = new Vue({
 		product: {},
         cateList:[],
         shopList:[],
-        bannerArr:[]
+        bannerArr:[],
+        productDetailList:[]
 	},
     // created: function(){
     //     //如果没有这句代码，select中初始化会是空白的，默认选中就无法实现
@@ -208,6 +208,11 @@ var vm = new Vue({
 			$.get(baseURL + "sys/product/info/"+id, function(r){
                 vm.product = r.product;
                 vm.bannerArr = r.bannerArr;
+
+                var content = r.product.productInfo;
+                ue.ready(function () {
+                    ue.setContent(content);
+                });
             });
 		},
         getCateList: function (event) {
@@ -235,7 +240,12 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        prodetail_addOrUpdate:function (title, url, width, height) {
+            var idx = $('.Xcontent34').attr('data-idx')
+            url = idx === undefined ? url : url + "?id=" + idx;
+            layer_show(title,url,width,height);
+        },
 	}
 });
 

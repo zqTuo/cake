@@ -1,7 +1,9 @@
 package io.renren.modules.sys.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.common.utils.PageUtils;
+import io.renren.modules.sys.dto.ProductDto;
 import io.renren.modules.sys.entity.ProductEntity;
 
 import java.util.Map;
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface ProductService extends IService<ProductEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils findByPage(Map<String, Object> params);
 }
 

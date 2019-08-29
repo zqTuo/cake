@@ -2,6 +2,7 @@ package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.util.Date;
  */
 @Data
 @TableName("tb_shop_order")
+@Builder
 public class ShopOrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,19 +60,19 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Integer orderSourceType;
 	/**
-	 * 备注
+	 * 寄语
 	 */
 	private String orderRemark;
 	/**
-	 * 配送省份
+	 * 配送省份 x
 	 */
 	private String addrPro;
 	/**
-	 * 配送城市
+	 * 配送城市 x
 	 */
 	private String addrCity;
 	/**
-	 * 配送区域
+	 * 配送区域 x
 	 */
 	private String addrDis;
 	/**
@@ -90,9 +92,9 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private String addrPhone;
 	/**
-	 * 派送时间
+	 * 派送时间/取货日期
 	 */
-	private Date sendTime;
+	private String sendTime;
 	/**
 	 * 创建时间
 	 */

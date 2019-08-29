@@ -52,3 +52,21 @@ tbody > tr > th {font-weight: normal; }
 .form-horizontal{
 	width:550px;padding-top:20px;
 }
+
+.f_l {
+    float: left;
+}
+
+.black-div {
+    width: 5px;
+    height: 50px;
+    background-color: #555;
+}
+.basic-data {
+    font-family: "Microsoft YaHei", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Helvetica, Arial, sans-serif;
+    color: #555;
+    line-height: 50px;
+    font-size: 17px;
+    font-weight: 700;
+    margin-left: 20px;
+}

@@ -1,6 +1,8 @@
 package io.renren.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.renren.dto.PayProDto;
+import io.renren.dto.ShoppingCartDto;
 import io.renren.entity.ShoppingCartEntity;
 
 import java.util.List;
@@ -15,5 +17,9 @@ import java.util.List;
 public interface ShoppingCartService extends IService<ShoppingCartEntity> {
 
     List<ShoppingCartEntity> getMyData(long userId);
+
+    ShoppingCartDto countMyData(long userId);
+
+    List<PayProDto> getBuyData(long userId);
 }
 

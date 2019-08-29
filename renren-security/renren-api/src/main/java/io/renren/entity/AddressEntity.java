@@ -29,7 +29,7 @@ public class AddressEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	@ApiModelProperty(value = "地址ID,修改时必传")
+	@ApiModelProperty(value = "地址ID,修改时必传",example = "0")
 	private Long id;
 	/**
 	 * 用户ID
@@ -39,8 +39,9 @@ public class AddressEntity implements Serializable {
 	/**
 	 * 省份
 	 */
-	@ApiModelProperty(value = "省份",required = true)
-	@NotBlank(message = "请选择省份")
+//	@ApiModelProperty(value = "省份",required = true)
+//	@NotBlank(message = "请选择省份")
+	@ApiModelProperty(hidden = true)
 	private String province;
 	/**
 	 * 市
@@ -51,8 +52,9 @@ public class AddressEntity implements Serializable {
 	/**
 	 * 区
 	 */
-	@ApiModelProperty(value = "区",required = true)
-	@NotBlank(message = "请选择区")
+//	@ApiModelProperty(value = "区",required = true)
+//	@NotBlank(message = "请选择区")
+	@ApiModelProperty(hidden = true)
 	private String district;
 	/**
 	 * 详细地址
@@ -76,7 +78,7 @@ public class AddressEntity implements Serializable {
 	/**
 	 * 默认地址 0：否 1：是
 	 */
-	@ApiModelProperty(value = "是否默认地址",allowableValues = "0：否 1：是",required = true)
-	private Integer defaultflag;
+	@ApiModelProperty(value = "是否默认地址",allowableValues = "0：否 1：是",required = true,example = "0")
+	private Integer defaultFlag;
 
 }

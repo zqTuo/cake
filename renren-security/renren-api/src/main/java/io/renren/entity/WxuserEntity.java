@@ -18,7 +18,7 @@ import java.util.Date;
  * @date 2019-08-19 16:35:41
  */
 @Data
-@TableName("wxuser")
+@TableName("tb_wxuser")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

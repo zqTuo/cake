@@ -19,4 +19,6 @@ import java.util.List;
 public interface CouponUserDao extends BaseMapper<CouponUserEntity> {
 
     List<CouponDto> getMyCoupon(@Param("userId") long userId, @Param("sourceType") int sourceType);
+
+    CouponDto findById(@Param("id") long id);
 }

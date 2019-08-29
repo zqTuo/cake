@@ -2,6 +2,7 @@ package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,7 +27,11 @@ public class BaseDataEntity implements Serializable {
 	private Long id;
 	/**
 	 * 配置类型 0：首页菜单icon
-	 * {}
+	 * {"cake":{"title":"生日蛋糕","icon":"http://cake.maojimall.com/images/cake.png"},
+	 * 	"tea":{"title":"元气下午茶","icon":"http://cake.maojimall.com/images/tea.png"},
+	 * 	 "hot":{"title":"人气推荐","icon":"http://cake.maojimall.com/images/hot.png"},
+	 * 	 "meituan":{"title":"使用美团/大众点评券","icon":"http://cake.maojimall.com/images/meituan.png"}
+	 * }
 	 */
 	private Integer sourceType;
 	/**

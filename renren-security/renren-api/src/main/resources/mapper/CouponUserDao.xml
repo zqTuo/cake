@@ -17,12 +17,18 @@
     </resultMap>
 
     <select id="getMyCoupon" resultType="io.renren.dto.CouponDto">
-        select cu.id as couponUserId,c.coupon_price,c.price,c.coupon_type,cu.end_time
+        select cu.id as couponUserId,c.coupon_price,c.price,c.coupon_type,cu.end_time,c.coupon_name
         from tb_coupon_user cu left join tb_coupon c on cu.coupon_id=c.id
         where cu.user_id=#{userId} and cu.state = 1
-        <if test="sourceType == 0">and couponType = 0</if>
-        <if test="sourceType == 2">and couponType = 1</if>
+        <if test="sourceType == 0">and c.coupon_type = 0</if>
+        <if test="sourceType == 2">and c.coupon_type = 1</if>
         order by cu.id desc
+    </select>
+
+    <select id="findById" resultType="io.renren.dto.CouponDto">
+        select cu.id as couponUserId,c.coupon_price,c.price,c.coupon_type,cu.end_time
+        from tb_coupon_user cu left join tb_coupon c on cu.coupon_id=c.id
+        where cu.id=#{id} and cu.state = 1
     </select>
 
 

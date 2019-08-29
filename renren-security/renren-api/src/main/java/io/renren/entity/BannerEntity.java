@@ -26,6 +26,7 @@ public class BannerEntity implements Serializable {
 	 * 
 	 */
 	@TableId
+	@ApiModelProperty(hidden = true)
 	private Long id;
 	/**
 	 * 图片地址
@@ -40,22 +41,27 @@ public class BannerEntity implements Serializable {
 	/**
 	 * 展示位置 0：首页
 	 */
+	@ApiModelProperty(hidden = true)
 	private Integer bannerType;
 	/**
 	 * 使用状态 0：禁用 1：启用
 	 */
+	@ApiModelProperty(hidden = true)
 	private Integer bannerState;
 	/**
 	 * 创建时间
 	 */
+	@ApiModelProperty(hidden = true)
 	private Date createTime;
 	/**
 	 * 修改时间
 	 */
+	@ApiModelProperty(hidden = true)
 	private Date updateTime;
 	/**
 	 * 修改管理员
 	 */
+	@ApiModelProperty(hidden = true)
 	private String updateBy;
 
 }

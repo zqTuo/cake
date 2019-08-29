@@ -15,7 +15,7 @@ public class WxuserServiceImpl extends ServiceImpl<WxuserDao, WxuserEntity> impl
 
     @Override
     public WxuserEntity selectUserByOpenId(String openid) {
-        return baseMapper.selectOne(new QueryWrapper<WxuserEntity>().eq("userOpenid",openid));
+        return baseMapper.selectOne(new QueryWrapper<WxuserEntity>().eq("user_openid",openid));
     }
 
     @Override

@@ -1,8 +1,11 @@
 package io.renren.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import io.renren.common.result.Result;
 import io.renren.common.utils.R;
 import io.renren.dto.HotColumnDto;
+import io.renren.dto.IndexProductDto;
+import io.renren.entity.AddressEntity;
 import io.renren.entity.BannerEntity;
 import io.renren.entity.BaseDataEntity;
 import io.renren.entity.ShopEntity;
@@ -44,7 +47,8 @@ public class IndexController {
     private String pic_pre;
 
     @GetMapping("menuInfo")
-    @ApiOperation(value="获取首页菜单信息接口")
+    @ApiOperation(value="获取首页菜单信息接口",notes = "data数据为菜单配置，cake对象是第一个菜单，tea是第二个菜单，hot是第三个，meituan是最后一个，" +
+            "其中title是菜单名称，icon是菜单icon地址")
     public R menuInfo(){
         BaseDataEntity baseDataEntity = baseDataService.getBySourceType(0);
         List<BannerEntity> bannerList = bannerService.getIndexBanner();
@@ -60,10 +64,14 @@ public class IndexController {
 
     @GetMapping("proInfo")
     @ApiOperation(value="获取首页热销商品接口")
-    public R proInfo(){
+    public Result<HotColumnDto> proInfo(){
         List<HotColumnDto> hotColumnDtoList = productService.findAllHotColumn();
-
-        return R.ok().put("arrayData", hotColumnDtoList);
+        for (HotColumnDto hotColumnDto:hotColumnDtoList){
+            for (IndexProductDto productDto:hotColumnDto.getProductList()){
+                productDto.setProductImg(pic_pre + productDto.getProductImg());
+            }
+        }
+        return new Result().ok(hotColumnDtoList);
     }
 
 }

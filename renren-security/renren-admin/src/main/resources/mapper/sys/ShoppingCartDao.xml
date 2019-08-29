@@ -16,6 +16,7 @@
         <result property="detailSize" column="detail_size"/>
         <result property="detailTaste" column="detail_taste"/>
         <result property="buyNum" column="buy_num"/>
+        <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>

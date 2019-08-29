@@ -3,90 +3,77 @@
 <head>
     <title>商品详情表</title>
 		<#include "/header.html">
+    <!--都是图片上传的css-->
+    <link href="${request.contextPath}/statics/libs/imgUp/common.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/index.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="rrapp" v-cloak>
-    <div v-show="showList">
-        <div class="grid-btn">
-			<#if shiro.hasPermission("sys:productdetail:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
-			<#if shiro.hasPermission("sys:productdetail:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			</#if>
-			<#if shiro.hasPermission("sys:productdetail:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
-        </div>
-        <table id="jqGrid"></table>
-        <div id="jqGridPager"></div>
-    </div>
-
-    <div v-show="!showList" class="panel panel-default">
+    <div class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品规格图片</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.detailCover" placeholder="商品规格图片"/>
-                        </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品规格图片</div>
+                <div class="col-sm-10">
+                    <div class="proDetailPic" style="width:230px;">
+                        <section class=" img-section">
+                            <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                                <div id="preview1" style="width: 190px;height: 180px;">
+                                    <img id="imgProDetail0" border="0" :src="productDetail.detailCover != '' && productDetail.detailCover != undefined ? productDetail.detailCover : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg0').click();">
+                                </div>
+                                <input type="file" onchange="onePicUpLoad(this,0,190,180)" style="display: none;" id="previewImg0">
+                            </div>
+                        </section>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品规格名称</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.detailName" placeholder="商品规格名称"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">所属商品ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.productId" placeholder="所属商品ID"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品规格价格</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.detailPrice" placeholder="商品规格价格"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品尺寸</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.detailSize" placeholder="商品尺寸"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">商品口味</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.detailTaste" placeholder="商品口味"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="productDetail.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品规格名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="productDetail.detailName" placeholder="商品规格名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品规格价格</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="productDetail.detailPrice" placeholder="商品规格价格"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品尺寸</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="productDetail.detailSize" placeholder="商品尺寸" style="width: 110px;float: left;" />
+
+                    <select class="form-control" @change="getData($event)" style="width: 110px;float: right;">
+                        <option :value="-1" selected >查看已有尺寸</option>
+                        <option :value="item.title" v-for="(item,index) in sizeList" :key="index" >{{item.title}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">商品口味</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="productDetail.detailTaste" placeholder="商品口味" style="width: 110px;float: left;" />
+
+                    <select class="form-control" @change="getData($event)" style="width: 110px;float: right;">
+                        <option :value="-1" selected >查看已有口味</option>
+                        <option :value="item.title" v-for="(item,index) in tasteList" :key="index" >{{item.title}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                       @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
             </div>
         </form>
     </div>
 </div>
+<!--单图上传js-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgUp.js?_${.now?long}"></script>
 
 <script src="${request.contextPath}/statics/js/modules/sys/productdetail.js?_${.now?long}"></script>
 </body>

@@ -16,13 +16,24 @@
         <result property="detailSize" column="detail_size"/>
         <result property="detailTaste" column="detail_taste"/>
         <result property="buyNum" column="buy_num"/>
+        <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <select id="getMyData" resultMap="shoppingCartMap">
         select s.* from tb_shopping_cart s left join tb_product p on s.product_id=p.id
-        where p.product_flag = 1
+        where p.product_flag = 1 and s.user_id=#{userid} order by s.id desc
+    </select>
+
+    <select id="countMyData" resultType="io.renren.dto.ShoppingCartDto">
+        select sum(detail_price * buy_num) as totalPrice,sum(buy_num) as num from tb_shopping_cart where user_id=#{userid}
+    </select>
+
+    <select id="getBuyData" resultType="io.renren.dto.PayProDto">
+        select detail_cover,detail_name,product_name,detail_price,
+               detail_size,detail_taste,buy_num,remark,product_detail_id
+        from tb_shopping_cart where user_id=#{userid} order by id desc
     </select>
 
 

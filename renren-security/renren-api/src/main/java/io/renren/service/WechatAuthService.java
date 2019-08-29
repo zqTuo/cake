@@ -33,10 +33,11 @@ public class WechatAuthService {
      * @return
      */
     public String getTicket() {
-        JSONObject params = new JSONObject();
+        Map<String,String> params = new HashMap<>();
         params.put("access_token",getLastAccessToken());
         params.put("type", "jsapi");
-        JSONObject ticketJson = HttpUtil.postByJson(wechatConfig.getTicketUrl(), params);
+        String ticket = HttpClientTool.getData("https://api.weixin.qq.com/cgi-bin/ticket/getticket", params);
+        JSONObject ticketJson = JSONObject.parseObject(ticket);
         log.info("========== 微信ticket请求结果：" + ticketJson);
         if (ticketJson.get("errcode")!= null && ticketJson.getInteger("errcode") == 0){
             return ticketJson.getString("ticket");
@@ -66,5 +67,13 @@ public class WechatAuthService {
             return res.getString("access_token");
         }
         return "";
+    }
+
+    public static void main(String[] args) {
+        Map<String,String> params = new HashMap<>();
+        params.put("access_token","24_hha9zgCBHad9CkEAHkVj263lfNopubgQzZHjIPqB5doLGIL5xUuCPEvq007bny8g2w-zqkpxR7x2onAbnUny6NHTFZbTRbZPu28kPuXbeSUZsadSbYXxtQDWEyY8pwgZXaM-7gGeqUlfVLbNRKDhAFAKDW");
+        params.put("type", "jsapi");
+        String ticketJson = HttpClientTool.getData("https://api.weixin.qq.com/cgi-bin/ticket/getticket", params);
+        System.out.println(ticketJson);
     }
 }

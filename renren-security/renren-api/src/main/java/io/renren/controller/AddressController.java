@@ -2,6 +2,7 @@ package io.renren.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.annotation.Login;
+import io.renren.common.result.Result;
 import io.renren.common.utils.R;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.entity.AddressEntity;
@@ -9,7 +10,6 @@ import io.renren.service.AddressService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.tomcat.jni.Address;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -33,17 +33,17 @@ public class AddressController {
     @Login
     @ApiOperation(value = "获取用户收货地址接口")
     @GetMapping("getInfo")
-    public R getInfo(@ApiIgnore @RequestAttribute("userId")long userId){
+    public Result<AddressEntity> getInfo(@ApiIgnore @RequestAttribute("userId")long userId){
         List<AddressEntity> addressList = addressService.list(new QueryWrapper<AddressEntity>().eq("user_id",userId));
-        return R.ok().put("arrayData",addressList);
+        return new Result<>().ok(addressList);
     }
 
     @Login
     @ApiOperation(value = "获取用户地址详情接口")
     @GetMapping("getDetail")
-    public R getDetail(@RequestBody @ApiParam(value = "地址ID")long id){
+    public Result<AddressEntity> getDetail(@RequestParam("id") @ApiParam(value = "地址ID",example = "1")long id){
         AddressEntity addressEntity = addressService.getById(id);
-        return R.ok().put("data",addressEntity);
+        return new Result().ok(addressEntity);
     }
 
     @Login
@@ -54,9 +54,9 @@ public class AddressController {
 
         int count = addressService.count(new QueryWrapper<AddressEntity>().eq("user_id",userId));
         if(count == 0){
-            addressEntity.setDefaultflag(1);
+            addressEntity.setDefaultFlag(1);
         }else{
-            if(addressEntity.getDefaultflag() > 0){
+            if(addressEntity.getDefaultFlag() > 0){
                 // 更换默认数据
                 addressService.cleanDefault(userId);
             }
@@ -74,10 +74,10 @@ public class AddressController {
     @Login
     @ApiOperation(value = "获取默认地址接口")
     @GetMapping("getDefault")
-    public R getDefault(@ApiIgnore @RequestAttribute("userId")long userId){
+    public Result<AddressEntity> getDefault(@ApiIgnore @RequestAttribute("userId")long userId){
         AddressEntity addressEntity = addressService.getOne(new QueryWrapper<AddressEntity>().eq("user_id",userId)
                 .eq("default_flag",1));
 
-        return R.ok().put("data",addressEntity);
+        return new Result().ok(addressEntity);
     }
 }

@@ -1,9 +1,13 @@
 package io.renren.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.renren.dto.OrderDto;
 import io.renren.entity.ShopOrderEntity;
+import io.renren.form.MyOrderForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 订单表
@@ -16,4 +20,8 @@ import org.apache.ibatis.annotations.Param;
 public interface ShopOrderDao extends BaseMapper<ShopOrderEntity> {
 
     int countToday(@Param("startTime") String startTime, @Param("endTime") String endTime);
+
+    List<OrderDto> findMyOrder(@Param("form") MyOrderForm form, @Param("userid") long userId);
+
+    OrderDto findByOrderNo(@Param("orderNo") String orderNo);
 }

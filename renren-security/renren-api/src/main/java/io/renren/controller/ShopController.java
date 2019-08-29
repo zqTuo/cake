@@ -1,6 +1,7 @@
 package io.renren.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import io.renren.common.result.Result;
 import io.renren.common.utils.LocationUtils;
 import io.renren.common.utils.R;
 import io.renren.dto.ShopDto;
@@ -9,10 +10,7 @@ import io.renren.service.ShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,9 +31,9 @@ public class ShopController {
     @Resource
     private LocationUtils locationUtils;
 
-    @GetMapping("shopInfo")
+    @PostMapping("shopInfo")
     @ApiOperation(value="获取门店列表接口")
-    public R shopInfo(@RequestBody(required = false) ShopForm form){
+    public Result<ShopDto> shopInfo(@RequestBody ShopForm form){
         List<ShopDto> shopList = shopService.findAll();
 
         if(form != null && StringUtils.isNotBlank(form.getLatitude()) && StringUtils.isNotBlank(form.getLongitude())){
@@ -47,7 +45,7 @@ public class ShopController {
             }
         }
 
-        return R.ok().put("arrayData",shopList);
+        return new Result<>().ok(shopList);
     }
 
     private boolean checkIsHear(ShopDto shopDto, ShopForm form) {

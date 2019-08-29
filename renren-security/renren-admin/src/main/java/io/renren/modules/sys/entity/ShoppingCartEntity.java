@@ -2,6 +2,7 @@ package io.renren.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -65,6 +66,10 @@ public class ShoppingCartEntity implements Serializable {
 	 * 购买数量
 	 */
 	private Integer buyNum;
+	/**
+	 * 寄语
+	 */
+	private String remark;
 	/**
 	 * 创建时间
 	 */
