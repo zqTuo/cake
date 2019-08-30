@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * 功能描述: <br>
  *
@@ -32,4 +34,16 @@ public class OrderItemDto {
 
     @ApiModelProperty(value = "商品ID")
     private long productId;
+
+    /**
+     * 商品规格价格
+     */
+    @ApiModelProperty(value = "商品规格价格")
+    private BigDecimal detailPrice;
+
+    /**
+     * 购买数量
+     */
+    @ApiModelProperty(value = "购买数量")
+    private int buyNum;
 }

@@ -51,6 +51,13 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<!--热启动 与reids缓存冲突-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 	</dependencies>
 
 	<build>

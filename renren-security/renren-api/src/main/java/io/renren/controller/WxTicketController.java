@@ -8,10 +8,12 @@ import io.renren.service.WechatAuthService;
 import io.renren.common.utils.ShareSignUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -38,9 +40,9 @@ public class WxTicketController {
     @Login
     @GetMapping("/getTicket")
     @ApiOperation(value = "获取微信票据接口",response = JsWechatConfig.class)
-    public R getTicket(HttpServletRequest request){
+    public R getTicket(@RequestParam("url")@ApiParam(value = "当前路由地址") String url, HttpServletRequest request){
         String ticket = wechatAuthService.getTicket();
-        Map<String,String> map = ShareSignUtil.sign(ticket, request.getRequestURL().toString());
+        Map<String,String> map = ShareSignUtil.sign(ticket,url);
 
         JsWechatConfig config = JsWechatConfig.builder().appId(wechatConfig.getWeCatAppId())
                 .noncestr(map.get("nonceStr")).timestamp(map.get("timestamp"))

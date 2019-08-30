@@ -87,7 +87,7 @@ public class ProductCategoryController {
     public static String setNBSP(int lev) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lev; i++) {
-            sb.append("...");
+            sb.append("......");
         }
         sb.append("| ");
         return sb.toString();

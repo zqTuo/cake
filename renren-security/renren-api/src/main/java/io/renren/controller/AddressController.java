@@ -10,6 +10,8 @@ import io.renren.service.AddressService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -27,6 +29,8 @@ import java.util.List;
 @RequestMapping("/api/addr")
 @Api(tags = "用户地址接口控制器")
 public class AddressController {
+    private static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+
     @Resource
     private AddressService addressService;
 
@@ -51,6 +55,8 @@ public class AddressController {
     @PostMapping("addOrUpdate")
     public R addOrUpdate(@RequestBody AddressEntity addressEntity,@ApiIgnore @RequestAttribute("userId")long userId){
         ValidatorUtils.validateEntity(addressEntity);
+
+        log.info("添加或修改地址参数：" + addressEntity.toString());
 
         int count = addressService.count(new QueryWrapper<AddressEntity>().eq("user_id",userId));
         if(count == 0){
@@ -79,5 +85,15 @@ public class AddressController {
                 .eq("default_flag",1));
 
         return new Result().ok(addressEntity);
+    }
+
+    @Login
+    @ApiOperation(value = "删除地址接口")
+    @PostMapping("delAddr")
+    public R delAddr(@RequestParam("id") @ApiParam(value = "地址ID",required = true)long id,
+                     @ApiIgnore @RequestAttribute("userId") long userId){
+
+        addressService.removeById(id);
+        return R.ok();
     }
 }

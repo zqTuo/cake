@@ -65,7 +65,7 @@
                o.order_price,o.order_discount,o.order_remark,date_format(o.send_time,'%Y.%m.%d %H:%m') as send_time,
                date_format(o.finish_time,'%Y.%m.%d %H:%m') as finish_time,
                ot.id as oid,ot.detail_cover,ot.product_name,ot.product_id,ot.product_desc,
-                ot.detail_size,ot.detail_taste
+                ot.detail_size,ot.detail_taste,ot.detail_price,ot.buy_num
         from tb_shop_order o
                  left join tb_shop_order_item ot on o.order_no=ot.order_no
         where o.order_no=#{orderNo}

@@ -55,7 +55,7 @@ public class ShoppingCartController {
         BigDecimal totalPrice = new BigDecimal("0.00");
         int num = 0;
         for (ShoppingCartEntity shoppingCartEntity:shoppingCartEntityList){
-            totalPrice = totalPrice.add(shoppingCartEntity.getDetailPrice());
+            totalPrice = totalPrice.add(shoppingCartEntity.getDetailPrice().multiply(new BigDecimal(shoppingCartEntity.getBuyNum())));
             num += shoppingCartEntity.getBuyNum();
 
             shoppingCartEntity.setDetailCover(pic_pre + shoppingCartEntity.getDetailCover());

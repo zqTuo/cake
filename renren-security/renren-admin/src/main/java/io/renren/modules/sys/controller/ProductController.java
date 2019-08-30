@@ -3,7 +3,9 @@ package io.renren.modules.sys.controller;
 import java.util.*;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.ProductDetailEntity;
 import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.form.ProductForm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,15 +78,21 @@ public class ProductController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:product:save")
-    public R save(@RequestBody ProductEntity product){
-        ValidatorUtils.validateEntity(product);
+    public R save(@RequestBody ProductForm form){
+        ValidatorUtils.validateEntity(form);
+        if(form.getProduct() == null || form.getSizeList() == null || form.getTasteList() == null){
+            return R.error("缺少必传参数");
+        }
 
+        ProductEntity product = form.getProduct();
         product.setProductImg(product.getProductImg().replaceAll(pic_pre,""));
         product.setProductBanner(product.getProductBanner().replaceAll(pic_pre,""));
 
         product.setCreateTime(new Date());
         product.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
         productService.save(product);
+
+        List<ProductDetailEntity> detailEntityList = form.getDetailList();
 
         return R.ok();
     }

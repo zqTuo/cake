@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -79,6 +80,7 @@ public class AddressEntity implements Serializable {
 	 * 默认地址 0：否 1：是
 	 */
 	@ApiModelProperty(value = "是否默认地址",allowableValues = "0：否 1：是",required = true,example = "0")
+	@Min(value = 0,message = "请传入是否默认地址参数")
 	private Integer defaultFlag;
 
 }

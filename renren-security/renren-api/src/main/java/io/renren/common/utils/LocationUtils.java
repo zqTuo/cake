@@ -63,7 +63,7 @@ public class LocationUtils {
     public float getDistanceByBaiduMap(String addrName,String origin){
         JSONObject addrRes = getLocation(addrName);
 
-        if(addrRes.getInteger("status") == 0){
+        if(addrRes.getInteger("status") == 0 && addrRes.getJSONArray("results").size() > 0){
             JSONObject locaJson = addrRes.getJSONArray("results").getJSONObject(0).getJSONObject("location");
             String destination = locaJson.getString("lat") + "," + locaJson.getString("lng");
             JSONObject res = getDistance(origin,destination);

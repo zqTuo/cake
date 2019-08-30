@@ -91,6 +91,9 @@ public class OrderController {
     public Result<PayProDto> getPayPros(@RequestBody PayProForm form, @ApiIgnore @RequestAttribute("userId")long userId){
         ValidatorUtils.validateEntity(form);
 
+        if(form.getSourceFrom() == 0 && form.getProductDetailId() == 0){
+            return new Result<>().error("请传入商品详情ID");
+        }
         List<PayProDto> payProDtoList = new ArrayList<>();
         if(form.getSourceFrom() == 0){ // 直接购买
             ProductDetailDto productDetail = productDetailService.findPayInfo(form.getProductDetailId());

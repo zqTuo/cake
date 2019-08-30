@@ -56,7 +56,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         //token为空
         if(StringUtils.isBlank(token)){
-            throw new RRException("token不能为空");
+            throw new RRException("token不能为空",-4);
         }
 
         //查询token信息

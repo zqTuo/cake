@@ -43,7 +43,10 @@ var vm = new Vue({
                         if(r.code === 0){
                              layer.msg("操作成功", {icon: 1});
 							vm.productDetail.detailCover = $("#imgProDetail0").attr("src");
-							parent.productDetailList.push(vm.productDetail);
+							console.log(window.parent.vm)
+							console.log(window.parent.vm.data.productDetailList)
+							console.log(window.parent.vm.productDetailList)
+							window.parent.vm.data.productDetailList.push(vm.productDetail);
 
 							var pic_R = '<div class="Xcontent_R" data-detailName="'+ vm.productDetail.detailName
 								+'" data-detailPrice="'+vm.productDetail.detailPrice+'" data-detailSize="'+vm.productDetail.detailSize
