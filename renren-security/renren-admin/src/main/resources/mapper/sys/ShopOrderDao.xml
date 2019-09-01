@@ -12,6 +12,7 @@
         <result property="orderDiscount" column="order_discount"/>
         <result property="orderDiscountType" column="order_discount_type"/>
         <result property="couponUserId" column="coupon_user_id"/>
+        <result property="meituanId" column="meituan_id"/>
         <result property="orderState" column="order_state"/>
         <result property="orderSourceType" column="order_source_type"/>
         <result property="orderRemark" column="order_remark"/>
@@ -21,8 +22,10 @@
         <result property="addrDetail" column="addr_detail"/>
         <result property="addrReceiver" column="addr_receiver"/>
         <result property="sendType" column="send_type"/>
+        <result property="sendPrice" column="send_price"/>
         <result property="addrPhone" column="addr_phone"/>
         <result property="sendTime" column="send_time"/>
+        <result property="sendDate" column="send_date"/>
         <result property="createTime" column="create_time"/>
         <result property="payTime" column="pay_time"/>
         <result property="payType" column="pay_type"/>
@@ -32,6 +35,42 @@
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>
     </resultMap>
+
+    <select id="findByPage" resultType="io.renren.modules.sys.entity.ShopOrderEntity">
+        select * from tb_shop_order
+        <where>
+            <if test="map.date !=null and map.date !=''">AND send_date <![CDATA[>=]]> #{map.date} </if>
+            <if test="map.dateEnd !=null and map.dateEnd !=''">AND send_date <![CDATA[<]]> #{map.dateEnd}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="getData" resultType="io.renren.modules.sys.dto.ExcelOrderDto">
+        select date_format(o.create_time,'%Y年%m月%d日') as create_time,
+        o.send_time,ot.product_name,ot.detail_taste,o.order_remark,
+        date_format(o.update_time,'%Y年%m月%d日 %Y:%m') as update_time,
+        if(o.send_type=0,'送货上门','自提') as send_type,o.addr_receiver,
+        o.addr_phone,concat(o.addr_city,o.addr_detail) as addr,
+        o.send_price,w.user_name,if(o.meituan_id>0,'美团点评',s.shop_name) as source,
+        o.order_price,if(o.order_state>0,'已支付','未支付') as orderState
+         from
+        tb_shop_order o LEFT JOIN tb_shop_order_item ot on o.order_no=ot.order_no
+        LEFT JOIN tb_wxuser w on o.user_id=w.id
+        LEFT JOIN tb_shop s on o.shop_id=s.id
+        <where>
+            <if test="map.idArr != null">
+                o.id in
+                <foreach collection="map.idArr" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="map.date !=null and map.date !=''">AND o.send_date <![CDATA[>=]]> #{map.date} </if>
+            <if test="map.dateEnd !=null and map.dateEnd !=''">AND o.send_date <![CDATA[<]]> #{map.dateEnd}</if>
+        </where>
+        order by o.send_date desc
+    </select>
+
+
 
 
 </mapper>

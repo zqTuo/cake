@@ -18,8 +18,9 @@
         <result property="productDesc" column="product_desc"/>
         <result property="productInfo" column="product_info"/>
         <result property="productFlag" column="product_flag"/>
-        <result property="productHot" column="product_hot"/>
+        <result property="productHotId" column="product_hot_id"/>
         <result property="productExtra" column="productExtra"/>
+        <result property="productHotFlag" column="product_hot_flag"/>
         <result property="shopId" column="shop_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -36,9 +37,10 @@
         </collection>
     </resultMap>
     <select id="findAllHotColumn" resultMap="HotColumnDtoMap">
-        select c.id,c.hot_title,p.id as pid,p.product_name,p.product_price,p.product_img from tb_hot_column c
-            left join tb_hot_relation r on c.id=r.hot_id
-            left join tb_product p on r.product_id=p.id
+        select c.id,c.hot_title,p.id as pid,p.product_name,
+        p.product_price,p.product_img
+         from tb_hot_column c
+            left join tb_product p on c.id=p.product_hot_id
             where p.product_flag = 1
         order by c.id desc ,p.id desc
     </select>
@@ -48,17 +50,35 @@
                product_banner,product_price_region,product_info
         from tb_product
         where product_flag = 1 and shop_id = #{form.shopId}
-          <if test="form.sourceType == 0">and product_hot = 1</if>
+          <if test="form.sourceType == 0">and product_hot_flag == 1</if>
           <if test="form.sourceType == 1">and product_cateid = #{form.cateid} </if>
         order by id desc
         limit #{form.pageNo} ,#{form.pageSize}
     </select>
 
     <select id="getExtraInfo" resultType="io.renren.dto.ProductDto">
-        select id,product_name,product_desc,product_price,product_img from tb_product
+        select id,product_name,product_desc,product_price,product_img,product_price_region
+         from tb_product
         where product_flag = 2 and product_extra = 1
         order by id desc
     </select>
 
+    <select id="findBySku" resultType="io.renren.dto.ProductDto">
+        select p.id,product_name,product_img,pd.id as productDetailId,
+        concat(pd.detail_name,'+',pd.detail_size,'+',pd.detail_taste) as detailType
+        from tb_product_detail pd left join tb_product p
+        on p.id=pd.product_id where detail_sku in
+        <foreach collection="skuArr" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by p.product_extra asc
+    </select>
+    <select id="findNewOne" resultType="io.renren.dto.ProductDto">
+        select p.id,product_name,product_img,pd.id as productDetailId,
+        concat(pd.detail_name,'+',pd.detail_size,'+',pd.detail_taste) as detailType
+        from tb_product_detail pd left join tb_product p
+        on p.id=pd.product_id where p.product_extra = 0 and p.product_flag = 1
+        order by p.id desc limit 1
+    </select>
 
 </mapper>

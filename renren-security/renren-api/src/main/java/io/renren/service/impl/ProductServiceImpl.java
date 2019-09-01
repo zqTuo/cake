@@ -29,4 +29,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductDao, ProductEntity> i
         return baseMapper.getExtraInfo();
     }
 
+    @Override
+    public List<ProductDto> findBySku(String[] detailSku) {
+        return baseMapper.findBySku(detailSku);
+    }
+
+    @Override
+    public ProductDto findNewOne() {
+        return baseMapper.findNewOne();
+    }
+
 }

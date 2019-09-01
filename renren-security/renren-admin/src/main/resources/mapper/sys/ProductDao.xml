@@ -18,8 +18,9 @@
         <result property="productDesc" column="product_desc"/>
         <result property="productInfo" column="product_info"/>
         <result property="productFlag" column="product_flag"/>
-        <result property="productHot" column="product_hot"/>
+        <result property="productHotId" column="product_hot_id"/>
         <result property="productExtra" column="product_extra"/>
+        <result property="productHotFlag" column="product_hot_flag"/>
         <result property="shopId" column="shop_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -28,7 +29,8 @@
 
     <select id="findByPage" resultType="io.renren.modules.sys.dto.ProductDto">
         select p.*,c.category_name,s.shop_name
-        from tb_product p left join tb_product_category c on p.product_cateid=c.id
+        from tb_product p left join tb_product_category c
+        on p.product_cateid=c.id
         left join tb_shop s on p.shop_id=s.id
     </select>
 

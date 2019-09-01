@@ -27,4 +27,5 @@ public interface ProductDetailDao extends BaseMapper<ProductDetailEntity> {
     List<ProductDetailEntity> getByIds(@Param("idArr")long[] ids);
 
     List<ProductInfoDetailDto> getByProductId(@Param("id")long id);
+
 }

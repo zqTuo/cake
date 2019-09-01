@@ -1,14 +1,28 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/hotrelation/list',
+        url: baseURL + 'sys/meituancoupon/list',
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '热销栏目ID', name: 'hotId', index: 'hot_id', width: 80 }, 			
-			{ label: '商品ID', name: 'productId', index: 'product_id', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '用户ID', name: 'userId', index: 'user_id', width: 80 },
+			{ label: '美团点评券码', name: 'code', index: 'code', width: 80 }, 			
+			{ label: '券码类型', name: 'sourcetype', index: 'sourceType', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "美团";
+                    }else{
+                        return "大众点评";
+                    }
+                }},
+			{ label: '使用状态', name: 'flag', index: 'flag', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已启用</span>";
+                    }else{
+                        return "<span class='label label-warning radius'>已禁用</span>";
+                    }
+                }},
+			{ label: '验券时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '使用时间', name: 'useTime', index: 'use_time', width: 80 }, 			
+			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -42,7 +56,7 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		hotRelation: {}
+		meituanCoupon: {}
 	},
 	methods: {
 		query: function () {
@@ -51,7 +65,7 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.hotRelation = {};
+			vm.meituanCoupon = {};
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -65,12 +79,12 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
-                var url = vm.hotRelation.id == null ? "sys/hotrelation/save" : "sys/hotrelation/update";
+                var url = vm.meituanCoupon.id == null ? "sys/meituancoupon/save" : "sys/meituancoupon/update";
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
                     contentType: "application/json",
-                    data: JSON.stringify(vm.hotRelation),
+                    data: JSON.stringify(vm.meituanCoupon),
                     success: function(r){
                         if(r.code === 0){
                              layer.msg("操作成功", {icon: 1});
@@ -99,7 +113,7 @@ var vm = new Vue({
                     lock = true;
 		            $.ajax({
                         type: "POST",
-                        url: baseURL + "sys/hotrelation/delete",
+                        url: baseURL + "sys/meituancoupon/delete",
                         contentType: "application/json",
                         data: JSON.stringify(ids),
                         success: function(r){
@@ -116,8 +130,8 @@ var vm = new Vue({
              });
 		},
 		getInfo: function(id){
-			$.get(baseURL + "sys/hotrelation/info/"+id, function(r){
-                vm.hotRelation = r.hotRelation;
+			$.get(baseURL + "sys/meituancoupon/info/"+id, function(r){
+                vm.meituanCoupon = r.meituanCoupon;
             });
 		},
 		reload: function (event) {

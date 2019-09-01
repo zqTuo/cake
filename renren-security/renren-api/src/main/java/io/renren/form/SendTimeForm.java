@@ -19,11 +19,9 @@ import javax.validation.constraints.NotBlank;
 public class SendTimeForm {
 
     @ApiModelProperty(value = "城市",required = true)
-    @NotBlank(message = "请选择派送城市")
     private String city;
 
     @ApiModelProperty(value = "详细地址",required = true)
-    @NotBlank(message = "请选择派送详细地址")
     private String addr;
 
     @ApiModelProperty(value = "派送日期，默认当天，格式yyyy-MM-dd")
@@ -33,4 +31,8 @@ public class SendTimeForm {
     @ApiModelProperty(value = "店铺ID",required = true,example = "1")
     @Min(value = 1,message = "请传入店铺ID")
     private long shopId;
+
+    @ApiModelProperty(value = "配送方式 0：送货上门 1：门店自取",required = true)
+    @Min(value = 0,message = "请传入店铺ID")
+    private int sendType;
 }

@@ -6,8 +6,20 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '图片地址', name: 'bannerPic', index: 'banner_pic', width: 80 }, 			
 			{ label: '跳转地址', name: 'linkUrl', index: 'link_url', width: 80 }, 			
-			{ label: '展示位置 0：首页', name: 'bannerType', index: 'banner_type', width: 80 }, 			
-			{ label: '使用状态 0：禁用 1：启用', name: 'bannerState', index: 'banner_state', width: 80 }, 			
+			{ label: '展示位置', name: 'bannerType', index: 'banner_type', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 0){
+                        return "<span class='label label-success radius'>首页</span>";
+                    }else{
+                        return "<span class='label label-warning radius'>商品页</span>";
+                    }
+                }},
+			{ label: '使用状态', name: 'bannerState', index: 'banner_state', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已启用</span>";
+                    }else{
+                        return "<span class='label label-warning radius'>已禁用</span>";
+                    }
+                }},
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			

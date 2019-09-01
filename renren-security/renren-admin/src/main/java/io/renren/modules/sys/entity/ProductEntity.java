@@ -86,15 +86,19 @@ public class ProductEntity implements Serializable {
 	@Min(value = 0,message = "请选择商品状态")
 	private Integer productFlag;
 	/**
-	 * 热销标记(展示在首页) 0：不推荐 1：推荐
+	 * 热销标记(展示在首页) 0：不推荐 1：推荐栏目ID
 	 */
 	@Min(value = 0,message = "请选择商品热销标记状态")
-	private Integer productHot;
+	private Long productHotId;
 	/**
-	 * 加购标记 0：不设为加购 1：设为加购
+	 * 加购标记 0：不设为加购 1：加购栏ID
 	 */
 	@Min(value = 0,message = "请选择商品加购标记状态")
 	private Integer productExtra;
+	/**
+	 * 热门标记 0：不推荐 1：推荐
+	 */
+	private Integer productHotFlag;
 	/**
 	 * 所属门店
 	 */

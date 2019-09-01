@@ -5,17 +5,27 @@ $(function () {
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '用户昵称', name: 'userName', index: 'user_name', width: 80 }, 			
-			{ label: '用户头像', name: 'userHead', index: 'user_head', width: 80 }, 			
-			{ label: '会员等级 0：普通用户 1：会员用户', name: 'userMember', index: 'user_member', width: 80 }, 			
-			{ label: 'openid', name: 'userOpenid', index: 'user_openid', width: 80 }, 			
-			{ label: 'unionid', name: 'userUnionid', index: 'user_unionid', width: 80 }, 			
-			{ label: '上次登录IP地址', name: 'userLastip', index: 'user_lastIp', width: 80 }, 			
+			{ label: '用户头像', name: 'userHead', index: 'user_head', width: 80 ,formatter:function (cellValue) {
+                    return '<img class="img-thumbnail" height="80px" width="80px" src="'+cellValue+'">';
+                }},
+			{ label: '会员等级', name: 'userMember', index: 'user_member', width: 80,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>会员用户</span>";
+                    }else{
+                        return "<span class='label label-primary radius'>普通用户</span>";
+                    }
+                } },
+			{ label: '上次登录IP地址', name: 'userLastip', index: 'user_lastIp', width: 80 },
 			{ label: '上次登录时间', name: 'userLastlogintime', index: 'user_lastLoginTime', width: 80 }, 			
 			{ label: '手机号', name: 'userPhone', index: 'user_phone', width: 80 }, 			
-			{ label: '用户状态 1：正常使用 0：禁用', name: 'userState', index: 'user_state', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '用户状态', name: 'userState', index: 'user_state', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>正常使用</span>";
+                    }else{
+                        return "<span class='label label-danger radius'>已禁用</span>";
+                    }
+                } },
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }
         ],
 		viewrecords: true,
         height: 385,

@@ -87,9 +87,10 @@
         <div class="form-group">
             <div class="col-sm-2 control-label">热销标记(展示在首页)</div>
             <div class="col-sm-10">
-                <select class="form-control" v-model="product.productHot">
-                    <option :value="0" selected>不推荐</option>
-                    <option :value="1" >推荐</option>
+                <select class="form-control" v-model="product.productHotId">
+                    <option :value="item.id" v-for="(item,index) in hotList" :key="index" :selected="index==0">
+                        {{item.hotTitle}}
+                    </option>
                 </select>
             </div>
         </div>
@@ -99,6 +100,15 @@
                 <select class="form-control" v-model="product.productExtra">
                     <option :value="0" selected>不设为加购</option>
                     <option :value="1" >设为加购商品</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">热门标记</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="product.productHotFlag">
+                    <option :value="0" selected>不推荐</option>
+                    <option :value="1" >推荐</option>
                 </select>
             </div>
         </div>
@@ -144,7 +154,6 @@
                     <div class="img-box full">
                         <section class=" img-section">
                             <div class="z_photo upimg-div clear">
-
                                 <section class="up-section fl" v-for="(item,index) in bannerArr">
                                     <span class="up-span imgIndex"></span>
                                     <img class="close-upimg" src="/cake-admin/statics/img/a7.png">
@@ -178,16 +187,25 @@
         </div>
 
         <div class="form-group">
-            <a class="btn btn-primary radius" @click="prodetail_add('添加产品规格','900px','600px')" href="javascript:;" style="margin-left: 159px;color: #fff">
+            <a class="btn btn-primary radius" @click="prodetail_addOrUpdate('添加产品规格','900px','600px','add')" href="javascript:;" style="margin-left: 159px;color: #fff">
                 <i class="fa fa-plus"></i> 添加产品规格
             </a>
-            <div class="Xcontent" style="display: none;">
+            <div class="Xcontent" v-show="showDetail">
                 <ul class="Xcontent01">
                     <!-- 展示大图 -->
                     <div class="Xcontent06"><img src="" /></div>
                     <!-- 右侧小图 -->
                     <ol class="Xcontent08">
+                        <div class="Xcontent_R"  :class="index == productDetailList.length-1 ? 'selected':''" v-for="(detail,index) in productDetailList"
+                             :data-id="detail.id"
+                             :data-detailname="detail.detailName"
+                             :data-detailsku="detail.detailSku"
+                             :data-detailprice="detail.detailPrice"
+                             :data-detailsize="detail.detailSize"
+                             :data-detailtaste="detail.detailTaste">
 
+                            <img :src="detail.detailCover">
+                        </div>
                     </ol>
                     <!-- 产品属性 -->
                     <ol class="Xcontent13">
@@ -196,7 +214,7 @@
                         <div class="Xcontent16"><p></p></div>
                         <div class="Xcontent17">
                             <p class="Xcontent18">售价</p>
-                            <p class="Xcontent19">￥<span>69.00</span></p>
+                            <p class="Xcontent19">￥<span></span></p>
                         </div>
 <!--                        <div class="Xcontent26">-->
 <!--                            <p class="title">商品SKU：</p>-->
@@ -210,10 +228,14 @@
                             <p class="title">口味：</p>
                             <p class="text pdtaste"></p>
                         </div>
+                        <div class="Xcontent26">
+                            <p class="title">规格SKU：</p>
+                            <p class="text pdsku"></p>
+                        </div>
 
 
-                        <div class="Xcontent34"><a href="javascript:;" @click="prodetail_addOrUpdate('修改产品规格','sys/productdetail/productdetail.html','900','760')"><img style="border: 1px solid #000;" src="/cake-admin/statics/libs/productShow/img/X17.png"></a></div>
-                        <div class="Xcontent35"><a href="javascript:;" class="delProdetail"><img src="/cake-admin/statics/libs/productShow/img/X18.png"></a></div>
+                        <div class="Xcontent34"><a href="javascript:;" @click="prodetail_addOrUpdate('修改产品规格','900px','600px','update')"><img style="border: 1px solid #000;" src="/cake-admin/statics/libs/productShow/img/X17.png"></a></div>
+                        <div class="Xcontent35"><a href="javascript:;" @click="delProdetail" class="delProdetail"><img src="/cake-admin/statics/libs/productShow/img/X18.png"></a></div>
                     </ol>
                 </ul>
             </div>

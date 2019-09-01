@@ -62,4 +62,13 @@ public class ProductDto {
      */
     @ApiModelProperty(value = "商品详情html代码",required = true)
     private String productInfo;
+
+    @ApiModelProperty(value = "商品详情ID")
+    private long productDetailId;
+
+    @ApiModelProperty(value = "商品规格")
+    private String detailType;
+
+    @ApiModelProperty(value = "购买数量")
+    private int buyNum;
 }

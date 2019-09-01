@@ -1,11 +1,13 @@
 package io.renren.common.utils;
 
+import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 /**
  * Created by will on 2015/8/25.
@@ -60,5 +62,67 @@ public class Signature {
 
         // 将sha1加密后的字符串可与signature对比，标识该请求来源于微信
         return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
+    }
+
+
+    /**
+     * 美团签名
+     * @param params
+     * @param appSecret
+     * @param signMethod
+     * @return
+     */
+    public static String generateSign(Map<String, String> params, String appSecret, String signMethod) {
+        // 第一步：参数排序
+        List<String> keys = Lists.newArrayList();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if (StringUtils.isNotEmpty(entry.getValue())) {
+                keys.add(entry.getKey());
+            }
+        }
+        Collections.sort(keys);
+        // 第二步：把所有参数名和参数值串在一起
+        StringBuilder sb = new StringBuilder();
+        if (StringUtils.isNotEmpty(appSecret)) {
+            sb.append(appSecret);
+        }
+        for (String key : keys) {
+            sb.append(key).append(params.get(key).trim());
+        }
+        if (StringUtils.isNotEmpty(appSecret)) {
+            sb.append(appSecret);
+        }
+        String encryptionKey = sb.toString().trim();
+        // 第三步：加签
+        if (signMethod.equals("MD5")){
+            try {
+                return genMd5(encryptionKey);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }else{
+            //开发者暂不需支持，支持MD5即可
+            return "";
+        }
+    }
+
+    public static String genMd5(String info) throws NoSuchAlgorithmException{
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        byte[] infoBytes = info.getBytes();
+        md5.update(infoBytes);
+        byte[] sign = md5.digest();
+        return byteArrayToHex(sign);
+    }
+
+    public static String byteArrayToHex(byte[] bytes) {
+        StringBuilder sign = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            String hex = Integer.toHexString(bytes[i] & 0xFF);
+            if (hex.length() == 1) {
+                sign.append("0");
+            }
+            sign.append(hex.toLowerCase());
+        }
+        return sign.toString();
     }
 }

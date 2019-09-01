@@ -4,7 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '栏目标题', name: 'hotTitle', index: 'hot_title', width: 80 }, 			
+			// { label: '商品列表',class:'details-control',width: 30},
+			{ label: '栏目标题', name: 'hotTitle', index: 'hot_title', width: 80 },
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
@@ -128,3 +129,50 @@ var vm = new Vue({
 		}
 	}
 });
+
+//行折叠与展开
+$('#jqGrid tbody').on('click', 'td.details-control', function () {
+    var rowid = $('#jqGrid').jqGrid('getGridParam','selrow');
+    var row = $("#gridTable").jqGrid('getRowData',rowid);
+    var tr = $(this).closest('tr');
+    if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+    } else {
+        // Open this row
+        //row.child( format(row.data()) ).show();
+
+        var id = getSelectedRow();
+        if(id == null){
+            return ;
+        }
+        $.get(baseURL + "sys/hotcolumn/getInfo/"+id, function(r){
+            row.child(format(r.list)).show();
+            tr.addClass('shown');
+        });
+    }
+});
+
+function format(dataArr) {
+    var html = '<table id="tempTable" class="table table-border table-bordered table-bg table-hover" ' +
+        'cellpadding="6" cellspacing="0" border="0">' +
+        '<tr class="text-c">' +
+        '<th>商品图片</th>' +
+        '<th>商品名称</th>' +
+        '<th>商品价格</th>' +
+        '</tr>' +
+        '<tbody class="tempbody">';
+    for (var i = 0; i < dataArr.length; i++) {
+        var item = dataArr[i];
+        html += '<tr>' +
+            '<td><input type="checkbox" class="checkItem" ' +
+            'data-pid="'+ item.id +'" name="checkItems"></td>' +
+            '<td><img src="' + item.productImg + '" width="80px" height="80px"></td>' +
+            '<td>'+item.productName+'</td>' +
+            '<td>'+item.productPrice+'</td>' +
+            ' </tr>';
+    }
+    html += '</tbody></table>';
+    return html;
+}

@@ -132,6 +132,7 @@ public class Constant {
         }
     }
 
-    public static final String WECHAT_LOGIN_SALT = "eliteon@XKY";
+    public static final String WECHAT_LOGIN_SALT = "cake@XKY";
+    public static final String MEITUAN_SECCESS_SALT = "cakeMeiTuan@XKY";
 
 }

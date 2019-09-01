@@ -10,5 +10,16 @@
         <result property="productId" column="product_id"/>
     </resultMap>
 
+    <select id="findDetail" resultType="java.lang.String">
+        select title from tb_product_size where product_id=#{id}
+    </select>
+
+    <delete id="del">
+        delete from tb_product_size where product_id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 
 </mapper>

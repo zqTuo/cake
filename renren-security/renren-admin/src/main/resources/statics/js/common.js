@@ -112,3 +112,5 @@ function getSelectedRows() {
 function isBlank(value) {
     return !value || !/\S/.test(value)
 }
+
+//全局请求美团session是否过期

@@ -24,5 +24,7 @@ public interface ProductDetailService extends IService<ProductDetailEntity> {
     List<ProductDetailEntity> getByIds(long[] productDetailId);
 
     List<ProductInfoDetailDto> getByProductId(long id);
+
+    BigDecimal countTotalPrice(String prods);
 }
 

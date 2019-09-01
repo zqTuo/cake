@@ -8,7 +8,9 @@ $(function () {
 			{ label: '门店详细地址', name: 'shopAddr', index: 'shop_addr', width: 80 }, 			
 			{ label: '所在地 经度', name: 'shopLongitude', index: 'shop_longitude', width: 80 }, 			
 			{ label: '所在地 纬度', name: 'shopLatitude', index: 'shop_latitude', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '美团店铺ID', name: 'meituanShopId', index: 'meituan_shop_id', width: 80 },
+			{ label: '点评店铺ID', name: 'dianpingShopId', index: 'dianping_shop_id', width: 80 },
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 },
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
         ],

@@ -12,33 +12,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.renren.modules.sys.entity.HotRelationEntity;
-import io.renren.modules.sys.service.HotRelationService;
+import io.renren.modules.sys.entity.MeituanCouponEntity;
+import io.renren.modules.sys.service.MeituanCouponService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
 
 
 /**
- * 热销栏目与商品关联表
+ * 美团券验券记录表
  *
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 17:12:34
+ * @date 2019-09-01 14:26:01
  */
 @RestController
-@RequestMapping("sys/hotrelation")
-public class HotRelationController {
+@RequestMapping("sys/meituancoupon")
+public class MeituanCouponController {
     @Autowired
-    private HotRelationService hotRelationService;
+    private MeituanCouponService meituanCouponService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("sys:hotrelation:list")
+    @RequiresPermissions("sys:meituancoupon:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = hotRelationService.queryPage(params);
+        PageUtils page = meituanCouponService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -48,20 +48,20 @@ public class HotRelationController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("sys:hotrelation:info")
+    @RequiresPermissions("sys:meituancoupon:info")
     public R info(@PathVariable("id") Long id){
-        HotRelationEntity hotRelation = hotRelationService.getById(id);
+        MeituanCouponEntity meituanCoupon = meituanCouponService.getById(id);
 
-        return R.ok().put("hotRelation", hotRelation);
+        return R.ok().put("meituanCoupon", meituanCoupon);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("sys:hotrelation:save")
-    public R save(@RequestBody HotRelationEntity hotRelation){
-        hotRelationService.save(hotRelation);
+    @RequiresPermissions("sys:meituancoupon:save")
+    public R save(@RequestBody MeituanCouponEntity meituanCoupon){
+        meituanCouponService.save(meituanCoupon);
 
         return R.ok();
     }
@@ -70,10 +70,10 @@ public class HotRelationController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("sys:hotrelation:update")
-    public R update(@RequestBody HotRelationEntity hotRelation){
-        ValidatorUtils.validateEntity(hotRelation);
-        hotRelationService.updateById(hotRelation);
+    @RequiresPermissions("sys:meituancoupon:update")
+    public R update(@RequestBody MeituanCouponEntity meituanCoupon){
+        ValidatorUtils.validateEntity(meituanCoupon);
+        meituanCouponService.updateById(meituanCoupon);
         
         return R.ok();
     }
@@ -82,9 +82,9 @@ public class HotRelationController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("sys:hotrelation:delete")
+    @RequiresPermissions("sys:meituancoupon:delete")
     public R delete(@RequestBody Long[] ids){
-        hotRelationService.removeByIds(Arrays.asList(ids));
+        meituanCouponService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

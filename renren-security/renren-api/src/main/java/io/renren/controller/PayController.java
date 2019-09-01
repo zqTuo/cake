@@ -3,7 +3,6 @@ package io.renren.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.annotation.Login;
-import io.renren.common.config.WechatConfig;
 import io.renren.common.result.Result;
 import io.renren.common.utils.Constant;
 import io.renren.common.utils.HttpUtil;
@@ -32,9 +31,11 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +81,7 @@ public class PayController {
     @Login
     @ApiOperation(value = "微信预支付接口")
     @PostMapping("userPay")
-    public Result userPay(@RequestBody PayForm form, @ApiIgnore @RequestAttribute("userId")long userId, HttpServletRequest request){
+    public Result<WechatPay> userPay(@RequestBody PayForm form, @ApiIgnore @RequestAttribute("userId")long userId, HttpServletRequest request){
         ValidatorUtils.validateEntity(form);
 
         ShopOrderEntity orderEntity = orderService.getOne(new QueryWrapper<ShopOrderEntity>().eq("order_no",form.getOrderNo()));

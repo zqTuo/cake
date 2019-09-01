@@ -16,5 +16,6 @@ import java.util.Map;
 public interface HotColumnService extends IService<HotColumnEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
 }
 

@@ -8,15 +8,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 热销栏目与商品关联表
+ * 美团券包含商品信息表
  * 
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 17:12:34
+ * @date 2019-09-01 14:26:01
  */
 @Data
-@TableName("tb_hot_relation")
-public class HotRelationEntity implements Serializable {
+@TableName("tb_meituan_item")
+public class MeituanItemEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,24 +25,12 @@ public class HotRelationEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 热销栏目ID
+	 * 美团券ID
 	 */
-	private Long hotId;
+	private Long couponId;
 	/**
-	 * 商品ID
+	 * 商品详情ID
 	 */
-	private Long productId;
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
-	/**
-	 * 修改时间
-	 */
-	private Date updateTime;
-	/**
-	 * 修改管理员
-	 */
-	private String updateBy;
+	private Long productDetailId;
 
 }

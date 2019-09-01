@@ -1,16 +1,17 @@
 package io.renren.modules.sys.service.impl;
 
-import org.springframework.stereotype.Service;
-import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.Query;
-
 import io.renren.modules.sys.dao.ProductTasteDao;
 import io.renren.modules.sys.entity.ProductTasteEntity;
 import io.renren.modules.sys.service.ProductTasteService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Service("productTasteService")
@@ -24,6 +25,11 @@ public class ProductTasteServiceImpl extends ServiceImpl<ProductTasteDao, Produc
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<String> findDetail(long id) {
+        return baseMapper.findDetail(id);
     }
 
 }

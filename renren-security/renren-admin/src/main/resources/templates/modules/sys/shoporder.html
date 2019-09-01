@@ -3,187 +3,191 @@
 <head>
     <title>订单表</title>
 		<#include "/header.html">
+    <style>
+        .input-text{
+            box-sizing: border-box;
+            border: solid 1px #ddd;
+            width: 100%;
+            -webkit-transition: all .2s linear 0s;
+            -moz-transition: all .2s linear 0s;
+            -o-transition: all .2s linear 0s;
+            transition: all .2s linear 0s;
+            font-size: 14px;
+            height: 31px;
+            line-height: 1.42857;
+            padding: 4px;
+        }
+    </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div class="grid-btn">
-			<#if shiro.hasPermission("sys:shoporder:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
 			<#if shiro.hasPermission("sys:shoporder:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
 			</#if>
-			<#if shiro.hasPermission("sys:shoporder:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
+
+        <div style="float: right;">
+            派送/取货时间：
+            <input type="text" autocomplete="off"
+                   onfocus="WdatePicker({onpicked:dateChange(),maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })"
+                   id="logmin" class="input-text Wdate datetimeStart" style="width:120px;">
+            -
+            <input type="text" autocomplete="off"
+                   onfocus="WdatePicker({onpicked:dateChange(), minDate:'#F{$dp.$D(\'logmin\')}'  })"
+                   id="logmax" class="input-text Wdate datetimeEnd" style="width:120px;">
+
+            <a class="btn btn-success" id="export" ><i class="fa fa-download" aria-hidden="true"></i> 导出Excel</a>
+        </div>
+
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">订单编号</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderNo" placeholder="订单编号"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">用户ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.userId" placeholder="用户ID"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">订单支付金额</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderPrice" placeholder="订单支付金额"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">订单优惠金额</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderDiscount" placeholder="订单优惠金额"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">订单优惠类型 0：无优惠 1：优惠券</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderDiscountType" placeholder="订单优惠类型 0：无优惠 1：优惠券"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">用户的优惠券ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.couponUserId" placeholder="用户的优惠券ID"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderState" placeholder="订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderSourceType" placeholder="订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">备注</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.orderRemark" placeholder="备注"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配送省份</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.addrPro" placeholder="配送省份"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配送城市</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.addrCity" placeholder="配送城市"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配送区域</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.addrDis" placeholder="配送区域"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配送详细地址</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.addrDetail" placeholder="配送详细地址"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">收货人</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.addrReceiver" placeholder="收货人"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配送方式 0：送货上门 1：门店自取</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.sendType" placeholder="配送方式 0：送货上门 1：门店自取"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">联系方式</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.addrPhone" placeholder="联系方式"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">派送时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.sendTime" placeholder="派送时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">支付时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.payTime" placeholder="支付时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">支付方式 0：微信支付</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.payType" placeholder="支付方式 0：微信支付"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">门店ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.shopId" placeholder="门店ID"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">取消时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.cancelTime" placeholder="取消时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">签收时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.finishTime" placeholder="签收时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="shopOrder.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单编号</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderNo" placeholder="订单编号"/>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">用户ID</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.userId" placeholder="用户ID"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单支付金额</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderPrice" placeholder="订单支付金额"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单优惠金额</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderDiscount" placeholder="订单优惠金额"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单优惠类型 0：无优惠 1：优惠券</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderDiscountType"
+                       placeholder="订单优惠类型 0：无优惠 1：优惠券"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">用户的优惠券ID</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.couponUserId" placeholder="用户的优惠券ID"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderState"
+                       placeholder="订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderSourceType"
+                       placeholder="订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">备注</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.orderRemark" placeholder="备注"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">配送省份</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.addrPro" placeholder="配送省份"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">配送城市</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.addrCity" placeholder="配送城市"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">配送区域</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.addrDis" placeholder="配送区域"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">配送详细地址</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.addrDetail" placeholder="配送详细地址"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">收货人</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.addrReceiver" placeholder="收货人"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">配送方式 0：送货上门 1：门店自取</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.sendType" placeholder="配送方式 0：送货上门 1：门店自取"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">联系方式</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.addrPhone" placeholder="联系方式"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">派送时间</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.sendTime" placeholder="派送时间"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">创建时间</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.createTime" placeholder="创建时间"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">支付时间</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.payTime" placeholder="支付时间"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">支付方式</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.payType" placeholder="支付方式 0：微信支付"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">门店ID</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.shopId" placeholder="门店ID"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
+</div>
 </div>
 
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/My97DatePicker/4.8/WdatePicker.js"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/shoporder.js?_${.now?long}"></script>
 </body>
 </html>

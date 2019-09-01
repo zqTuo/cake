@@ -1,7 +1,7 @@
 package io.renren.modules.sys.dao;
 
-import io.renren.modules.sys.entity.HotColumnEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.renren.modules.sys.entity.HotColumnEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface HotColumnDao extends BaseMapper<HotColumnEntity> {
-	
+
 }

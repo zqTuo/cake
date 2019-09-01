@@ -3,6 +3,7 @@ package io.renren.modules.sys.dao;
 import io.renren.modules.sys.entity.ProductDetailEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 商品详情表
@@ -13,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ProductDetailDao extends BaseMapper<ProductDetailEntity> {
-	
+
+    void del(@Param("ids") Long[] ids);
 }

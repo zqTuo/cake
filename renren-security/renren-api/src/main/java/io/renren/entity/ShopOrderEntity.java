@@ -2,8 +2,10 @@ package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -18,6 +20,8 @@ import java.util.Date;
  */
 @Data
 @TableName("tb_shop_order")
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ShopOrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -44,13 +48,17 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private BigDecimal orderDiscount;
 	/**
-	 * 订单优惠类型 0：无优惠 1：优惠券
+	 * 订单优惠类型 0：无优惠 1：优惠券  2：美团券
 	 */
 	private Integer orderDiscountType;
 	/**
 	 * 用户的优惠券ID
 	 */
 	private Long couponUserId;
+	/**
+	 * 美团券验券记录ID
+	 */
+	private Long meituanId;
 	/**
 	 * 订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收
 	 */
@@ -88,6 +96,10 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Integer sendType;
 	/**
+	 * 配送费用
+	 */
+	private BigDecimal sendPrice;
+	/**
 	 * 联系方式
 	 */
 	private String addrPhone;
@@ -95,6 +107,10 @@ public class ShopOrderEntity implements Serializable {
 	 * 派送时间/取货日期
 	 */
 	private String sendTime;
+	/**
+	 * 派送日期 yyyy-MM-dd
+	 */
+	private Date sendDate;
 	/**
 	 * 创建时间
 	 */

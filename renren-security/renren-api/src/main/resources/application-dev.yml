@@ -3,12 +3,12 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-#      url: jdbc:mysql://120.25.106.3:3306/cake_testdb?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      url: jdbc:mysql://localhost:9988/cake_db?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-#      username: zuofang_cake
-#      password: 5149330
-      username: root
-      password: 123456
+      url: jdbc:mysql://120.25.106.3:3306/cake_testdb?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#      url: jdbc:mysql://localhost:3306/cake_db?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: zuofang_cake
+      password: 5149330
+#      username: root
+#      password: 123456
       initial-size: 10
       max-active: 100
       min-idle: 10
@@ -73,3 +73,11 @@ baiduMap:
   ak: SoQCCsGE9S8ILEvx1HCtV8S6oS4PYYXA
   locationUrl: http://api.map.baidu.com/place/v2/search
   distanceUrl: http://api.map.baidu.com/routematrix/v2/driving
+
+# 美团
+meituan:
+  appKey: a47e6d93e90e87b0
+  appSecret: 9bd1648712f0456a8ede514077e80a8ac00b4ffe
+  redirect_url: /cake-api/api/meituan/authRedirect
+  sessionUrl: https://openapi.dianping.com/router/oauth/token
+  checkCodeUrl: https://openapi.dianping.com/router/tuangou/receipt/prepare

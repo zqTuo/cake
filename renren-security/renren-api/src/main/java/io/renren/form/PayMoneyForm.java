@@ -23,11 +23,8 @@ public class PayMoneyForm {
     @ApiModelProperty(value = "配送地址ID，送货上门时必传")
     private long addressId;
 
-    @ApiModelProperty(value = "商品详情ID数组",required = true)
-    private long[] productDetailId;
-
-    @ApiModelProperty(value = "加购商品id数组")
-    private long[] extraIds;
+    @ApiModelProperty(value = "商品详情数组字符串,格式：[{\"detailId\":1,buyNum:1}]，detailId：商品详情id，buyNum：购买数量",required = true)
+    private String prods;
 
     @ApiModelProperty(value = "优惠券ID")
     private long couponUserId;
@@ -35,4 +32,7 @@ public class PayMoneyForm {
     @ApiModelProperty(value = "店铺ID",required = true)
     @Min(value = 1,message = "请传入店铺ID")
     private long shopId;
+
+    @ApiModelProperty(value = "美团券券码ID")
+    private long meituanId;
 }

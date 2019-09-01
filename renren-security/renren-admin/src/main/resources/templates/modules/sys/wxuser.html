@@ -7,103 +7,10 @@
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
-        <div class="grid-btn">
-			<#if shiro.hasPermission("sys:wxuser:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
-			<#if shiro.hasPermission("sys:wxuser:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			</#if>
-			<#if shiro.hasPermission("sys:wxuser:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
-        </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">用户昵称</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userName" placeholder="用户昵称"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">用户头像</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userHead" placeholder="用户头像"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">会员等级 0：普通用户 1：会员用户</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userMember" placeholder="会员等级 0：普通用户 1：会员用户"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">openid</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userOpenid" placeholder="openid"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">unionid</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userUnionid" placeholder="unionid"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">上次登录IP地址</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userLastip" placeholder="上次登录IP地址"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">上次登录时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userLastlogintime" placeholder="上次登录时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">手机号</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userPhone" placeholder="手机号"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">用户状态 1：正常使用 0：禁用</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.userState" placeholder="用户状态 1：正常使用 0：禁用"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxuser.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
-            </div>
-        </form>
-    </div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/wxuser.js?_${.now?long}"></script>
