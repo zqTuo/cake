@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface SendTimeService extends IService<SendTimeEntity> {
 
-    void resolveTimeList(List<SendTimeDto> sendTimeList, float distance, String selectedDate) throws ParseException;
+    void resolveTimeList(List<SendTimeDto> sendTimeList, float distance, String selectedDate,int sendType) throws ParseException;
 
     List<SendTimeDto> getData();
 }

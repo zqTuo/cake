@@ -3,9 +3,7 @@ package io.renren.common.result;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 功能描述: <br>
@@ -49,5 +47,9 @@ public class Result<T> {
 
     public Result error(String msg){
         return new Result(500,msg);
+    }
+
+    public Result error(int code, String msg) {
+        return new Result(code,msg);
     }
 }

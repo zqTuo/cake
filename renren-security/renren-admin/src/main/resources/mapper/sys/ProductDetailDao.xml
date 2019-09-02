@@ -9,6 +9,7 @@
         <result property="detailCover" column="detail_cover"/>
         <result property="detailName" column="detail_name"/>
         <result property="productId" column="product_id"/>
+        <result property="detailSku" column="detail_sku"/>
         <result property="detailPrice" column="detail_price"/>
         <result property="detailSize" column="detail_size"/>
         <result property="sizeId" column="size_id"/>
@@ -18,6 +19,13 @@
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>
     </resultMap>
+
+    <delete id="del">
+        delete from tb_product_detail where product_id in
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
 
 </mapper>

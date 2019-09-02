@@ -32,8 +32,9 @@ create table tb_product(
   product_desc varchar(500) not null default '' comment '商品描述',
   product_info text not null comment '商品详情HTML代码',
   product_flag int not null default 1 comment '商品状态 0：下架 1：上架',
-  product_hot int not null default 0 comment '热销标记(展示在首页) 0：不推荐 1：推荐',
+  product_hot_id bigint(11) not null default 0 comment '热销标记(展示在首页) 0：不推荐 1：推荐栏目ID',
   product_extra int not null default 0 comment '加购标记 0：不设为加购 1：设为加购',
+  product_hot_flag int not null default 0 comment '热门标记 0：不推荐 1：推荐',
   shop_id bigint(20) not null default 0 comment '所属门店',
   create_time datetime not null COMMENT '创建时间',
   update_time datetime COMMENT '修改时间',
@@ -47,6 +48,7 @@ create table tb_product_detail(
   detail_cover varchar(200) not null default '' comment '商品规格图片',
   detail_name varchar(200) not null default '' comment '商品规格名称',
   product_id bigint(20) not null default 0 comment '所属商品ID',
+  detail_sku varchar(100) not null default '' comment '规格SKU',
   detail_price decimal(11,2) not null default 0 comment '商品规格价格',
   detail_size varchar(100) not null default '' comment '商品尺寸',
   size_id bigint(11) not null default 0 comment '尺寸id',
@@ -96,6 +98,7 @@ create table tb_shop_order(
     order_discount decimal(11,2) not null default 0 comment '订单优惠金额',
     order_discount_type int not null default 0 comment '订单优惠类型 0：无优惠 1：优惠券',
     coupon_user_id bigint(20) default 0 comment '用户的优惠券ID',
+    meituan_id bigint(20) default 0 comment '美团券验券记录ID',
     order_state int not null default -1 comment '订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收',
     order_source_type int not null default 0 comment '订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员',
     order_remark varchar(500) default '' comment '备注',
@@ -106,7 +109,9 @@ create table tb_shop_order(
     addr_receiver varchar(100) default '' comment '收货人',
     send_type int not null default 0 comment '配送方式 0：送货上门 1：门店自取',
     addr_phone varchar(20) default '' comment '联系方式',
-    send_time varchar(100) not null comment '派送时间',
+    send_time varchar(100) not null comment '派送时间段',
+    send_date date not null comment '配送时间日期',
+    send_price decimal(11,2) not null default 0 comment '配送费用',
     create_time datetime not null COMMENT '创建时间',
     pay_time datetime comment '支付时间',
     pay_type int default 0 comment '支付方式 0：微信支付',
@@ -190,6 +195,8 @@ create table tb_shop(
     shop_addr varchar(500) not null default '' comment '门店详细地址',
     shop_longitude varchar(100) not null default '' comment '所在地 经度',
     shop_latitude varchar(100) not null default '' comment '所在地 纬度',
+    meituan_shop_id varchar(100) default '' comment '美团店铺ID',
+    dianping_shop_id varchar(100) default '' comment '点评店铺ID',
     create_time datetime not null COMMENT '创建时间',
     update_time datetime COMMENT '修改时间',
     update_by VARCHAR(100) default '' comment '修改管理员',
@@ -253,17 +260,6 @@ create table tb_hot_column(
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='首页热销栏目表';
 
--- 热销栏目与商品关联表
-create table tb_hot_relation(
-    id bigint(20) auto_increment,
-    hot_id bigint(20) not null default 0 comment '热销栏目ID',
-    product_id bigint(20) not null default 0 comment '商品ID',
-    create_time datetime not null COMMENT '创建时间',
-    update_time datetime COMMENT '修改时间',
-    update_by VARCHAR(100) default '' comment '修改管理员',
-    primary key (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='热销栏目与商品关联表';
-
 -- 收货地址表
 create table tb_address(
     id bigint(20) auto_increment,
@@ -291,6 +287,27 @@ create table tb_order_sales(
     update_by VARCHAR(100) default '' comment '修改管理员',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='财务流水表';
+
+-- 美团券验券记录表
+create table tb_meituan_coupon(
+  id bigint(11) auto_increment,
+  user_id bigint(11) not null default 0 comment '用户ID',
+  code varchar(100) not null default '' comment '美团点评券码',
+  sourceType int not null default 0 comment '券码类型 0：美团 1：大众点评',
+  flag int not null default 0 comment '使用状态 0:未使用 1：已使用',
+  create_time datetime not null COMMENT '验券时间',
+  use_time datetime COMMENT '使用时间',
+  update_time datetime COMMENT '修改时间',
+  primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='美团券验券记录表';
+
+-- 美团券包含商品信息表
+create table tb_meituan_item(
+  id bigint(11) auto_increment,
+  coupon_id bigint(11) not null default 0 comment '美团券ID',
+  product_detail_id bigint(11) not null default 0 comment '商品详情ID',
+  primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='美团券包含商品信息表';
 
 
 

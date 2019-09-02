@@ -10,6 +10,8 @@
         <result property="shopAddr" column="shop_addr"/>
         <result property="shopLongitude" column="shop_longitude"/>
         <result property="shopLatitude" column="shop_latitude"/>
+        <result property="meituanShopId" column="meituan_shop_id"/>
+        <result property="dianpingShopId" column="dianping_shop_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>

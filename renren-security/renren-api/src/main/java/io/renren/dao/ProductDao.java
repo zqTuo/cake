@@ -25,4 +25,8 @@ public interface ProductDao extends BaseMapper<ProductEntity> {
     List<ProductDto> findProduct(@Param("form") PageForm form);
 
     List<ProductDto> getExtraInfo();
+
+    List<ProductDto> findBySku(@Param("skuArr") String[] detailSku);
+
+    ProductDto findNewOne();
 }

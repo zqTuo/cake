@@ -74,13 +74,17 @@ public class ProductEntity implements Serializable {
 	 */
 	private Integer productFlag;
 	/**
-	 * 热销标记(展示在首页) 0：不推荐 1：推荐
+	 * 热销标记(展示在首页) 0：不展示 1：展示栏目ID
 	 */
-	private Integer productHot;
+	private Long productHotId;
 	/**
 	 * 加购标记 0：不设为加购 1：设为加购
 	 */
 	private Integer productExtra;
+	/**
+	 * 热门标记 0：不推荐 1：推荐
+	 */
+	private Integer productHotFlag;
 	/**
 	 * 所属门店
 	 */

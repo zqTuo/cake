@@ -14,6 +14,7 @@ public class DateUtil {
     private static SimpleDateFormat sdfLongTimePlus = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static SimpleDateFormat sdf_yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
     private static SimpleDateFormat sdf_yyyyMMddHHmm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static SimpleDateFormat sdfLongTime = new SimpleDateFormat("yyyyMMddHHmmss");
 
     public DateUtil(){}
 
@@ -35,6 +36,14 @@ public class DateUtil {
         {
             throw e;
         }
+    }
+
+    /**
+     * Descrption:取得当前日期时间,格式为:YYYYMMDDHHMISS
+     * @return String
+     */
+    public static String getNowLongTime(){
+        return sdfLongTime.format(new Date());
     }
 
     public static String generateTimeStamp() {

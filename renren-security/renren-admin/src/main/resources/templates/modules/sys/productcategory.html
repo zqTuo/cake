@@ -35,7 +35,6 @@
             <div class="col-sm-2 control-label">父类</div>
             <div class="col-sm-10">
                 <select class="form-control" v-model="productCategory.categoryParentid">
-                    <option :value="0" selected >顶级分类</option>
                     <option :value="item.id" v-for="(item,index) in cateList" :key="index" :data-lev="item.lev">{{item.name}}</option>
                 </select>
             </div>
@@ -47,24 +46,6 @@
                     <option :value="1" selected >启用</option>
                     <option :value="0" >禁用</option>
                 </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">创建时间</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="productCategory.createTime" placeholder="创建时间"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">修改时间</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="productCategory.updateTime" placeholder="修改时间"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">修改管理员</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="productCategory.updateBy" placeholder="修改管理员"/>
             </div>
         </div>
         <div class="form-group">

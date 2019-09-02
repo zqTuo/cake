@@ -1,25 +1,18 @@
 package io.renren.modules.sys.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import io.renren.common.validator.ValidatorUtils;
-import io.renren.modules.sys.dto.CategoryDto;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.modules.sys.entity.ProductCategoryEntity;
-import io.renren.modules.sys.service.ProductCategoryService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
+import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.dto.CategoryDto;
+import io.renren.modules.sys.entity.ProductCategoryEntity;
+import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.service.ProductCategoryService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
 
 
 /**
@@ -111,6 +104,10 @@ public class ProductCategoryController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:productcategory:save")
     public R save(@RequestBody ProductCategoryEntity productCategory){
+        ValidatorUtils.validateEntity(productCategory);
+
+        productCategory.setCreateTime(new Date());
+        productCategory.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
         productCategoryService.save(productCategory);
 
         return R.ok();
@@ -123,6 +120,9 @@ public class ProductCategoryController {
     @RequiresPermissions("sys:productcategory:update")
     public R update(@RequestBody ProductCategoryEntity productCategory){
         ValidatorUtils.validateEntity(productCategory);
+
+        productCategory.setUpdateTime(new Date());
+        productCategory.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
         productCategoryService.updateById(productCategory);
         
         return R.ok();

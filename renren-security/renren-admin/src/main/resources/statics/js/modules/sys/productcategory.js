@@ -6,7 +6,13 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '分类名称', name: 'categoryName', index: 'category_name', width: 80 }, 			
 			{ label: '父类ID', name: 'categoryParentid', index: 'category_parentid', width: 80 }, 			
-			{ label: '状态', name: 'categoryFlag', index: 'category_flag', width: 80 },
+			{ label: '状态', name: 'categoryFlag', index: 'category_flag', width: 80   ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已启用</span>";
+                    }else{
+                        return "<span class='label label-warning radius'>已禁用</span>";
+                    }
+                }},
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
@@ -43,8 +49,13 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		productCategory: {}
-	},
+		productCategory: {},
+        cateList:[]
+    },
+    mounted: function(){
+        var that = this;
+        that.getCateList();
+    },
 	methods: {
 		query: function () {
 			vm.reload();
@@ -127,6 +138,16 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        getCateList: function (event) {
+            $.get(baseURL + "sys/productcategory/findAll", function(r){
+                vm.cateList = r.arrayData;
+                var cate = {};
+                cate.id = 0;
+                cate.lev = 0;
+                cate.name = '顶级分类';
+                vm.cateList.unshift(cate)
+            });
+        }
 	}
 });

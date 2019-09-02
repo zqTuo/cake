@@ -1,27 +1,22 @@
 package io.renren.modules.sys.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.renren.common.utils.PageUtils;
+import io.renren.common.utils.R;
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.ProductDetailEntity;
 import io.renren.modules.sys.entity.ProductSizeEntity;
 import io.renren.modules.sys.entity.ProductTasteEntity;
+import io.renren.modules.sys.service.ProductDetailService;
 import io.renren.modules.sys.service.ProductSizeService;
 import io.renren.modules.sys.service.ProductTasteService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.renren.modules.sys.entity.ProductDetailEntity;
-import io.renren.modules.sys.service.ProductDetailService;
-import io.renren.common.utils.PageUtils;
-import io.renren.common.utils.R;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -140,5 +135,6 @@ public class ProductDetailController {
 
         return R.ok();
     }
+
 
 }

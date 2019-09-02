@@ -53,7 +53,7 @@ public class AddressController {
     @Login
     @ApiOperation(value = "新增或修改地址接口")
     @PostMapping("addOrUpdate")
-    public R addOrUpdate(@RequestBody AddressEntity addressEntity,@ApiIgnore @RequestAttribute("userId")long userId){
+    public Result<AddressEntity> addOrUpdate(@RequestBody AddressEntity addressEntity,@ApiIgnore @RequestAttribute("userId")long userId){
         ValidatorUtils.validateEntity(addressEntity);
 
         log.info("添加或修改地址参数：" + addressEntity.toString());
@@ -74,7 +74,7 @@ public class AddressController {
             addressEntity.setUserId(userId);
             addressService.save(addressEntity);
         }
-        return R.ok();
+        return new Result<>().ok(addressEntity);
     }
 
     @Login

@@ -3,6 +3,16 @@
 <head>
     <title>首页热销栏目表</title>
 		<#include "/header.html">
+    <style>
+        td.details-control {
+            background: url('statics/img/details_open.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.shown td.details-control {
+            background: url('statics/img/details_close.png') no-repeat center center;
+        }
+    </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -22,40 +32,23 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">栏目标题</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="hotColumn.hotTitle" placeholder="栏目标题"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="hotColumn.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="hotColumn.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="hotColumn.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">栏目标题</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="hotColumn.hotTitle" placeholder="栏目标题"/>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
+</div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/hotcolumn.js?_${.now?long}"></script>

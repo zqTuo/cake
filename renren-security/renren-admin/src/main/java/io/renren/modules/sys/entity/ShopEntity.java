@@ -41,6 +41,14 @@ public class ShopEntity implements Serializable {
 	 */
 	private String shopLatitude;
 	/**
+	 * 美团店铺ID
+	 */
+	private String meituanShopId;
+	/**
+	 * 点评店铺ID
+	 */
+	private String dianpingShopId;
+	/**
 	 * 创建时间
 	 */
 	private Date createTime;

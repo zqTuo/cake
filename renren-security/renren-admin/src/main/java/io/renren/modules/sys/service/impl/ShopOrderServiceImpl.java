@@ -1,16 +1,17 @@
 package io.renren.modules.sys.service.impl;
 
-import org.springframework.stereotype.Service;
-import java.util.Map;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.Query;
-
 import io.renren.modules.sys.dao.ShopOrderDao;
+import io.renren.modules.sys.dto.ExcelOrderDto;
 import io.renren.modules.sys.entity.ShopOrderEntity;
 import io.renren.modules.sys.service.ShopOrderService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Service("shopOrderService")
@@ -18,12 +19,14 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrderEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<ShopOrderEntity> page = this.page(
-                new Query<ShopOrderEntity>().getPage(params),
-                new QueryWrapper<ShopOrderEntity>()
-        );
+        IPage<ShopOrderEntity> page = baseMapper.findByPage(new Query<ShopOrderEntity>().getPage(params),params);
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<ExcelOrderDto> getData(Map<String, Object> map) {
+        return baseMapper.getData(map);
     }
 
 }

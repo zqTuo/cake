@@ -38,8 +38,12 @@ public class Constant {
      *  升序
      */
     public static final String ASC = "asc";
+    /**
+     * 订单excel表模板文件名
+     */
+    public static final String EXPORT_PACKAGE_EXCEL = "Order";
 
-	/**
+    /**
 	 * 菜单类型
 	 */
     public enum MenuType {

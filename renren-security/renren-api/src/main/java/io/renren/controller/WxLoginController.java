@@ -28,7 +28,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -110,9 +109,19 @@ public class WxLoginController {
         log.info("url是：" + url);
         log.info("state是：" + state);
         log.info("code是：" + code);
-        if (org.springframework.util.StringUtils.isEmpty(code) || org.springframework.util.StringUtils.isEmpty(state)) {
+        if (StringUtils.isEmpty(code) || StringUtils.isEmpty(state)) {
             log.error("接收code错误，code为空");
             return "";
+        }
+
+        // 校验 防止跨站请求伪造攻击
+        String o_state = Constant.MEITUAN_SECCESS_SALT + DateUtil.getYYYYMMdd();
+        MD5 md5 = new MD5();
+        String cotent2Aes = md5.toDigest(o_state);
+
+        log.info("微信登录，原state：" + cotent2Aes);
+        if(!(cotent2Aes).equals(state)){
+            return "redirect:" + url_pre;
         }
 
         //*************************   获取openid   ***********************************

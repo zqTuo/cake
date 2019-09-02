@@ -21,12 +21,15 @@ public class OrderForm {
     @ApiModelProperty(value = "购买商品数据,格式：[{\"detailId\":1,buyNum:1}]",required = true)
     private String prods;
 
-    @ApiModelProperty(value = "优惠类型：0无优惠 1：优惠券",required = true)
+    @ApiModelProperty(value = "优惠类型：0无优惠 1：优惠券 2：美团券",required = true)
     @Min(value = 0,message = "缺少优惠类型参数")
     private int discountType;
 
     @ApiModelProperty(value = "优惠券ID")
     private long couponUserId;
+
+    @ApiModelProperty(value = "美团券券码ID")
+    private long meituanId;
 
     @Min(value = 0,message = "缺少业务类型参数")
     @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约烘焙课程 2：购买会员",required = true)
@@ -40,7 +43,7 @@ public class OrderForm {
     private long addressId;
 
     @NotBlank(message = "缺少配送/取货时间参数")
-    @ApiModelProperty(value = "配送/取货时间 格式：yyyy-MM-dd",required = true)
+    @ApiModelProperty(value = "配送/取货时间 格式：yyyy-MM-dd HH:mm",required = true)
     private String sendTime;
 
     @Min(value = 0,message = "缺少门店参数")

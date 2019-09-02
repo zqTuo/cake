@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class HotColumnEntity implements Serializable {
 	/**
 	 * 栏目标题
 	 */
+	@NotBlank(message = "请填写栏目标题")
 	private String hotTitle;
 	/**
 	 * 创建时间

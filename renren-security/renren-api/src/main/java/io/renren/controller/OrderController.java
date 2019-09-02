@@ -1,12 +1,11 @@
 package io.renren.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.annotation.Login;
 import io.renren.common.result.Result;
 import io.renren.common.utils.Constant;
-import io.renren.common.utils.LocationUtils;
+import io.renren.common.utils.JodaTimeUtil;
 import io.renren.common.utils.R;
 import io.renren.common.utils.UniqueOrderGenerate;
 import io.renren.common.validator.ValidatorUtils;
@@ -16,6 +15,7 @@ import io.renren.form.*;
 import io.renren.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,6 +62,8 @@ public class OrderController {
     private WxuserService wxuserService;
     @Resource
     private ShoppingCartService shoppingCartService;
+    @Resource
+    private MeituanItemService meituanItemService;
 
     @Value("${project.pic_pre}")
     private String pic_pre;
@@ -75,13 +77,16 @@ public class OrderController {
         List<SendTimeDto> sendTimeEntityList = sendTimeService.getData();
 
         // 根据派送地址系统时间 计算可选时段
-        float distance = freightService.getDistance(form.getShopId(),form.getCity(),form.getAddr());
+        float distance = 0;
+        if(form.getSendType() == 0){
+            distance = freightService.getDistance(form.getShopId(),form.getCity(),form.getAddr());
 
-        if(distance == -1){
-            return new Result<>().error("尚未获取派送距离，请核实派送地址是否有误");
+            if(distance == -1){
+                return new Result<>().error("尚未获取派送距离，请核实派送地址是否有误");
+            }
         }
 
-        sendTimeService.resolveTimeList(sendTimeEntityList,distance,form.getSelectedDate());
+        sendTimeService.resolveTimeList(sendTimeEntityList,distance,form.getSelectedDate(),form.getSendType());
         return new Result<>().ok(sendTimeEntityList);
     }
 
@@ -100,12 +105,15 @@ public class OrderController {
             PayProDto payProDto = PayProDto.builder().buyNum(form.getBuyNum()).detailCover(pic_pre + productDetail.getDetailCover())
                     .detailName(productDetail.getProductName()).detailPrice(productDetail.getDetailPrice())
                     .productDetailId(productDetail.getId())
-                    .detailSize(JSONObject.parseObject(productDetail.getDetailSize()).getString("size"))
-                    .detailTaste(JSONObject.parseObject(productDetail.getDetailTaste()).getString("taste"))
+                    .detailSize(productDetail.getDetailSize())
+                    .detailTaste(productDetail.getDetailTaste())
                     .build();
             payProDtoList.add(payProDto);
         }else{ // 购物车购买
             payProDtoList = shoppingCartService.getBuyData(userId);
+            for (PayProDto payProDto:payProDtoList){
+                payProDto.setDetailCover(pic_pre + payProDto.getDetailCover());
+            }
         }
 
         return new Result<>().ok(payProDtoList);
@@ -120,24 +128,19 @@ public class OrderController {
         ValidatorUtils.validateEntity(form);
         log.info("======= 用户：" + userId + ",结算参数：" + form.toString());
 
-        // 计算购买商品
-        BigDecimal totalPrice = new BigDecimal("0");
-        List<ProductDetailEntity> detailList = productDetailService.getByIds(form.getProductDetailId());
-        for (ProductDetailEntity detail:detailList){
-            totalPrice = totalPrice.add(detail.getDetailPrice());
+        if(StringUtils.isEmpty(form.getProds())){
+            return new Result<>().error("请传入商品参数");
         }
+
+        // 计算购买商品
+        BigDecimal totalPrice = productDetailService.countTotalPrice(form.getProds());
 
         log.info("购买商品金额：" + totalPrice);
         PayMoneyDto payMoneyDto = new PayMoneyDto();
 
         payMoneyDto.setPrice(totalPrice);
-
-        if(form.getExtraIds() != null && form.getExtraIds().length > 0){
-            //计算加购商品
-            BigDecimal extraPrice = productDetailService.countExtraPrice(form.getExtraIds());
-            log.info( "加购商品金额：" + extraPrice);
-            totalPrice = totalPrice.add(extraPrice);
-        }
+        payMoneyDto.setDiscount(new BigDecimal(0));
+        payMoneyDto.setFreight(new BigDecimal(0));
 
         if(form.getCouponUserId() > 0){
             //计算优惠券
@@ -147,14 +150,28 @@ public class OrderController {
             payMoneyDto.setDiscount(discount);
         }
 
+        if(form.getMeituanId() > 0){
+            // 计算美团券包含商品金额
+            BigDecimal discount = meituanItemService.countPrice(form.getMeituanId());
+            log.info( "使用美团商品抵扣券优惠金额：" + discount);
+            totalPrice = totalPrice.subtract(discount);
+            payMoneyDto.setDiscount(payMoneyDto.getDiscount().add(discount));
+        }
+
         if(form.getSendType() == 0){
             //计算配送费
             AddressEntity addressEntity = addressService.getById(form.getAddressId());
             BigDecimal freight = freightService.getFreight(form.getShopId(),addressEntity.getCity(),addressEntity.getAddress());
             log.info("送货上门，运费：" + freight);
             totalPrice = totalPrice.add(freight).setScale(2,BigDecimal.ROUND_HALF_UP);
-            payMoneyDto.setTotalPrice(totalPrice);
+
             payMoneyDto.setFreight(freight);
+        }
+
+        payMoneyDto.setTotalPrice(totalPrice);
+
+        if(totalPrice.compareTo(new BigDecimal("0")) < 0){
+            payMoneyDto.setTotalPrice(new BigDecimal("0"));
         }
 
         return new Result().ok(payMoneyDto);
@@ -168,6 +185,25 @@ public class OrderController {
 
         log.info("====== 用户:" + userId + "统一下单参数：" + form.toString());
 
+        String sendTimeHHss = ""; // 配送时间段
+        Date sendDate = null; // 配送时间 日
+        try {
+            sendDate = JodaTimeUtil.strToDate(form.getSendTime(),"yyyy-MM-dd HH:mm");
+            sendTimeHHss = JodaTimeUtil.getTimeStrForHHss(form.getSendTime());
+            SendTimeEntity sendTimeEntity = sendTimeService.getOne(new QueryWrapper<SendTimeEntity>()
+                    .eq("start_time",sendTimeHHss));
+            if(sendTimeEntity == null){
+                return new Result<>().error("无此时间派送");
+            }
+
+            sendTimeHHss = sendTimeEntity.getStartTime() + "-" + sendTimeEntity.getEndTime();
+            log.info("配送时间段：" + sendTimeHHss);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Result<>().error("配送时间格式错误，请遵照yyyy-MM-dd HH:ss格式");
+        }
+
+
         UniqueOrderGenerate idWorker = new UniqueOrderGenerate(0, 0);
         String orderNo = String.valueOf(idWorker.nextId());//雪花算法 生成订单号
 
@@ -175,6 +211,7 @@ public class OrderController {
 
         BigDecimal totalPrice = new BigDecimal("0.00"); // 订单总价
         BigDecimal discountFee = new BigDecimal("0.00"); // 优惠金额
+        BigDecimal sendPrice = new BigDecimal("0.00"); // 配送费用
 
         int orderState = Constant.ORDER_UNPAY; // 是否已经抵扣完的订单状态
 
@@ -192,17 +229,18 @@ public class OrderController {
                     return new Result<>().error(errMsg + "已下架！");
                 }
 
-                ShopOrderItemEntity orderItemEntity = ShopOrderItemEntity.builder().orderNo(orderNo).productName(productDetail.getProductName())
+                ShopOrderItemEntity orderItemEntity = ShopOrderItemEntity.builder().orderNo(orderNo)
+                        .productName(productDetail.getProductName())
                         .productId(productDetail.getProductId()).detailCover(productDetail.getDetailCover())
                         .detailPrice(productDetail.getDetailPrice())
-                        .detailSize(JSONObject.parseObject(productDetail.getDetailSize()).getString("size"))
-                        .detailTaste(JSONObject.parseObject(productDetail.getDetailTaste()).getString("taste"))
+                        .detailSize(productDetail.getDetailSize())
+                        .detailTaste(productDetail.getDetailTaste())
                         .buyNum(buyNum).userMember(0).courseId(0L).build();
 
                 orderItemList.add(orderItemEntity);
 
                 log.info("条目价格："+ orderItemEntity.getDetailPrice() +",订单详情生成:" + orderItemEntity.toString());
-                totalPrice = totalPrice.add(orderItemEntity.getDetailPrice());
+                totalPrice = totalPrice.add(orderItemEntity.getDetailPrice().multiply(new BigDecimal(buyNum)));
 
             }
 
@@ -219,6 +257,15 @@ public class OrderController {
                 discountFee = discountFee.add(discount);
             }
 
+            if(form.getMeituanId() > 0){
+                // 计算美团券包含商品金额
+                BigDecimal discount = meituanItemService.countPrice(form.getMeituanId());
+                log.info( "使用美团商品抵扣券优惠金额：" + discount);
+                totalPrice = totalPrice.subtract(discount);
+                discountFee = discountFee.add(discount);
+            }
+
+
             String sendAddr = "";
             String addrReceiver = "";
             String addrPhone = "";
@@ -232,6 +279,7 @@ public class OrderController {
 
                 BigDecimal freight = freightService.getFreight(form.getShopId(),addressEntity.getCity(),addressEntity.getAddress());
                 log.info("送货上门，运费：" + freight);
+                sendPrice = sendPrice.add(freight);
                 totalPrice = totalPrice.add(freight).setScale(2,BigDecimal.ROUND_HALF_UP);
             }else{
                 ShopEntity shopEntity = shopService.getById(form.getShopId());
@@ -249,7 +297,8 @@ public class OrderController {
                     .orderPrice(totalPrice).orderDiscount(discountFee).orderDiscountType(form.getDiscountType())
                     .couponUserId(form.getCouponUserId()).orderState(orderState).orderSourceType(form.getSourceType())
                     .orderRemark(form.getOrderRemark()).addrDetail(sendAddr).sendType(form.getSendType())
-                    .addrPhone(addrPhone).addrReceiver(addrReceiver).sendTime(form.getSendTime())
+                    .sendPrice(sendPrice).sendTime(sendTimeHHss)
+                    .addrPhone(addrPhone).addrReceiver(addrReceiver).sendDate(sendDate)
                     .createTime(new Date()).payType(0).shopId(form.getShopId())
                     .build();
 

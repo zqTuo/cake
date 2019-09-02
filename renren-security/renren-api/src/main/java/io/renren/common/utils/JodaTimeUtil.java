@@ -23,6 +23,7 @@ public class JodaTimeUtil {
     public static final SimpleDateFormat STANDARD_DATE_FORMAT = new SimpleDateFormat(STANDARD_FORMAT);
     public static final String IDCARD_FORMAT = "yyyyMMdd";
     private static final SimpleDateFormat sdf_yyyyMMddHHmm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final SimpleDateFormat sdf_HHmm = new SimpleDateFormat("HH:mm");
 
 
     public static Date strToDate(String dateTimeStr,String formatStr){
@@ -191,7 +192,11 @@ public class JodaTimeUtil {
 
 
     public static void main(String[] args) throws ParseException {
-        System.out.println(duringHours("2019-08-26 10:00","2019-08-26 22:00"));
+        String temp = "2019-9-10 11:00";
+        System.out.println(strToDate(temp,"yyyy-MM-dd HH:mm"));
     }
 
+    public static String getTimeStrForHHss(String sendTime) throws ParseException {
+        return sdf_HHmm.format(sdf_yyyyMMddHHmm.parse(sendTime));
+    }
 }

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,18 +29,22 @@ public class ProductCategoryEntity implements Serializable {
 	/**
 	 * 分类名称
 	 */
+	@NotBlank(message = "请填写分类名称")
 	private String categoryName;
 	/**
 	 * 父类ID
 	 */
+	@Min(value = 0,message = "请选择父类")
 	private Long categoryParentid;
 	/**
 	 * 分类状态 0：禁用 1：启用
 	 */
+	@Min(value = 0,message = "请选择分类状态")
 	private Integer categoryFlag;
 	/**
 	 * 首页是否展示 0：不展示 1：展示
 	 */
+	@Min(value = 0,message = "请选择首页是否展示")
 	private Integer showFlag;
 	/**
 	 * 创建时间

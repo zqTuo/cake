@@ -70,3 +70,11 @@ baiduMap:
   ak: SoQCCsGE9S8ILEvx1HCtV8S6oS4PYYXA
   locationUrl: http://api.map.baidu.com/place/v2/search
   distanceUrl: http://api.map.baidu.com/routematrix/v2/driving
+
+# 美团
+meituan:
+  appKey: a47e6d93e90e87b0
+  appSecret: 9bd1648712f0456a8ede514077e80a8ac00b4ffe
+  redirect_url: /cake-api/api/meituan/authRedirect
+  sessionUrl: https://openapi.dianping.com/router/oauth/token
+  checkCodeUrl: https://openapi.dianping.com/router/tuangou/receipt/prepare

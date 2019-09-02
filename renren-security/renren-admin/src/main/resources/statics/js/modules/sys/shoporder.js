@@ -17,8 +17,14 @@ $(function () {
 			{ label: '配送方式', name: 'sendType', index: 'send_type', width: 80 },
 			{ label: '联系方式', name: 'addrPhone', index: 'addr_phone', width: 80 }, 			
 			{ label: '时间', name: 'sendTime', index: 'send_time', width: 80 },
-			{ label: '支付方式', name: 'payType', index: 'pay_type', width: 80 },
-			{ label: '下单门店', name: 'shopId', index: 'shop_id', width: 80 },
+			{ label: '支付方式', name: 'payType', index: 'pay_type', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 0){
+                        return "微信支付";
+                    }else{
+                        return ''
+                    }
+                } },
+			{ label: '下单门店', name: 'shopId', index: 'shop_id', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -139,3 +145,53 @@ var vm = new Vue({
 		}
 	}
 });
+
+$("#export").on('click', function () {
+    var date = $.trim($(".datetimeStart").val());
+    var dateEnd = $.trim($(".datetimeEnd").val());
+    if (date === "" || dateEnd === "") {
+        layer.msg("请选择导出时段", {icon: 7, time: 1500}) //icon:  1:成功  2：失败 3:疑问 4：锁 5：红色哭脸 6：绿色笑脸 7以上：橙色感叹号
+    } else {
+        layer.confirm("确定导出该时段数据?", function (index) {
+            $.get(baseURL + "sys/upload/downloadOrder?date=" + date + "&dateEnd=" + dateEnd, function(r){
+                if(r.code === 200){
+                    layer.msg("操作成功", {icon: 1});
+                }else{
+                    layer.msg(r.msg, {icon: 7});
+                }
+            });
+            window.location.href = "/cake-admin/sys/upload/downloadOrder?date=" + date + "&dateEnd=" + dateEnd;
+            layer.closeAll('dialog');
+        });
+    }
+})
+
+/*订单-时间改变*/
+var o_startdate = $.trim($(".datetimeStart").val());
+var o_dateEnd = $(".datetimeEnd").val();
+function dateChange() {
+    var date = $.trim($(".datetimeStart").val());
+    var dateEnd = $.trim($(".datetimeEnd").val());
+    if (o_startdate != date) {
+        o_startdate = date;
+
+        var postJson = {date:date,dateEnd:dateEnd};
+        //传入查询条件参数
+        $("#jqGrid").jqGrid("setGridParam",{postData:postJson});
+        //每次提出新的查询都转到第一页
+        $("#jqGrid").jqGrid("setGridParam",{page:1});
+        //提交post并刷新表格
+        $("#jqGrid").jqGrid("setGridParam",{url:baseURL + 'sys/shoporder/list'}).trigger("reloadGrid");
+    }
+    if (o_dateEnd != dateEnd) {
+        o_dateEnd = dateEnd;
+        var postJson = {date:date,dateEnd:dateEnd};
+        //传入查询条件参数
+        $("#jqGrid").jqGrid("setGridParam",{postData:postJson});
+        //每次提出新的查询都转到第一页
+        $("#jqGrid").jqGrid("setGridParam",{page:1});
+        //提交post并刷新表格
+        $("#jqGrid").jqGrid("setGridParam",{url:baseURL + 'sys/shoporder/list'}).trigger("reloadGrid");
+    }
+}
+

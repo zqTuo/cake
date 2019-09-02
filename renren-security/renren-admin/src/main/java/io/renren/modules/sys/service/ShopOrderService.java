@@ -2,8 +2,10 @@ package io.renren.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.common.utils.PageUtils;
+import io.renren.modules.sys.dto.ExcelOrderDto;
 import io.renren.modules.sys.entity.ShopOrderEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface ShopOrderService extends IService<ShopOrderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<ExcelOrderDto> getData(Map<String, Object> map);
 }
 

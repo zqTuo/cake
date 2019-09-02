@@ -22,5 +22,9 @@ public interface ProductService extends IService<ProductEntity> {
     List<ProductDto> findProduct(PageForm form);
 
     List<ProductDto> getExtraInfo();
+
+    List<ProductDto> findBySku(String[] detailSku);
+
+    ProductDto findNewOne();
 }
 

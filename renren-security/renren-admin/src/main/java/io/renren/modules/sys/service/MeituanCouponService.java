@@ -2,18 +2,18 @@ package io.renren.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.common.utils.PageUtils;
-import io.renren.modules.sys.entity.HotRelationEntity;
+import io.renren.modules.sys.entity.MeituanCouponEntity;
 
 import java.util.Map;
 
 /**
- * 热销栏目与商品关联表
+ * 美团券验券记录表
  *
  * @author Mark
  * @email sunlightcs@gmail.com
- * @date 2019-08-21 17:12:34
+ * @date 2019-09-01 14:26:01
  */
-public interface HotRelationService extends IService<HotRelationEntity> {
+public interface MeituanCouponService extends IService<MeituanCouponEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 }

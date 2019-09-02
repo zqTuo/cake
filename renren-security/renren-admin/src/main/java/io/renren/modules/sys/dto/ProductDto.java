@@ -1,6 +1,5 @@
 package io.renren.modules.sys.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +26,7 @@ public class ProductDto {
     private String productSku;
     private String productImg;
     private Integer productFlag;
-    private Integer productHot;
+    private Long productHotId;
     private Integer productExtra;
     private Long shopId;
     /**

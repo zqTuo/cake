@@ -50,6 +50,10 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Long couponUserId;
 	/**
+	 * 美团券验券记录ID
+	 */
+	private Long meituanId;
+	/**
 	 * 订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收
 	 */
 	private Integer orderState;
@@ -58,7 +62,7 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Integer orderSourceType;
 	/**
-	 * 备注
+	 * 寄语
 	 */
 	private String orderRemark;
 	/**
@@ -86,13 +90,21 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Integer sendType;
 	/**
+	 * 配送费用
+	 */
+	private BigDecimal sendPrice;
+	/**
 	 * 联系方式
 	 */
 	private String addrPhone;
 	/**
-	 * 派送时间
+	 * 派送时间段
 	 */
 	private String sendTime;
+	/**
+	 * 派送日期 yyyy-MM-dd
+	 */
+	private Date sendDate;
 	/**
 	 * 创建时间
 	 */
@@ -118,7 +130,7 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Date finishTime;
 	/**
-	 * 修改时间
+	 * 配送时间
 	 */
 	private Date updateTime;
 	/**

@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Author: Clarence
@@ -129,6 +131,15 @@ public class DateUtil {
     }
 
     public static void main(String[] args) throws ParseException {
+        String temp = "这是真的商品【商品DIY#sku1,sku2是吧】我就说嘛";
+        Pattern p = Pattern.compile("#(.*?)#");
+        Matcher m=p.matcher(temp);
+
+        String[] arr = new String[1];
+        while(m.find()){
+            arr = m.group(1).split(",");
+        }
+        System.out.println(arr.length);
 //        System.out.println(isToday("2019-08-26"));
 //        System.out.println(isAfter(4,"20:49", start, end));
     }

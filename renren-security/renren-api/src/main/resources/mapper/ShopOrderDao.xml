@@ -12,6 +12,7 @@
         <result property="orderDiscount" column="order_discount"/>
         <result property="orderDiscountType" column="order_discount_type"/>
         <result property="couponUserId" column="coupon_user_id"/>
+        <result property="meituanId" column="meituan_id"/>
         <result property="orderState" column="order_state"/>
         <result property="orderSourceType" column="order_source_type"/>
         <result property="orderRemark" column="order_remark"/>
@@ -23,6 +24,8 @@
         <result property="sendType" column="send_type"/>
         <result property="addrPhone" column="addr_phone"/>
         <result property="sendTime" column="send_time"/>
+        <result property="sendDate" column="send_date"/>
+        <result property="sendPrice" column="send_price"/>
         <result property="createTime" column="create_time"/>
         <result property="payTime" column="pay_time"/>
         <result property="payType" column="pay_type"/>
@@ -49,7 +52,7 @@
 
     <select id="findMyOrder" resultMap="OrderDtoMap">
         select o.id,o.order_no,o.order_state,date_format(o.create_time,'%Y/%m/%d %H:%m') as create_time,o.order_price,
-               ot.id as oid,ot.detail_cover,ot.product_name,ot.product_id
+               ot.id as oid,ot.detail_cover,ot.product_name,ot.product_id,ot.detail_price,ot.buy_num
         from tb_shop_order o
             left join tb_shop_order_item ot on o.order_no=ot.order_no
         where o.user_id=#{userid}

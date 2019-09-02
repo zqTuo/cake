@@ -7,10 +7,22 @@ $(function () {
 			{ label: '优惠券名称', name: 'couponName', index: 'coupon_name', width: 80 }, 			
 			{ label: '触发价格', name: 'couponPrice', index: 'coupon_price', width: 80 }, 			
 			{ label: '优惠金额', name: 'price', index: 'price', width: 80 }, 			
-			{ label: '优惠券类型 0：商品优惠券 1：课程优惠券', name: 'couponType', index: 'coupon_type', width: 80 }, 			
+			{ label: '优惠券类型', name: 'couponType', index: 'coupon_type', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 0){
+                        return "<span class='label label-success radius'>商品优惠券</span>";
+                    }else{
+                        return "<span class='label label-warning radius'>课程优惠券</span>";
+                    }
+                }},
 			{ label: '开始时间', name: 'startTime', index: 'start_time', width: 80 }, 			
 			{ label: '截止时间', name: 'endTime', index: 'end_time', width: 80 }, 			
-			{ label: '是否限时 0：不限时 1:限时', name: 'dateFlag', index: 'date_flag', width: 80 }, 			
+			{ label: '是否限时', name: 'dateFlag', index: 'date_flag', width: 80 ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>限时</span>";
+                    }else{
+                        return "<span class='label label-warning radius'>不限时</span>";
+                    }
+                }},
 			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			

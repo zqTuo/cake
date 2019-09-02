@@ -21,15 +21,17 @@ $(function () {
 			{ label: '商品状态', name: 'productFlag', index: 'product_flag', width: 80 ,formatter:function (cellValue) {
                     if(cellValue === 1){
                         return "<span class='label label-success radius'>已上架</span>";
+                    }else if(cellValue === 2){
+                        return "<span class='label label-success radius'>已上架但不显示</span>";
                     }else{
                         return "<span class='label label-danger radius'>已下架</span>";
                     }
                 }},
-			{ label: '热销标记', name: 'productHot', index: 'product_hot', width: 80  ,formatter:function (cellValue) {
+			{ label: '热销标记', name: 'productHotId', index: 'product_hot_id', width: 80  ,formatter:function (cellValue) {
                     if(cellValue === 1){
-                        return "<span class='label label-success radius'>已推荐</span>";
+                        return "<span class='label label-success radius'>已展示</span>";
                     }else{
-                        return "未推荐";
+                        return "不展示";
                     }
                 }},
 			{ label: '加购标记', name: 'productExtra', index: 'product_extra', width: 80  ,formatter:function (cellValue) {
@@ -37,6 +39,13 @@ $(function () {
                         return "<span class='label label-success radius'>已添加</span>";
                     }else{
                         return "未添加";
+                    }
+                }},
+			{ label: '热门标记', name: 'productHotFlag', index: 'product_hot_flag', width: 80  ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>已推荐</span>";
+                    }else{
+                        return "未推荐";
                     }
                 }},
 			{ label: '所属门店', name: 'shopName', index: 'shop_name', width: 80 }
@@ -91,9 +100,11 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		showList: true,
+        showDetail:false,
 		title: null,
 		product: {},
         cateList:[],
+        hotList:[],
         shopList:[],
         bannerArr:[],
         tag: null,
@@ -102,19 +113,11 @@ var vm = new Vue({
         tasteList:[],
         productDetailList:[]
 	},
-    // created: function(){
-    //     //如果没有这句代码，select中初始化会是空白的，默认选中就无法实现
-    //     if(JSON.stringify(this.product) === '{}'){
-    //         this.product.productCateid = -1;
-    //     }else{
-    //         this.product = this.cateList[0].id;
-    //     }
-    // },
     mounted: function(){
         var that = this;
         that.getCateList();
         that.getShopList();
-        // that.getDataList();
+        that.getHotList();
 
     },
 	methods: {
@@ -176,14 +179,7 @@ var vm = new Vue({
                     success: function(r){
                         if(r.code === 0){
                              layer.msg("操作成功", {icon: 1});
-                             vm.reload();
-                             vm.productDetail = {};
-                             vm.tasteList = [];
-                             vm.sizeList = [];
-                             vm.productDetailList = [];
-
-                             $('#btnSaveOrUpdate').button('reset');
-                             $('#btnSaveOrUpdate').dequeue();
+                            location.replace(location.href);
                         }else{
                             layer.alert(r.msg);
                             $('#btnSaveOrUpdate').button('reset');
@@ -224,8 +220,44 @@ var vm = new Vue({
 		},
 		getInfo: function(id){
 			$.get(baseURL + "sys/product/info/"+id, function(r){
-                vm.product = r.product;
+                vm.showDetail = true;
+			    vm.product = r.product;
                 vm.bannerArr = r.bannerArr;
+                vm.productDetailList = r.productDetailEntityList;
+                vm.sizeList = r.sizeList;
+                vm.tasteList = r.tasteList;
+                vm.productDetail = vm.productDetailList[0];
+                console.log("获取商品详情：" + vm.productDetailList)
+
+                $(".Xcontent06").find('img').attr('src',vm.productDetail.detailCover);
+                $(".Xcontent14").find('p').text(vm.productDetail.detailName);
+                $(".Xcontent19").find('span').text(vm.productDetail.detailPrice);
+                $(".pdsize").text(vm.productDetail.detailSize);
+                $(".pdtaste").text(vm.productDetail.detailTaste);
+                $(".pdsku").text(vm.productDetail.detailSku);
+                $(".Xcontent").attr('style','display:block');
+                var len = $(".Xcontent_R").length;
+                $('.Xcontent34').attr('data-idx',len)
+                $('.Xcontent35').attr('data-idx',len)
+
+                var detailname = $(".Xcontent_R").eq(0).attr('data-detailname');
+                var detailprice = $(".Xcontent_R").eq(0).attr('data-detailprice');
+                var detailsize = $(".Xcontent_R").eq(0).attr('data-detailsize');
+                var detailsku = $(".Xcontent_R").eq(0).attr('data-detailsku');
+                var detailtaste = $(".Xcontent_R").eq(0).attr('data-detailtaste');
+                var detailCover = $(".Xcontent_R").eq(0).find('img').attr('src');
+
+                $(".Xcontent06 img").attr('src',detailCover);
+                $(".Xcontent06").find('img').attr('src',detailCover);
+                $(".Xcontent14").find('p').text(detailname);
+                $(".Xcontent19").find('span').text(detailprice);
+                $(".pdsize").text(detailsize);
+                $(".pdtaste").text(detailtaste);
+                $(".pdsku").text(detailsku);
+                $('.Xcontent35').attr('data-idx',vm.productDetailList.length - 1);
+                $('.Xcontent34').attr('data-idx',vm.productDetailList.length - 1);
+
+                vm.productDetail = {};
 
                 var content = r.product.productInfo;
                 ue.ready(function () {
@@ -241,6 +273,15 @@ var vm = new Vue({
                 cate.lev = 0;
                 cate.name = '请选择类型';
                 vm.cateList.unshift(cate)
+            });
+        },
+        getHotList: function (event) {
+            $.get(baseURL + "sys/hotcolumn/findAll", function(r){
+                vm.hotList = r.hotList;
+                var cate = {};
+                cate.id = 0;
+                cate.hotTitle = '---- 不推荐到首页 ----';
+                vm.hotList.unshift(cate)
             });
         },
         getShopList: function(e){
@@ -285,9 +326,25 @@ var vm = new Vue({
             var value = $(this).val();
             $(this).closest('input').val(value)
         },
-        prodetail_add:function (title, width, height) {
-		    console.log(vm.tasteList)
-		    console.log(vm.sizeList)
+        prodetail_addOrUpdate:function (title, width, height,opt) {
+            vm.productDetail = {};
+
+            var detailCover = "/cake-admin/statics/img/a11.png";
+		    var detailName = "";
+		    var detailPrice = "";
+		    var detailSize = "";
+		    var detailTaste = "";
+		    var detailSku = "";
+
+            var idx = $('.Xcontent34').attr('data-idx')
+            if(opt === 'update'){
+                detailCover = $(".Xcontent06").find('img').attr('src');
+                detailName = $(".Xcontent_R").eq(idx).attr('data-detailname');
+                detailSize = $(".Xcontent_R").eq(idx).attr('data-detailsize');
+                detailTaste = $(".Xcontent_R").eq(idx).attr('data-detailtaste');
+                detailPrice = $(".Xcontent_R").eq(idx).attr('data-detailprice');
+                detailSku = $(".Xcontent_R").eq(idx).attr('data-detailsku');
+            }
 
             var detailHtml = '<form class="form-horizontal">' +
                 '            <div class="form-group">' +
@@ -297,7 +354,7 @@ var vm = new Vue({
                 '                        <section class=" img-section">' +
                 '                            <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">' +
                 '                                <div id="preview1" style="width: 190px;height: 180px;">' +
-                '                                    <img id="imgProDetail1" border="0" src="/cake-admin/statics/img/a11.png" width="190" height="180" onclick="$(\'#previewImg1\').click();">' +
+                '                                    <img id="imgProDetail1" border="0" src="'+detailCover+'" width="190" height="180" onclick="$(\'#previewImg1\').click();">' +
                 '                                </div>' +
                 '                                <input type="file" onchange="onePicUpLoad(this,1,190,180)" style="display: none;" id="previewImg1">' +
                 '                            </div>' +
@@ -308,19 +365,25 @@ var vm = new Vue({
                 '            <div class="form-group">' +
                 '                <div class="col-sm-2 control-label">商品规格名称</div>' +
                 '                <div class="col-sm-10">' +
-                '                    <input type="text" class="form-control" id="detailName" placeholder="商品规格名称"/>' +
+                '                    <input type="text" class="form-control" id="detailName" value="'+detailName+'" placeholder="商品规格名称"/>' +
+                '                </div>' +
+                '            </div>' +
+                '            <div class="form-group">' +
+                '                <div class="col-sm-2 control-label">商品规格SKU</div>' +
+                '                <div class="col-sm-10">' +
+                '                    <input type="text" class="form-control" id="detailSku" value="'+detailSku+'" placeholder="商品规格SKU，匹配美团/大众点评商品，设置商品名称#+sku+#结束,其中sku如果有多个以英文逗号隔开"/>' +
                 '                </div>' +
                 '            </div>' +
                 '            <div class="form-group">' +
                 '                <div class="col-sm-2 control-label">商品规格价格</div>' +
                 '                <div class="col-sm-10">' +
-                '                    <input type="text" class="form-control" id="detailPrice" placeholder="商品规格价格"/>' +
+                '                    <input type="text" class="form-control" id="detailPrice" value="'+detailPrice+'" placeholder="商品规格价格"/>' +
                 '                </div>' +
                 '            </div>' +
                 '            <div class="form-group">' +
                 '                <div class="col-sm-2 control-label">商品尺寸</div>' +
                 '                <div class="col-sm-10">' +
-                '                    <input type="text" class="form-control" id="detailSize" placeholder="商品尺寸" style="width: 120px;float: left;" />' +
+                '                    <input type="text" class="form-control" id="detailSize" value="'+detailSize+'" placeholder="商品尺寸" style="width: 120px;float: left;" />' +
                 '' +
                 '                    <select class="form-control" onchange="getData()" style="width: 170px;float: right;">' +
                 '                        <option value="-1" selected >查看已有尺寸</option>';
@@ -335,7 +398,7 @@ var vm = new Vue({
                 '            <div class="form-group">' +
                 '                <div class="col-sm-2 control-label">商品口味</div>' +
                 '                <div class="col-sm-10">' +
-                '                    <input type="text" class="form-control" id="detailTaste" placeholder="商品口味" style="width: 120px;float: left;" />' +
+                '                    <input type="text" class="form-control" id="detailTaste" value="'+detailTaste+'" placeholder="商品口味" style="width: 120px;float: left;" />' +
                 '' +
                 '                    <select class="form-control" onchange="getData()" style="width: 170px;float: right;">' +
                 '                        <option value="-1" selected >查看已有口味</option>';
@@ -351,13 +414,36 @@ var vm = new Vue({
                 var that = this;
 
             layer.confirm(detailHtml,{title:title,area:[width,height]},function () {
-                vm.productDetail.detailCover = $("#imgProDetail1").attr("src");
-                vm.productDetail.detailName = $("#detailName").val();
-                vm.productDetail.detailPrice = $("#detailPrice").val();
-                vm.productDetail.detailSize = $("#detailSize").val();
-                vm.productDetail.detailTaste = $("#detailTaste").val();
-                console.log(vm.productDetail)
-                that.addDetail();
+
+                detailCover = $("#imgProDetail1").attr("src");
+                detailName = $("#detailName").val();
+                detailPrice = $("#detailPrice").val();
+                detailSize = $("#detailSize").val();
+                detailTaste = $("#detailTaste").val();
+                detailSku = $("#detailSku").val();
+
+                if(detailCover == "/cake-admin/statics/img/a11.png" || detailName=="" ||  detailPrice==""
+                    || detailSize=="" || detailTaste=="" || detailSku == ""){
+                    alert("产品属性存在空值，请认真填写！")
+                    return;
+                }
+
+                vm.productDetail.detailCover = detailCover
+                vm.productDetail.detailName = detailName
+                vm.productDetail.detailPrice = detailPrice
+                vm.productDetail.detailSize = detailSize
+                vm.productDetail.detailTaste = detailTaste
+                vm.productDetail.detailSku = detailSku
+                console.log(vm.productDetail);
+
+                if(opt === 'update'){
+                    that.updateDetail(idx);
+                }else{
+                    that.addDetail();
+                }
+
+
+                vm.showDetail = true;
 
                 layer.close(layer.index);
             })
@@ -373,27 +459,112 @@ var vm = new Vue({
                 vm.sizeList.push(vm.productDetail.detailSize)
             }
 
-            var pic_R = '<div class="Xcontent_R" data-detailname="'+ vm.productDetail.detailName
-                +'" data-detailprice="'+vm.productDetail.detailPrice
-                +'" data-detailsize="'+vm.productDetail.detailSize
-                +'" data-detailtaste="'+vm.productDetail.detailTaste+'">' +
-                '<img src="'+ vm.productDetail.detailCover +'"></div>';
-
+            //右侧规格详情设置数据
             $(".Xcontent06").find('img').attr('src',vm.productDetail.detailCover);
-            $(".Xcontent08").append(pic_R);
-            $(".Xcontent08").find('.Xcontent_R').removeClass('selected');
-            $(".Xcontent08").find('.Xcontent_R').eq(-1).addClass('selected');
+            // $(".Xcontent08").find('.Xcontent_R').removeClass('selected');
+            // $(".Xcontent08").find('.Xcontent_R').eq(-1).addClass('selected');
             $(".Xcontent14").find('p').text(vm.productDetail.detailName);
             $(".Xcontent19").find('span').text(vm.productDetail.detailPrice);
             $(".pdsize").text(vm.productDetail.detailSize);
             $(".pdtaste").text(vm.productDetail.detailTaste);
+            $(".pdsku").text(vm.productDetail.detailSku);
             $(".Xcontent").attr('style','display:block');
             var len = $(".Xcontent_R").length;
-            $('.Xcontent34').attr('data-idx',len-1)
-            $('.Xcontent35').attr('data-idx',len-1)
+            $('.Xcontent34').attr('data-idx',len)
+            $('.Xcontent35').attr('data-idx',len)
 
             vm.productDetail = {};
         },
+        updateDetail: function (idx) {
+		    console.log(vm.productDetailList);
+		    console.log("正在修改：" + idx);
+
+		    vm.productDetailList[idx] = vm.productDetail;
+
+            if(vm.tasteList.indexOf(vm.productDetail.detailTaste) <= -1){
+                vm.tasteList.push(vm.productDetail.detailTaste)
+            }
+
+            if(vm.sizeList.indexOf(vm.productDetail.detailSize) <= -1){
+                vm.sizeList.push(vm.productDetail.detailSize)
+            }
+
+            $(".Xcontent06").find('img').attr('src',vm.productDetail.detailCover);
+            $(".Xcontent14").find('p').text(vm.productDetail.detailName);
+            $(".Xcontent19").find('span').text(vm.productDetail.detailPrice);
+            $(".pdsize").text(vm.productDetail.detailSize);
+            $(".pdtaste").text(vm.productDetail.detailTaste);
+            $(".pdsku").text(vm.productDetail.detailSku);
+
+
+            $(".Xcontent_R").eq(idx).attr('data-detailname',vm.productDetail.detailName);
+            $(".Xcontent_R").eq(idx).attr('data-detailprice',vm.productDetail.detailPrice);
+            $(".Xcontent_R").eq(idx).attr('data-detailsize',vm.productDetail.detailSize);
+            $(".Xcontent_R").eq(idx).attr('data-detailtaste',vm.productDetail.detailTaste);
+            $(".Xcontent_R").eq(idx).attr('data-detailsku',vm.productDetail.detailSku);
+            $(".Xcontent_R").eq(idx).find('img').attr('src',vm.productDetail.detailCover);
+            $(".Xcontent06").find('img').attr('src',vm.productDetail.detailCover);
+        },
+        delProdetail:function () {
+		    var that = this;
+
+            if($(".Xcontent_R").length == 1){
+                layer.msg("手下留情，留一个商品吧！",{icon:7,time:2000})
+            }else{
+                layer.confirm('确认要删除吗？',function(index){
+                    var id = $(".Xcontent08").find('.selected').attr('data-id');
+                    if(id != undefined && id > 0){
+                        var ids = [];
+                        ids.push(id)
+
+                        $.ajax({
+                            type: "POST",
+                            url: baseURL + "sys/productdetail/delete",
+                            contentType: "application/json",
+                            data: JSON.stringify(ids),
+                            success: function(r){
+                                if(r.code == 0){
+                                    layer.msg("操作成功", {icon: 1});
+
+                                    that.delHtml();
+                                    layer.closeAll('dialog');
+                                }else{
+                                    layer.alert(r.msg);
+                                }
+                            }
+                        });
+                    }else{
+                        that.delHtml();
+                        layer.closeAll('dialog');
+                    }
+                });
+            }
+        },
+        delHtml:function () {
+            var idx = $('.Xcontent35').attr('data-idx');
+            $(".Xcontent_R").eq(idx).remove();
+
+            $(".Xcontent08").find('.Xcontent_R').eq(0).addClass('selected');
+            var detailsku = $(".Xcontent_R").eq(0).attr('data-detailsku');
+            var detailname = $(".Xcontent_R").eq(0).attr('data-detailname');
+            var detailsize = $(".Xcontent_R").eq(0).attr('data-detailsize');
+            var detailtaste = $(".Xcontent_R").eq(0).attr('data-detailtaste');
+            var price = $(".Xcontent_R").eq(0).attr('data-detailprice');
+            var imgPath = $(".Xcontent_R").eq(0).find('img').attr('src');
+
+
+            $(".Xcontent14 p").text(detailname)
+            $(".pdsize").text(detailsize)
+            $(".pdtaste").text(detailtaste)
+            $(".pdsku").text(detailsku);
+            $(".Xcontent19 span").text(price)
+            $(".Xcontent06 img").attr('src',imgPath);
+
+            $('.Xcontent35').attr('data-idx',0);
+            $('.Xcontent34').attr('data-idx',0);
+
+
+        }
 	}
 });
 
@@ -410,37 +581,9 @@ $(document).on('mouseover','.Xcontent08>div',function (event){
     $(".Xcontent19").find('span').text($(this).attr('data-detailprice'));
     $(".pdsize").text($(this).attr('data-detailsize'));
     $(".pdtaste").text($(this).attr('data-detailtaste'));
+    $(".pdsku").text($(this).attr('data-detailsku'));
 })
 
-$(document).on('click','.delProdetail',function () {
-    if($(".Xcontent_R").length == 1){
-        layer.msg("手下留情，留一个商品吧！",{icon:7,time:2000})
-    }else{
-        layer.confirm('确认要删除吗？',function(index){
-            var idx = $('.Xcontent35').attr('data-idx');
-            $(".Xcontent_R").eq(idx).remove();
-
-            $(".Xcontent08").find('.Xcontent_R').eq(0).addClass('selected');
-            var detailname = $(".Xcontent_R").eq(0).attr('data-detailname');
-            var detailsize = $(".Xcontent_R").eq(0).attr('data-detailsize');
-            var detailtaste = $(".Xcontent_R").eq(0).attr('data-detailtaste');
-            var price = $(".Xcontent_R").eq(0).attr('data-detailprice');
-            var imgPath = $(".Xcontent_R").eq(0).find('img').attr('src');
-
-
-            $(".Xcontent14 p").text(detailname)
-            $(".pdsize").text(detailsize)
-            $(".pdtaste").text(detailtaste)
-            $(".Xcontent19 span").text(price)
-            $(".Xcontent06 img").attr('src',imgPath);
-
-            $('.Xcontent35').attr('data-idx',0);
-            $('.Xcontent34').attr('data-idx',0);
-
-            layer.closeAll('dialog');
-        });
-    }
-})
 
 
 

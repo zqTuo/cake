@@ -25,14 +25,19 @@ public class SendTimeServiceImpl extends ServiceImpl<SendTimeDao, SendTimeEntity
     private ShopOrderDao orderDao;
 
     @Override
-    public void resolveTimeList(List<SendTimeDto> sendTimeList, float distance, String selectedDate) throws ParseException {
+    public void resolveTimeList(List<SendTimeDto> sendTimeList, float distance, String selectedDate,int sendType) throws ParseException {
         //获取营业时段
         String start = sendTimeList.get(0).getStartTime();
         String end = sendTimeList.get(sendTimeList.size() - 1).getStartTime();
 
-        // 判断派送距离导致的推迟小时 20km以内 只能选择4小时以后的时间点  20km以外的 只能选择6小时以后的时间点
+        // 1.自提需要提前3小时，
+        // 2.配送的需要判断派送距离导致的推迟小时
+        //      20km以内 只能选择4小时以后的时间点
+        //      20km以外的 只能选择6小时以后的时间点
         int delay = 4;
-        if(distance / 1000 > 20){// 20km以外
+        if(sendType == 0){ // 自提
+            delay = 3;
+        }else if(distance / 1000 > 20){// 20km以外
             delay = 6;
         }
 

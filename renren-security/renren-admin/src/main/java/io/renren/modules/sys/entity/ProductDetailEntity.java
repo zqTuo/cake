@@ -40,6 +40,10 @@ public class ProductDetailEntity implements Serializable {
 	 */
 	private Long productId;
 	/**
+	 * 规格SKU
+	 */
+	private String detailSku;
+	/**
 	 * 商品规格价格
 	 */
 	private BigDecimal detailPrice;

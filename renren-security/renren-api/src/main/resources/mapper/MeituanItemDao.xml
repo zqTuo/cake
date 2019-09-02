@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.MeituanItemDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.MeituanItemEntity" id="meituanItemMap">
+        <result property="id" column="id"/>
+        <result property="couponId" column="coupon_id"/>
+        <result property="productDetailId" column="product_detail_id"/>
+    </resultMap>
+
+
+    <select id="countPrice" resultType="java.math.BigDecimal">
+        select sum (p.detail_price) from tb_meituan_item m left join tb_product_detail p on m.product_detail_id=p.id
+        where m.coupon_id=#{meituanId}
+    </select>
+
+
+</mapper>

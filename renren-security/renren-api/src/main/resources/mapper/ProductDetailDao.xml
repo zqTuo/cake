@@ -9,6 +9,7 @@
         <result property="detailCover" column="detail_cover"/>
         <result property="detailName" column="detail_name"/>
         <result property="productId" column="product_id"/>
+        <result property="detailSku" column="detail_sku"/>
         <result property="detailPrice" column="detail_price"/>
         <result property="detailSize" column="detail_size"/>
         <result property="detailTaste" column="detail_taste"/>
