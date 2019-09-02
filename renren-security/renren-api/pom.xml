@@ -51,11 +51,24 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!--热启动 与reids缓存冲突-->
+		<!--&lt;!&ndash;热启动 与reids缓存冲突&ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-devtools</artifactId>-->
+			<!--<optional>true</optional>-->
+		<!--</dependency>-->
+
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/xstream/xstream -->
+		<dependency>
+			<groupId>xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.1.2</version>
 		</dependency>
 
 	</dependencies>

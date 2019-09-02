@@ -3,7 +3,6 @@ package io.renren.service;
 import com.alibaba.fastjson.JSONObject;
 import io.renren.common.config.WechatConfig;
 import io.renren.common.utils.HttpClientTool;
-import io.renren.common.utils.HttpUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -67,6 +66,26 @@ public class WechatAuthService {
             return res.getString("access_token");
         }
         return "";
+    }
+
+    /**
+     *
+     * 通过静默获取用户信息
+     *
+     * @param access_token
+     * @param openid
+     * @return
+     */
+    public JSONObject getBaseUserInfo(String access_token, String openid) {
+        String url = wechatConfig.getWeCatUserInfoUrl();
+
+        Map<String,String> param = new HashMap<>();
+        param.put("access_token",access_token);
+        param.put("openid",openid);
+        param.put("lang","zh_CN");
+        String resultStr = HttpClientTool.postData(url, param, "UTF-8", "GET");
+
+        return JSONObject.parseObject(resultStr);
     }
 
     public static void main(String[] args) {

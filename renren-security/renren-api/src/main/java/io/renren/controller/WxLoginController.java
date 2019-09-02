@@ -15,6 +15,7 @@ import io.renren.common.utils.*;
 import io.renren.entity.TokenEntity;
 import io.renren.entity.WxuserEntity;
 import io.renren.service.TokenService;
+import io.renren.service.WechatAuthService;
 import io.renren.service.WxuserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,6 +64,8 @@ public class WxLoginController {
     private WxuserService userService;
     @Autowired
     private TokenService tokenService;
+    @Resource
+    private WechatAuthService wechatAuthService;
 
 
     @ApiOperation(value = "请求微信登录")
@@ -138,7 +141,7 @@ public class WxLoginController {
 
         //******************** 获取用户个人信息 ************************
 
-        JSONObject userinfoJson = getBaseUserInfo(accessToken, openid,unConcern);
+        JSONObject userinfoJson = wechatAuthService.getBaseUserInfo(accessToken, openid);
         log.info("获取用户个人信息：" + userinfoJson);
 
         if (!userinfoJson.containsKey("nickname")) {
@@ -229,23 +232,5 @@ public class WxLoginController {
         return JSONObject.parseObject(resultStr);
     }
 
-    /**
-     *
-     * 通过静默获取用户信息
-     *
-     * @param access_token
-     * @param openid
-     * @return
-     */
-    private JSONObject getBaseUserInfo(String access_token, String openid,int unConcern) {
-        String url = wechatConfig.getWeCatUserInfoUrl();
 
-        Map<String,String> param = new HashMap<>();
-        param.put("access_token",access_token);
-        param.put("openid",openid);
-        param.put("lang","zh_CN");
-        String resultStr = HttpClientTool.postData(url, param, "UTF-8", "GET");
-
-        return JSONObject.parseObject(resultStr);
-    }
 }

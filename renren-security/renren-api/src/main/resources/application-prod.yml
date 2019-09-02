@@ -64,6 +64,7 @@ weCat:
   ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket
   payApi: https://api.mch.weixin.qq.com/pay/unifiedorder
   enterprisesPay_API: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
+  dnbx_token: weixinMsg
 
 # 百度地图
 baiduMap:
