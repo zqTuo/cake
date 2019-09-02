@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "微信支付参数实体")
 @Builder
 public class WechatPay {
-    @ApiModelProperty(value = "appid",required = true)
-    private String appid;
     @ApiModelProperty(value = "随机字符串",required = true)
-    private String noncestr;
+    private String nonceStr;
     @ApiModelProperty(value = "时间戳",required = true)
-    private String time;
+    private String timestamp;
     @ApiModelProperty(value = "签名",required = true)
-    private String signature;
+    private String paySign;
     @ApiModelProperty(value = "预支付ID",required = true)
     private String prepay_id;
+    @ApiModelProperty(value = "加密方式",required = true)
+    private String signType;
 }

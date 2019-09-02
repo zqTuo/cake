@@ -3,6 +3,11 @@
 <head>
     <title>banner表</title>
 		<#include "/header.html">
+    <!--都是图片上传的css-->
+    <link href="${request.contextPath}/statics/libs/imgUp/common.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/index.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -22,60 +27,61 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">图片地址</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.bannerPic" placeholder="图片地址"/>
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">banner图</div>
+            <div class="col-sm-10">
+                <div class="proDetailPic" style="width:230px;">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                            <div id="preview1" style="width: 190px;height: 180px;">
+                                <img id="imgProDetail100" border="0" :src="banner.bannerPic != '' && banner.bannerPic != undefined ? banner.bannerPic : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg100').click();">
+                            </div>
+                            <input type="file" onchange="onePicUpLoad(this,100,190,180)" style="display: none;" id="previewImg100">
                         </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">跳转地址</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.linkUrl" placeholder="跳转地址"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">展示位置 0：首页</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.bannerType" placeholder="展示位置 0：首页"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">使用状态 0：禁用 1：启用</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.bannerState" placeholder="使用状态 0：禁用 1：启用"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="banner.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+                    </section>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">跳转地址</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="banner.linkUrl" placeholder="跳转地址"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">展示位置</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="banner.bannerType">
+                    <option :value="0" selected>首页</option>
+                    <option :value="1" >商品页</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">使用状态</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="banner.bannerState">
+                    <option :value="1" >启用</option>
+                    <option :value="0">禁用</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
+</div>
 </div>
 
+<!--单图上传js-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgUp.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/banner.js?_${.now?long}"></script>
 </body>
 </html>

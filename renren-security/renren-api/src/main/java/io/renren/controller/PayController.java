@@ -137,6 +137,7 @@ public class PayController {
 
         JSONObject resultJSON = HttpUtil.wxPayByHttps(pay_api, "POST", xml);
 
+        log.info("=====请求预支付结果：" + resultJSON);
         if(resultJSON.getString("prepay_id") == null){
             return new Result<>().error("请求微信支付错误，请重试或联系客服");
         }
@@ -149,9 +150,10 @@ public class PayController {
         map.put("signType", "MD5");
         String sign = signature.getSign(map);
 
-        WechatPay wechatPay = WechatPay.builder().appid(weCatAppId).noncestr(noncestr)
-                .time(time).signature(sign).prepay_id(resultJSON.getString("prepay_id")).build();
+        WechatPay wechatPay = WechatPay.builder().nonceStr(noncestr).signType("MD5")
+                .timestamp(time).paySign(sign).prepay_id("prepay_id=" + resultJSON.getString("prepay_id")).build();
 
+        log.info("============ 组装预支付参数：" + wechatPay.toString());
         return new Result().ok(wechatPay);
     }
 

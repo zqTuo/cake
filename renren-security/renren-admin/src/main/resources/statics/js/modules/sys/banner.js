@@ -4,7 +4,9 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '图片地址', name: 'bannerPic', index: 'banner_pic', width: 80 }, 			
+			{ label: '图片', name: 'bannerPic', index: 'banner_pic', width: 80 ,formatter:function (cellValue, options, rowObject) {
+                    return '<img class="img-thumbnail" width="80px" src="/images/'+cellValue+'" alt="图片">'
+                }},
 			{ label: '跳转地址', name: 'linkUrl', index: 'link_url', width: 80 }, 			
 			{ label: '展示位置', name: 'bannerType', index: 'banner_type', width: 80 ,formatter:function (cellValue) {
                     if(cellValue === 0){
@@ -80,6 +82,9 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.banner.id == null ? "sys/banner/save" : "sys/banner/update";
+
+                vm.banner.bannerPic = $("#imgProDetail100").attr("src");
+
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,

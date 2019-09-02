@@ -134,29 +134,31 @@ public class ProductController {
             productDetailEntity.setCreateTime(new Date());
             productDetailEntity.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
             productDetailEntity.setProductId(product.getId());
-        }
 
-        productDetailService.saveBatch(detailEntityList);
+            productDetailService.save(productDetailEntity);
 
-        List<ProductSizeEntity> sizeEntityList = new ArrayList<>();
-        for (int i = 0; i < form.getSizeList().length; i++) {
-            String size = form.getSizeList()[i];
-            ProductSizeEntity sizeEntity = ProductSizeEntity.builder().productId(product.getId())
-                    .title(size).build();
-            sizeEntityList.add(sizeEntity);
+            saveSizeAndTaste(productDetailEntity,product);
         }
-        productSizeService.saveBatch(sizeEntityList);
-
-        List<ProductTasteEntity> tasteEntityArrayList = new ArrayList<>();
-        for (int i = 0; i < form.getTasteList().length; i++) {
-            String taste = form.getTasteList()[i];
-            ProductTasteEntity tasteEntity = ProductTasteEntity.builder().productId(product.getId())
-                    .title(taste).build();
-            tasteEntityArrayList.add(tasteEntity);
-        }
-        productTasteService.saveBatch(tasteEntityArrayList);
 
         return R.ok();
+    }
+
+    private void saveSizeAndTaste(ProductDetailEntity productDetailEntity,ProductEntity product){
+        ProductSizeEntity sizeEntity = ProductSizeEntity.builder()
+                .productId(product.getId())
+                .title(productDetailEntity.getDetailSize()).build();
+
+        productSizeService.save(sizeEntity);
+
+        ProductTasteEntity tasteEntity = ProductTasteEntity.builder().productId(product.getId())
+                .title(productDetailEntity.getDetailTaste()).build();
+
+        productTasteService.save(tasteEntity);
+
+        productDetailEntity.setSizeId(sizeEntity.getId());
+        productDetailEntity.setTasteId(tasteEntity.getId());
+
+        productDetailService.updateById(productDetailEntity);
     }
 
     /**
@@ -181,37 +183,26 @@ public class ProductController {
         product.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
         productService.updateById(product);
 
+        //先删除该商品所有的尺寸和口味
+        productSizeService.remove(new QueryWrapper<ProductSizeEntity>().eq("product_id",product.getId()));
+        productTasteService.remove(new QueryWrapper<ProductTasteEntity>().eq("product_id",product.getId()));
+
         List<ProductDetailEntity> detailEntityList = form.getDetailList();
         for (ProductDetailEntity productDetailEntity:detailEntityList){
             productDetailEntity.setDetailCover(productDetailEntity.getDetailCover().replaceAll(pic_pre,""));
             productDetailEntity.setUpdateTime(new Date());
             productDetailEntity.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
             productDetailEntity.setProductId(product.getId());
+
+            if(productDetailEntity.getId() != null && productDetailEntity.getId() > 0){//更新商品详情
+                productDetailService.updateById(productDetailEntity);
+            }else{
+                productDetailService.save(productDetailEntity);
+            }
+
+            saveSizeAndTaste(productDetailEntity,product);
         }
 
-        productDetailService.updateBatchById(detailEntityList);
-
-        productSizeService.remove(new QueryWrapper<ProductSizeEntity>().eq("product_id",product.getId()));
-        productTasteService.remove(new QueryWrapper<ProductTasteEntity>().eq("product_id",product.getId()));
-
-        List<ProductSizeEntity> sizeEntityList = new ArrayList<>();
-        for (int i = 0; i < form.getSizeList().length; i++) {
-            String size = form.getSizeList()[i];
-            ProductSizeEntity sizeEntity = ProductSizeEntity.builder().productId(product.getId())
-                    .title(size).build();
-            sizeEntityList.add(sizeEntity);
-        }
-        productSizeService.saveBatch(sizeEntityList);
-
-        List<ProductTasteEntity> tasteEntityArrayList = new ArrayList<>();
-        for (int i = 0; i < form.getTasteList().length; i++) {
-            String taste = form.getTasteList()[i];
-            ProductTasteEntity tasteEntity = ProductTasteEntity.builder().productId(product.getId())
-                    .title(taste).build();
-            tasteEntityArrayList.add(tasteEntity);
-        }
-        productTasteService.saveBatch(tasteEntityArrayList);
-        
         return R.ok();
     }
 

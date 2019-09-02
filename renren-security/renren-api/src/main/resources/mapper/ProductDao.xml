@@ -50,7 +50,7 @@
                product_banner,product_price_region,product_info
         from tb_product
         where product_flag = 1 and shop_id = #{form.shopId}
-          <if test="form.sourceType == 0">and product_hot_flag == 1</if>
+          <if test="form.sourceType == 0">and product_hot_flag = 1</if>
           <if test="form.sourceType == 1">and product_cateid = #{form.cateid} </if>
         order by id desc
         limit #{form.pageNo} ,#{form.pageSize}

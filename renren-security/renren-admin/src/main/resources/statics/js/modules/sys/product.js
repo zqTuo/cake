@@ -160,6 +160,9 @@ var vm = new Vue({
                 vm.product.productBanner = banner_imgs.toString();
 
                 vm.product.productImg = $("#imgProDetail100").attr("src");
+                if(vm.product.productImg === "/cake-admin/statics/img/a11.png"){
+
+                }
 
                 var data ={
                     product:vm.product,
@@ -335,6 +338,7 @@ var vm = new Vue({
 		    var detailSize = "";
 		    var detailTaste = "";
 		    var detailSku = "";
+		    var id = $('.Xcontent08').find('.selected').attr('data-id');
 
             var idx = $('.Xcontent34').attr('data-idx')
             if(opt === 'update'){
@@ -423,7 +427,7 @@ var vm = new Vue({
                 detailSku = $("#detailSku").val();
 
                 if(detailCover == "/cake-admin/statics/img/a11.png" || detailName=="" ||  detailPrice==""
-                    || detailSize=="" || detailTaste=="" || detailSku == ""){
+                    || detailSize=="" || detailTaste==""){
                     alert("产品属性存在空值，请认真填写！")
                     return;
                 }
@@ -434,6 +438,7 @@ var vm = new Vue({
                 vm.productDetail.detailSize = detailSize
                 vm.productDetail.detailTaste = detailTaste
                 vm.productDetail.detailSku = detailSku
+                vm.productDetail.id = id
                 console.log(vm.productDetail);
 
                 if(opt === 'update'){

@@ -115,12 +115,13 @@ public class WxLoginController {
         }
 
         // 校验 防止跨站请求伪造攻击
-        String o_state = Constant.MEITUAN_SECCESS_SALT + DateUtil.getYYYYMMdd();
+        String o_state = Constant.WECHAT_LOGIN_SALT + DateUtil.getYYYYMMdd();
         MD5 md5 = new MD5();
         String cotent2Aes = md5.toDigest(o_state);
 
         log.info("微信登录，原state：" + cotent2Aes);
         if(!(cotent2Aes).equals(state)){
+            log.info("信息不安全：" + cotent2Aes);
             return "redirect:" + url_pre;
         }
 
@@ -221,8 +222,10 @@ public class WxLoginController {
         param.put("secret",appSecret);
         param.put("code",code);
         param.put("grant_type","authorization_code");
-        String resultStr = HttpClientTool.postData(url, param, "UTF-8", "GET");
 
+        log.info("请求参数：" + param);
+        String resultStr = HttpClientTool.postData(url, param, "UTF-8", "GET");
+        log.info("请求结果：" + resultStr);
         return JSONObject.parseObject(resultStr);
     }
 
