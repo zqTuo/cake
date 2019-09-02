@@ -117,6 +117,7 @@ public class WxLoginController {
 
         //*************************   获取openid   ***********************************
         JSONObject openidJson = getWebAccessTokenJson(wechatConfig.getWeCatAppId(), wechatConfig.getWeCatAppSecret(), code);
+        log.info("换取openid结果：" + openidJson);
         if(!openidJson.containsKey("openid")) {
             log.error("未请求到openid，用户授权失败，" + openidJson);
             return "redirect:" + url_pre;
