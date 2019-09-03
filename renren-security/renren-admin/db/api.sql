@@ -9,7 +9,9 @@ user_unionid VARCHAR(200) default '' COMMENT 'unionid',
 user_lastIp VARCHAR(100) not NULL default '' COMMENT '上次登录IP地址',
 user_lastLoginTime datetime not null comment '上次登录时间',
 user_phone varchar(20) default '' comment '手机号',
+kf_account varchar(20) default '' comment '专属客服账号',
 user_state int not null default 0 comment '用户状态 1：正常使用 0：禁用',
+subscribe int not null default 0 comment '是否关注公众号 1：已关注 0：未关注',
 create_time datetime not null COMMENT '创建时间',
 update_time datetime COMMENT '修改时间',
 update_by VARCHAR(100) default '' comment '修改管理员',
@@ -308,6 +310,48 @@ create table tb_meituan_item(
   product_detail_id bigint(11) not null default 0 comment '商品详情ID',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='美团券包含商品信息表';
+
+-- 微信客服表
+create table tb_custom(
+    id bigint(11) auto_increment,
+    user_name varchar(200) not null default '' comment '微信昵称',
+    user_open_id varchar(200) not null default '' comment 'OPENID',
+    user_head varchar(200) not null default '' comment '微信头像',
+    kf_account varchar(200) not null default '' comment '完整客服帐号，格式为：帐号前缀@公众号微信号',
+    kf_nick varchar(200) not null default '' comment '客服昵称',
+    kf_account varchar(200) default '' comment '专属客服账号',
+    kf_head_img_url varchar(200) default '' comment '客服头像',
+    kf_wx varchar(200) default '' comment '如果客服帐号已绑定了客服人员微信号， 则此处显示微信号',
+    state int not null default 1 comment '客服状态 0：已停用 1：已启用',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    update_by VARCHAR(100) default '' comment '修改管理员',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信客服表';
+
+-- 客服接待记录表
+create table tb_custom_record(
+   id bigint(20) NOT NULL AUTO_INCREMENT,
+   user_id bigint(11) not null  DEFAULT 0 comment '用户ID',
+   custom_id bigint(11) not null DEFAULT 0 comment '客服ID',
+   user_name varchar(200) not null DEFAULT '' comment '用户昵称',
+   create_time datetime not null COMMENT '创建时间',
+   update_time datetime COMMENT '修改时间',
+   update_by VARCHAR(100) default '' comment '修改管理员',
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客服接待记录表';
+
+-- 微信关键字表
+CREATE TABLE `tb_wx_key` (
+     `id` bigint(20) NOT NULL AUTO_INCREMENT,
+     `keyword` varchar(200) NOT NULL default '' comment '关键字,多个中间用英文逗号隔开',
+     `msg_type` varchar(100) NOT NULL default '' comment '消息类型（text/news/image）',
+     `content` text comment '回复内容',
+     `mediaID` varchar(200) DEFAULT '' comment '图文ID',
+     PRIMARY KEY (`id`),
+     UNIQUE KEY `keyword` (`keyword`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信关键字表';
+
 
 
 

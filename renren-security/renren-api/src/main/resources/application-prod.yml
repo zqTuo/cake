@@ -65,6 +65,8 @@ weCat:
   payApi: https://api.mch.weixin.qq.com/pay/unifiedorder
   enterprisesPay_API: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
   dnbx_token: weixinMsg
+  download_media_url: http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+  online_kf_list: https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist
 
 # 百度地图
 baiduMap:

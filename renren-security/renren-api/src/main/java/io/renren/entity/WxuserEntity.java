@@ -63,9 +63,17 @@ public class WxuserEntity implements Serializable {
 	 */
 	private String userPhone;
 	/**
+	 * 专属客服编号
+	 */
+	private String kfAccount;
+	/**
 	 * 用户状态
 	 */
 	private Integer userState;
+	/**
+	 * 用户状态
+	 */
+	private Integer subscribe;
 	/**
 	 * 创建时间
 	 */

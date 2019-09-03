@@ -1,7 +1,8 @@
 package io.renren.entity;
 
 /**
- * Created by 24537 on 2017/9/5.
+ * Created by kuro on 2017/9/5.
+ * 名称必须小写 否则微信客服消息收不到
  */
 public class item {
     //标题

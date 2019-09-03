@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 炫酷游开源 All rights reserved.
+ *
  *
  * http://www.xkygame.com
  *

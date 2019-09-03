@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 炫酷游开源 All rights reserved.
+ *
  *
  * http://www.xkygame.com
  *
@@ -153,6 +153,7 @@ public class WxLoginController {
         String userName = StringEscapeUtils.escapeJava(name);
         String headimgurl = userinfoJson.getString("headimgurl");
         String unionid = userinfoJson.getString("unionid");
+        int subscribe = userinfoJson.getInteger("subscribe");
 
         //************************ 写入用户信息到数据库 **********************
         WxuserEntity user = userService.selectUserByOpenId(openid);
@@ -160,7 +161,7 @@ public class WxLoginController {
 
         if (null == user) {
             user = WxuserEntity.builder().userName(userName).userHead(headimgurl).userMember(0).userOpenid(openid)
-                    .userUnionid(unionid)
+                    .userUnionid(unionid).subscribe(subscribe)
                     .userLastip(ip).userLastlogintime(new Date()).userState(1)
                     .createTime(new Date()).build();
 

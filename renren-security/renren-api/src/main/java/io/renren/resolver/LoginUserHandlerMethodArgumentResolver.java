@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 炫酷游开源 All rights reserved.
+ *
  *
  * http://www.xkygame.com
  *
@@ -9,7 +9,7 @@
 package io.renren.resolver;
 
 import io.renren.annotation.LoginUser;
-import io.renren.entity.UserEntity;
+import io.renren.dto.UserDto;
 import io.renren.interceptor.AuthorizationInterceptor;
 import io.renren.service.WxuserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(UserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
+        return parameter.getParameterType().isAssignableFrom(UserDto.class) && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override

@@ -14,7 +14,9 @@
         <result property="userLastip" column="user_lastIp"/>
         <result property="userLastlogintime" column="user_lastLoginTime"/>
         <result property="userPhone" column="user_phone"/>
+        <result property="kfAccount" column="kf_account"/>
         <result property="userState" column="user_state"/>
+        <result property="subscribe" column="subscribe"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>

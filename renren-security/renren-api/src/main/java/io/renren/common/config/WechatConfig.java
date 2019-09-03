@@ -34,4 +34,9 @@ public class WechatConfig {
     @Value("${weCat.ticketUrl}")
     private String ticketUrl;
 
+    @Value("${weCat.download_media_url}")
+    private String download_media_url;
+    @Value("${weCat.online_kf_list}")
+    private String online_kf_list;
+
 }
