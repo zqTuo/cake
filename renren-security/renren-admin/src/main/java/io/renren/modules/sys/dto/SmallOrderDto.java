@@ -27,6 +27,6 @@ public class SmallOrderDto extends ExcelBean {
     private String detailTaste;//口味
     private String orderDes; // 特殊备注
     private String orderRemark;//生日牌内容
-    private String userName;//接单客服
+    private String kfNick;//接单客服
     private String source;//渠道来源
 }

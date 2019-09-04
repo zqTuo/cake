@@ -147,22 +147,46 @@ var vm = new Vue({
 });
 
 $("#export").on('click', function () {
+    var ids = getSelectedRows();
+
     var date = $.trim($(".datetimeStart").val());
     var dateEnd = $.trim($(".datetimeEnd").val());
-    if (date === "" || dateEnd === "") {
-        layer.msg("请选择导出时段", {icon: 7, time: 1500}) //icon:  1:成功  2：失败 3:疑问 4：锁 5：红色哭脸 6：绿色笑脸 7以上：橙色感叹号
-    } else {
-        layer.confirm("确定导出该时段数据?", function (index) {
-            $.get(baseURL + "sys/upload/downloadOrder?date=" + date + "&dateEnd=" + dateEnd, function(r){
-                if(r.code === 200){
-                    layer.msg("操作成功", {icon: 1});
-                }else{
-                    layer.msg(r.msg, {icon: 7});
-                }
-            });
-            window.location.href = "/cake-admin/sys/upload/downloadOrder?date=" + date + "&dateEnd=" + dateEnd;
+
+    if(ids != null){
+        layer.confirm("确定导出选中数据?", function (index) {
+            window.location.href = "/cake-admin/sys/upload/downloadSmallOrder?date=" + date + "&dateEnd=" + dateEnd + "&ids=" + ids;
             layer.closeAll('dialog');
         });
+    }else{
+        if (date === "" || dateEnd === "") {
+            layer.msg("请选择导出时段", {icon: 7, time: 1500}) //icon:  1:成功  2：失败 3:疑问 4：锁 5：红色哭脸 6：绿色笑脸 7以上：橙色感叹号
+        } else {
+            layer.confirm("确定导出该时段数据?", function (index) {
+                window.location.href = "/cake-admin/sys/upload/downloadSmallOrder?date=" + date + "&dateEnd=" + dateEnd;
+                layer.closeAll('dialog');
+            });
+        }
+    }
+})
+
+$("#exportSmall").on('click', function () {
+    var ids = getSelectedRows();
+    var date = $.trim($(".datetimeStart").val());
+    var dateEnd = $.trim($(".datetimeEnd").val());
+    if(ids != null){
+        layer.confirm("确定导出选中数据?", function (index) {
+            window.location.href = "/cake-admin/sys/upload/downloadOrder?date=" + date + "&dateEnd=" + dateEnd + "&ids=" + ids;
+            layer.closeAll('dialog');
+        });
+    }else{
+        if (date === "" || dateEnd === "") {
+            layer.msg("请选择导出时段", {icon: 7, time: 1500}) //icon:  1:成功  2：失败 3:疑问 4：锁 5：红色哭脸 6：绿色笑脸 7以上：橙色感叹号
+        } else {
+            layer.confirm("确定导出该时段数据?", function (index) {
+                window.location.href = "/cake-admin/sys/upload/downloadOrder?date=" + date + "&dateEnd=" + dateEnd;
+                layer.closeAll('dialog');
+            });
+        }
     }
 })
 

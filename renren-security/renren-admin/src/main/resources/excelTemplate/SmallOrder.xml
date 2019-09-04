@@ -11,6 +11,6 @@
     <property name="detailTaste" title="口味" position="8" type="String"/>
     <property name="orderDes" title="特殊备注" position="9" type="String"/>
     <property name="orderRemark" title="生日牌内容" position="10" type="String"/>
-    <property name="userName" title="接单客服" position="11" type="String"/>
+    <property name="kfNick" title="接单客服" position="11" type="String"/>
     <property name="source" title="下单来源" position="12" type="String"/>
 </excel>

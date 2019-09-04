@@ -46,7 +46,8 @@ public class Constant {
     /**
      * 订单excel表模板文件名
      */
-    public static final String EXPORT_PACKAGE_EXCEL = "Order";
+    public static final String EXPORT_ORDER_EXCEL = "Order";
+    public static final String EXPORT_SMALLORDER_EXCEL = "SmallOrder";
     /**
      * 订单 支付成功
      */

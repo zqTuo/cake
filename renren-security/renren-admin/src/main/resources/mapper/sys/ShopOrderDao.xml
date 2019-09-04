@@ -30,6 +30,7 @@
         <result property="payTime" column="pay_time"/>
         <result property="payType" column="pay_type"/>
         <result property="shopId" column="shop_id"/>
+        <result property="kfNick" column="kf_nick"/>
         <result property="cancelTime" column="cancel_time"/>
         <result property="finishTime" column="finish_time"/>
         <result property="updateTime" column="update_time"/>
@@ -70,7 +71,28 @@
         order by o.send_date desc
     </select>
 
-
+    <select id="getSmallData" resultType="io.renren.modules.sys.dto.SmallOrderDto">
+        select date_format(o.create_time,'%Y年%m月%d日') as create_time,o.addr_receiver,
+        o.addr_phone,date_format(o.update_time,'%Y年%m月%d日 %Y:%m') as update_time,
+        if(o.send_type=0,'送货上门','自提') as send_type,
+        concat(o.addr_city,o.addr_detail) as addr,
+        ot.product_name,ot.detail_taste,ot.detail_size,
+        o.order_remark,o.kf_nick,if(o.meituan_id>0,'美团点评',s.shop_name) as source,
+        from
+        tb_shop_order o LEFT JOIN tb_shop_order_item ot on o.order_no=ot.order_no
+        LEFT JOIN tb_wxuser w on o.user_id=w.id
+        <where>
+            <if test="map.idArr != null">
+                o.id in
+                <foreach collection="map.idArr" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="map.date !=null and map.date !=''">AND o.send_date <![CDATA[>=]]> #{map.date} </if>
+            <if test="map.dateEnd !=null and map.dateEnd !=''">AND o.send_date <![CDATA[<]]> #{map.dateEnd}</if>
+        </where>
+        order by o.send_date desc
+    </select>
 
 
 </mapper>

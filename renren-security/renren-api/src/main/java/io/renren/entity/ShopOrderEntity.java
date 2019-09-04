@@ -107,6 +107,11 @@ public class ShopOrderEntity implements Serializable {
 	 * 派送时间/取货日期
 	 */
 	private String sendTime;
+
+	/**
+	 * 接单客服
+	 */
+	private String kfNick;
 	/**
 	 * 派送日期 yyyy-MM-dd
 	 */

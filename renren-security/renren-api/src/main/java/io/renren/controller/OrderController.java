@@ -293,6 +293,7 @@ public class OrderController {
                 totalPrice = new BigDecimal("0");
                 orderState = Constant.ORDER_PAY_SUCCESS;
             }
+
             ShopOrderEntity orderEntity = ShopOrderEntity.builder().orderNo(orderNo).userId(userId)
                     .orderPrice(totalPrice).orderDiscount(discountFee).orderDiscountType(form.getDiscountType())
                     .couponUserId(form.getCouponUserId()).orderState(orderState).orderSourceType(form.getSourceType())
