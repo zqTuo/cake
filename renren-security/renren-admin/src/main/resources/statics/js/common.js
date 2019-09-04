@@ -78,6 +78,16 @@ function layer_show(title,url,w,h){
 	});
 }
 
+function layer_full(url,title) {
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url,
+	});
+	layer.full(index);
+}
+
+
 //选择一条记录
 function getSelectedRow() {
     var grid = $("#jqGrid");
@@ -113,4 +123,3 @@ function isBlank(value) {
     return !value || !/\S/.test(value)
 }
 
-//全局请求美团session是否过期

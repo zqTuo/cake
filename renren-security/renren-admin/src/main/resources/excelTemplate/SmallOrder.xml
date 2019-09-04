@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK"?>
+<excel name="ExcelOrderDto" className="io.renren.modules.sys.dto.ExcelOrderDto">
+    <property name="createTime" title="预约时间" position="0" type="String" />
+    <property name="addrReceiver" title="收货人姓名" position="1" type="String" />
+    <property name="addrPhone" title="收货人电话" position="2" type="String" />
+    <property name="updateTime" title="送出时间" position="3" type="String"/>
+    <property name="sendType" title="物流方式" position="4" type="String"/>
+    <property name="addr" title="收货地址" position="5" type="String"/>
+    <property name="productName" title="蛋糕名称" position="6" type="String"/>
+    <property name="detailSize" title="规格" position="7" type="String"/>
+    <property name="detailTaste" title="口味" position="8" type="String"/>
+    <property name="orderDes" title="特殊备注" position="9" type="String"/>
+    <property name="orderRemark" title="生日牌内容" position="10" type="String"/>
+    <property name="userName" title="接单客服" position="11" type="String"/>
+    <property name="source" title="下单来源" position="12" type="String"/>
+</excel>

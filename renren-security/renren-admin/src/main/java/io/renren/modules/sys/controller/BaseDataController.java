@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.service.IRedisService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import io.renren.modules.sys.service.BaseDataService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
+import javax.annotation.Resource;
 
 
 /**
@@ -31,6 +33,7 @@ import io.renren.common.utils.R;
 public class BaseDataController {
     @Autowired
     private BaseDataService baseDataService;
+
 
     /**
      * 列表

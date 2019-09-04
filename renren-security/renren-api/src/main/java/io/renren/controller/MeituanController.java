@@ -59,60 +59,7 @@ public class MeituanController {
     @Resource
     private MeituanItemService meituanItemService;
 
-    @GetMapping("auth")
-    @ApiOperation(value = "美团授权接口")
-    public String auth(HttpServletRequest request) throws UnsupportedEncodingException {
-        String o_url = ServletRequestUtils.getStringParameter(request,"p","");
 
-        String url = meiTuanUtil.getSessionUrl(request,o_url);
-        return "redirect:" + url;
-    }
-
-    /**
-     * 美团授权回调地址
-     * @return
-     */
-    @RequestMapping("authRedirect")
-    @ResponseBody
-    public String authRedirect(HttpServletRequest request){
-        String message = ServletRequestUtils.getStringParameter(request,"message","");
-        String auth_code = ServletRequestUtils.getStringParameter(request,"auth_code","");
-        String state = ServletRequestUtils.getStringParameter(request,"state","");
-        String ip = ServletRequestUtils.getStringParameter(request,"ip","");
-        String o_url = ServletRequestUtils.getStringParameter(request,"o_url","");
-
-        log.info("============ 美团授权回调参数：message：" + message + ",auth_code："
-                + auth_code + "，state：" + state + ",ip：" + ip + ",o_url:" + o_url);
-        if(StringUtils.isEmpty(message) || StringUtils.isEmpty(auth_code)
-                || StringUtils.isEmpty(state) || StringUtils.isEmpty(ip)){
-            log.error("缺少参数，授权回调异常！");
-            return "";
-        }
-
-        // 校验 防止跨站请求伪造攻击
-        String o_state = Constant.MEITUAN_SECCESS_SALT + ip + DateUtil.getYYYYMMdd();
-        MD5 md5 = new MD5();
-        String cotent2Aes = md5.toDigest(o_state);
-
-        log.info("美团授权，原state：" + cotent2Aes);
-        if(!(cotent2Aes).equals(state)){
-            log.info("授权检验失败：ip：" + ip);
-            return "redirect:" + url_pre;
-        }
-
-        // 通过code换取session
-        JSONObject userInfo = meiTuanUtil.getWebSession(auth_code,o_url);
-
-        log.info("====== meituan_session获取结果：" + userInfo);
-
-        if(200 != userInfo.getInteger("code")){
-            return "";
-        }
-
-        redisService.set("meituan_session",userInfo.getString("access_token"),userInfo.getLong("expires_in"));
-
-        return "redirect:" + o_url;
-    }
 
 
     @Login
@@ -122,15 +69,15 @@ public class MeituanController {
     public Result<ProductDto> checkCode(@RequestBody CodeForm codeForm, @ApiIgnore @RequestAttribute("userId")long userId) throws Exception {
         ValidatorUtils.validateEntity(codeForm);
 
+        String session = meiTuanUtil.getSession();
+        if(StringUtils.isEmpty(session)){
+            return new Result().error("此功能尚在维护，请稍后再试");
+        }
+
         ShopEntity shopEntity = shopService.getById(codeForm.getShopId());
 
         if(StringUtils.isEmpty(shopEntity.getMeituanShopId()) && StringUtils.isEmpty(shopEntity.getDianpingShopId())){
             return new Result().error("该店铺暂无美团/大众点评店铺");
-        }
-
-        String session = meiTuanUtil.getSession();
-        if(StringUtils.isEmpty(session)){
-            return new Result().error(-3,"session已失效，请重新授权");
         }
 
         if(codeForm.getSourceType() == 0 && StringUtils.isEmpty(shopEntity.getMeituanShopId())){

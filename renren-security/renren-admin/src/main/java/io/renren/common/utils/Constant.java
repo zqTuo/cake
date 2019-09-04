@@ -38,10 +38,23 @@ public class Constant {
      *  升序
      */
     public static final String ASC = "asc";
+
+    /**
+     * 订单 未支付状态
+     */
+    public static final int ORDER_UNPAY = -1;
     /**
      * 订单excel表模板文件名
      */
     public static final String EXPORT_PACKAGE_EXCEL = "Order";
+    /**
+     * 订单 支付成功
+     */
+    public static final int ORDER_PAY_SUCCESS = 1;
+    public static final String WX_PAYTYPE_FRO_WX = "JSAPI"; // 微信支付类型 微信端
+    public static final int ORDER_TYPE_CAKE = 0; // 蛋糕订购
+    public static final int ORDER_TYPE_COURSE = 1;// 预约烘焙课程
+    public static final int ORDER_CANCELED = 0; // 订单状态 已取消
 
     /**
 	 * 菜单类型
@@ -122,5 +135,8 @@ public class Constant {
             return value;
         }
     }
+
+    public static final String WECHAT_LOGIN_SALT = "cake@XKY";
+    public static final String MEITUAN_SECCESS_SALT = "cakeMeiTuan@XKY";
 
 }

@@ -2,6 +2,7 @@ package io.renren.modules.sys.controller;
 
 import io.renren.common.utils.Constant;
 import io.renren.common.utils.DateUtil;
+import io.renren.common.utils.NameTransUtil;
 import io.renren.modules.sys.dto.ExcelOrderDto;
 import io.renren.modules.sys.service.ExcelService;
 import io.renren.modules.sys.service.ShopOrderService;
@@ -64,6 +65,12 @@ public class FileDownloadController {
         if(orderDtoList.size()==0){
             logger.error("下载数据为空！");
             return;
+        }
+
+        for (ExcelOrderDto orderDto:orderDtoList){
+            if(StringUtils.isNotBlank(orderDto.getUserName())){
+                orderDto.setUserName(NameTransUtil.transName(orderDto.getUserName()));
+            }
         }
 
         try {

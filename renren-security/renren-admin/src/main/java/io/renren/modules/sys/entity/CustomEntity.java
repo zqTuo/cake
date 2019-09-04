@@ -45,10 +45,6 @@ public class CustomEntity implements Serializable {
 	 */
 	private String kfNick;
 	/**
-	 * 客服编号
-	 */
-	private String kfAccount;
-	/**
 	 * 客服头像
 	 */
 	private String kfHeadImgUrl;
