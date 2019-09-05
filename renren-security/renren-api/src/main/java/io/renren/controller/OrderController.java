@@ -263,6 +263,11 @@ public class OrderController {
                 log.info( "使用美团商品抵扣券优惠金额：" + discount);
                 totalPrice = totalPrice.subtract(discount);
                 discountFee = discountFee.add(discount);
+                form.setDiscountType(2);
+            }
+
+            if(form.getCouponUserId() > 0 && form.getMeituanId() > 0){
+                form.setDiscountType(3);
             }
 
 

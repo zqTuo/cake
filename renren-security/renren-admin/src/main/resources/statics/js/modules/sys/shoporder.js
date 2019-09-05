@@ -3,8 +3,7 @@ $(function () {
         url: baseURL + 'sys/shoporder/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '订单编号', name: 'orderNo', index: 'order_no', width: 80 }, 			
+			{ label: '订单编号', name: 'orderNo', index: 'order_no', width: 130 },
 			{ label: '用户昵称', name: 'userId', index: 'user_id', width: 80 },
 			{ label: '支付金额', name: 'orderPrice', index: 'order_price', width: 80 },
 			{ label: '优惠金额', name: 'orderDiscount', index: 'order_discount', width: 80 },

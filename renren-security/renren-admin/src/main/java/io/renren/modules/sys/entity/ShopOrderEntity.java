@@ -42,7 +42,7 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private BigDecimal orderDiscount;
 	/**
-	 * 订单优惠类型 0：无优惠 1：优惠券
+	 * 订单优惠类型 0：无优惠 1：优惠券  2：美团券 3：优惠券+美团
 	 */
 	private Integer orderDiscountType;
 	/**
