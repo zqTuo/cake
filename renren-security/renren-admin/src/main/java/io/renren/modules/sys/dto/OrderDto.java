@@ -1,5 +1,6 @@
 package io.renren.modules.sys.dto;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -14,6 +15,11 @@ import java.math.BigDecimal;
 @Data
 public class OrderDto {
     /**
+     *
+     */
+    @TableId
+    private Long id;
+    /**
      * 订单编号
      */
     private String orderNo;
@@ -21,6 +27,10 @@ public class OrderDto {
      * 用户昵称
      */
     private String userName;
+    /**
+     * 收货人
+     */
+    private String addrReceiver;
 
     /**
      * 订单支付金额
