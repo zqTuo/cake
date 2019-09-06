@@ -6,6 +6,13 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '分类名称', name: 'categoryName', index: 'category_name', width: 80 }, 			
 			{ label: '父类ID', name: 'categoryParentid', index: 'category_parentid', width: 80 }, 			
+			{ label: '展示位置', name: 'showFlag', index: 'show_flag', width: 80  ,formatter:function (cellValue) {
+                    if(cellValue === 1){
+                        return "蛋糕首页";
+                    }else if(cellValue === 2){
+                        return "课程首页";
+                    }
+                }},
 			{ label: '状态', name: 'categoryFlag', index: 'category_flag', width: 80   ,formatter:function (cellValue) {
                     if(cellValue === 1){
                         return "<span class='label label-success radius'>已启用</span>";

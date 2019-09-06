@@ -42,9 +42,9 @@ public class ProductCategoryEntity implements Serializable {
 	@Min(value = 0,message = "请选择分类状态")
 	private Integer categoryFlag;
 	/**
-	 * 首页是否展示 0：不展示 1：展示
+	 * 展示位置 1：蛋糕首页  2：课程首页
 	 */
-	@Min(value = 0,message = "请选择首页是否展示")
+	@Min(value = 0,message = "请选择展示位置")
 	private Integer showFlag;
 	/**
 	 * 创建时间

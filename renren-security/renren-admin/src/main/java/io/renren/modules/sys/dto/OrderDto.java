@@ -24,6 +24,10 @@ public class OrderDto {
      */
     private String orderNo;
     /**
+     * 用户ID
+     */
+    private Long userId;
+    /**
      * 用户昵称
      */
     private String userName;
