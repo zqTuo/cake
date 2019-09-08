@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class SendFreightEntity implements Serializable {
 	/**
 	 * 最大距离
 	 */
+	@Min(value = 0,message = "请填写最大距离")
 	private Integer maxDistance;
 	/**
 	 * 运费

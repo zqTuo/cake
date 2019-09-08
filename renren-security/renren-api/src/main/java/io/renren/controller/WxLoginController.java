@@ -153,7 +153,7 @@ public class WxLoginController {
         String userName = StringEscapeUtils.escapeJava(name);
         String headimgurl = userinfoJson.getString("headimgurl");
         String unionid = userinfoJson.getString("unionid");
-        int subscribe = userinfoJson.getInteger("subscribe");
+//        int subscribe = userinfoJson.getInteger("subscribe");
 
         //************************ 写入用户信息到数据库 **********************
         WxuserEntity user = userService.selectUserByOpenId(openid);
@@ -161,7 +161,7 @@ public class WxLoginController {
 
         if (null == user) {
             user = WxuserEntity.builder().userName(userName).userHead(headimgurl).userMember(0).userOpenid(openid)
-                    .userUnionid(unionid).subscribe(subscribe)
+                    .userUnionid(unionid).subscribe(1)
                     .userLastip(ip).userLastlogintime(new Date()).userState(1)
                     .createTime(new Date()).build();
 
@@ -191,7 +191,7 @@ public class WxLoginController {
                 log.info("用户："+user.getId()+"已被禁用");
                 response.setContentType("text/plain; charset=utf-8");
                 response.setContentType("text/html; charset=utf-8");
-                response.getWriter().write("   <span style=\"font-size:18px;color:red;\">您已被加入猫迹黑名单！禁止进入！</span>");
+                response.getWriter().write("   <span style=\"font-size:18px;color:red;\">您已被加入黑名单！禁止进入！</span>");
                 return "";
             }
 

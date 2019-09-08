@@ -1,21 +1,19 @@
 package io.renren.modules.sys.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import io.renren.common.validator.ValidatorUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.modules.sys.entity.SendFreightEntity;
-import io.renren.modules.sys.service.SendFreightService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
+import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.SendFreightEntity;
+import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.service.SendFreightService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 
 
@@ -61,6 +59,11 @@ public class SendFreightController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:sendfreight:save")
     public R save(@RequestBody SendFreightEntity sendFreight){
+        ValidatorUtils.validateEntity(sendFreight);
+
+        sendFreight.setCreateTime(new Date());
+
+        sendFreight.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
         sendFreightService.save(sendFreight);
 
         return R.ok();
@@ -73,6 +76,10 @@ public class SendFreightController {
     @RequiresPermissions("sys:sendfreight:update")
     public R update(@RequestBody SendFreightEntity sendFreight){
         ValidatorUtils.validateEntity(sendFreight);
+
+        sendFreight.setUpdateTime(new Date());
+
+        sendFreight.setUpdateBy(((SysUserEntity) SecurityUtils.getSubject().getPrincipal()).getUsername());
         sendFreightService.updateById(sendFreight);
         
         return R.ok();

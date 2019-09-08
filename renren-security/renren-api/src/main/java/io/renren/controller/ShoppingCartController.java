@@ -1,10 +1,8 @@
 package io.renren.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.annotation.Login;
 import io.renren.common.result.Result;
-import io.renren.common.utils.R;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.dto.ShoppingCartDto;
 import io.renren.entity.ProductDetailEntity;
@@ -15,7 +13,6 @@ import io.renren.service.ProductDetailService;
 import io.renren.service.ProductService;
 import io.renren.service.ShoppingCartService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Value;

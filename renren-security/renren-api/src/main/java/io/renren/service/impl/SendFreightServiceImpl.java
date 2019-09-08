@@ -8,6 +8,8 @@ import io.renren.entity.SendFreightEntity;
 import io.renren.entity.ShopEntity;
 import io.renren.service.SendFreightService;
 import io.renren.service.ShopService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,10 +18,10 @@ import java.util.List;
 
 @Service("sendFreightService")
 public class SendFreightServiceImpl extends ServiceImpl<SendFreightDao, SendFreightEntity> implements SendFreightService {
+    private static Logger log = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+
     @Resource
     private ShopService shopService;
-    @Resource
-    private SendFreightDao sendFreightDao;
     @Resource
     private LocationUtils locationUtils;
 
@@ -37,6 +39,7 @@ public class SendFreightServiceImpl extends ServiceImpl<SendFreightDao, SendFrei
 
         //计算距离
         float distance = getDistance(shopId,city,address);
+        log.info("运费结算距离：" + distance);
 
         //按最大距离倒叙查询
         List<SendFreightEntity> freightEntities = baseMapper.selectList(
@@ -45,7 +48,7 @@ public class SendFreightServiceImpl extends ServiceImpl<SendFreightDao, SendFrei
         //从大到小比较
         for (int i = 0; i < freightEntities.size(); i++) {
             SendFreightEntity sendFreightEntity = freightEntities.get(i);
-
+            log.info("=== 当前运费规则栏：" + sendFreightEntity.toString());
             if(distance >= sendFreightEntity.getMaxDistance()){
                 freight = sendFreightEntity.getFreight();
                 break;

@@ -70,7 +70,7 @@ public class LocationUtils {
 
             if(res.getInteger("status") == 0){
                 //获取路线距离，duration也可以返回路线耗时  驾驶模式
-                return res.getJSONArray("result").getJSONObject(0).getJSONObject("distance").getFloat("value");
+                return res.getJSONArray("result").getJSONObject(0).getJSONObject("distance").getFloat("value") / 1000;
             }
         }
 

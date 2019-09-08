@@ -22,46 +22,29 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">最大距离</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendFreight.maxDistance" placeholder="最大距离"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">运费</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendFreight.freight" placeholder="运费"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendFreight.createTime" placeholder="创建时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendFreight.updateTime" placeholder="修改时间"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendFreight.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">最大距离</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="sendFreight.maxDistance" placeholder="最大距离"/>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">运费</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="sendFreight.freight" placeholder="运费"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
+</div>
 </div>
 
 <script src="${request.contextPath}/statics/js/modules/sys/sendfreight.js?_${.now?long}"></script>
