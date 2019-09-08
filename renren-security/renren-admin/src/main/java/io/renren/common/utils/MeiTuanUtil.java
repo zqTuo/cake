@@ -2,6 +2,7 @@ package io.renren.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import io.renren.modules.sys.service.IRedisService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,16 +39,14 @@ public class MeiTuanUtil {
     @Resource
     private IRedisService redisService;
 
-    public String getSessionUrl(HttpServletRequest request, String o_url) throws UnsupportedEncodingException {
-        String ip = HttpUtil.getIpAddr(request);
+    public String getSessionUrl() throws UnsupportedEncodingException {
 
-        log.info("请求美团授权ip：" + ip);
-        String content = Constant.MEITUAN_SECCESS_SALT + ip + DateUtil.getYYYYMMdd();
+        String content = Constant.MEITUAN_SECCESS_SALT + DateUtil.getYYYYMMdd();
         MD5 md5 = new MD5();
         String cotent2Aes = md5.toDigest(content);
         cotent2Aes = URLEncoder.encode(cotent2Aes,"UTF-8");
 
-        String redirect = url_pre + redirect_url + "?ip=" + ip + "&o_url=" + o_url;
+        String redirect = url_pre + redirect_url;
 
         redirect = URLEncoder.encode(redirect,"UTF-8");
         return "https://e.dianping.com/dz-open/merchant/auth" +
@@ -68,16 +67,20 @@ public class MeiTuanUtil {
      * @param code
      * @return
      */
-    public JSONObject getWebSession(String code,String redirect_url){
+    public JSONObject getWebSession(String code){
 
         Map<String,String> param = new HashMap<>();
         param.put("app_key",appKey);
         param.put("app_secret",appSecret);
-        param.put("code",code);
+        param.put("auth_code",code);
         param.put("grant_type","authorization_code");
-        param.put("redirect_url",redirect_url);
-        String resultStr = HttpClientTool.postData(sessionUrl, param, "UTF-8", "GET");
+        param.put("redirect_url",url_pre + redirect_url);
+
+        log.info("换取session参数：" + param);
+        String resultStr = HttpClientTool.getData(sessionUrl, param);
 
         return JSONObject.parseObject(resultStr);
     }
+
+
 }

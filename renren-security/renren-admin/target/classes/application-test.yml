@@ -36,7 +36,7 @@ spring:
     database: 0
     host: localhost
     port: 6379
-    password:      # 密码（默认为空）
+    password: cake!5149330     # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:
@@ -71,6 +71,6 @@ baiduMap:
 meituan:
   appKey: a47e6d93e90e87b0
   appSecret: 9bd1648712f0456a8ede514077e80a8ac00b4ffe
-  redirect_url: /cake-api/api/meituan/authRedirect
+  redirect_url: /cake-admin/sys/meituancoupon/authRedirect
   sessionUrl: https://openapi.dianping.com/router/oauth/token
   checkCodeUrl: https://openapi.dianping.com/router/tuangou/receipt/prepare

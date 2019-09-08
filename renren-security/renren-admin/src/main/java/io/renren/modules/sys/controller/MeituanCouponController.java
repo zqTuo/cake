@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,8 @@ public class MeituanCouponController {
     private MeiTuanUtil meiTuanUtil;
     @Resource
     private IRedisService redisService;
+    @Value("${project.url_pre}")
+    private String url_pre;
 
     /**
      * 列表
@@ -73,10 +76,8 @@ public class MeituanCouponController {
 
     @GetMapping("auth")
     @ApiOperation(value = "美团授权接口")
-    public String auth(HttpServletRequest request) throws UnsupportedEncodingException {
-        String o_url = ServletRequestUtils.getStringParameter(request,"p","");
-
-        String url = meiTuanUtil.getSessionUrl(request,o_url);
+    public String auth() throws UnsupportedEncodingException {
+        String url = meiTuanUtil.getSessionUrl();
         log.info("美团请求授权链接：" + url);
         return "redirect:" + url;
     }
@@ -90,40 +91,38 @@ public class MeituanCouponController {
         String message = ServletRequestUtils.getStringParameter(request,"message","");
         String auth_code = ServletRequestUtils.getStringParameter(request,"auth_code","");
         String state = ServletRequestUtils.getStringParameter(request,"state","");
-        String ip = ServletRequestUtils.getStringParameter(request,"ip","");
-        String o_url = ServletRequestUtils.getStringParameter(request,"o_url","");
 
         log.info("============ 美团授权回调参数：message：" + message + ",auth_code："
-                + auth_code + "，state：" + state + ",ip：" + ip + ",o_url:" + o_url);
-        if(StringUtils.isEmpty(message) || StringUtils.isEmpty(auth_code)
-                || StringUtils.isEmpty(state) || StringUtils.isEmpty(ip)){
+                + auth_code + "，state：" + state);
+        if(StringUtils.isEmpty(auth_code)
+                || StringUtils.isEmpty(state)){
             log.error("缺少参数，授权回调异常！");
-            return "";
+            return "redirect:" + url_pre + "/cake-admin";
         }
 
         // 校验 防止跨站请求伪造攻击
-        String o_state = Constant.MEITUAN_SECCESS_SALT + ip + DateUtil.getYYYYMMdd();
+        String o_state = Constant.MEITUAN_SECCESS_SALT + DateUtil.getYYYYMMdd();
         MD5 md5 = new MD5();
         String cotent2Aes = md5.toDigest(o_state);
 
         log.info("美团授权，原state：" + cotent2Aes);
         if(!(cotent2Aes).equals(state)){
-            log.info("授权检验失败：ip：" + ip);
-            return "redirect:" + o_url;
+            log.info("授权检验失败：state：" + state);
+            return "redirect:" + url_pre + "/cake-admin";
         }
 
         // 通过code换取session
-        JSONObject userInfo = meiTuanUtil.getWebSession(auth_code,o_url);
+        JSONObject userInfo = meiTuanUtil.getWebSession(auth_code);
 
         log.info("====== meituan_session获取结果：" + userInfo);
 
         if(200 != userInfo.getInteger("code")){
-            return "";
+            return "redirect:" + url_pre + "/cake-admin";
         }
 
         redisService.set("meituan_session",userInfo.getString("access_token"),userInfo.getLong("expires_in"));
 
-        return "redirect:" + o_url;
+        return "redirect:" + url_pre + "/cake-admin";
     }
 
     /**

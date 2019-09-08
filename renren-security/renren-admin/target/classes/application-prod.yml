@@ -71,6 +71,6 @@ baiduMap:
 meituan:
   appKey: a47e6d93e90e87b0
   appSecret: 9bd1648712f0456a8ede514077e80a8ac00b4ffe
-  redirect_url: /cake-api/api/meituan/authRedirect
+  redirect_url: /cake-admin/sys/meituancoupon/authRedirect
   sessionUrl: https://openapi.dianping.com/router/oauth/token
   checkCodeUrl: https://openapi.dianping.com/router/tuangou/receipt/prepare
