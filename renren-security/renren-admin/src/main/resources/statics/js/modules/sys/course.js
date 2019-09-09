@@ -1,30 +1,14 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/productcategory/list',
+        url: baseURL + 'sys/course/list',
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '分类名称', name: 'categoryName', index: 'category_name', width: 80 }, 			
-			{ label: '父类ID', name: 'categoryParentid', index: 'category_parentid', width: 80 }, 			
-			{ label: '展示位置', name: 'showFlag', index: 'show_flag', width: 80  ,formatter:function (cellValue) {
-                    if(cellValue === 1){
-                        return "蛋糕首页";
-                    }else if(cellValue === 2){
-                        return "课程首页";
-                    }else{
-                        return "不展示";
-                    }
-                }},
-			{ label: '状态', name: 'categoryFlag', index: 'category_flag', width: 80   ,formatter:function (cellValue) {
-                    if(cellValue === 1){
-                        return "<span class='label label-success radius'>已启用</span>";
-                    }else{
-                        return "<span class='label label-warning radius'>已禁用</span>";
-                    }
-                }},
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '课程名称', name: 'title', index: 'title', width: 80 }, 			
+			{ label: '分类名称', name: 'categoryName', index: 'category_name', width: 80 },
+			{ label: '主图图片', name: 'courseImg', index: 'course_img', width: 80 }, 			
+			{ label: '售价', name: 'price', index: 'price', width: 80 },
+			{ label: '课程简介', name: 'courseDes', index: 'course_des', width: 80 },
         ],
 		viewrecords: true,
         height: 385,
@@ -58,13 +42,8 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		productCategory: {},
-        cateList:[]
-    },
-    mounted: function(){
-        var that = this;
-        that.getCateList();
-    },
+		course: {}
+	},
 	methods: {
 		query: function () {
 			vm.reload();
@@ -72,7 +51,7 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.productCategory = {};
+			vm.course = {};
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -86,12 +65,12 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
-                var url = vm.productCategory.id == null ? "sys/productcategory/save" : "sys/productcategory/update";
+                var url = vm.course.id == null ? "sys/course/save" : "sys/course/update";
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
                     contentType: "application/json",
-                    data: JSON.stringify(vm.productCategory),
+                    data: JSON.stringify(vm.course),
                     success: function(r){
                         if(r.code === 0){
                              layer.msg("操作成功", {icon: 1});
@@ -120,7 +99,7 @@ var vm = new Vue({
                     lock = true;
 		            $.ajax({
                         type: "POST",
-                        url: baseURL + "sys/productcategory/delete",
+                        url: baseURL + "sys/course/delete",
                         contentType: "application/json",
                         data: JSON.stringify(ids),
                         success: function(r){
@@ -137,8 +116,8 @@ var vm = new Vue({
              });
 		},
 		getInfo: function(id){
-			$.get(baseURL + "sys/productcategory/info/"+id, function(r){
-                vm.productCategory = r.productCategory;
+			$.get(baseURL + "sys/course/info/"+id, function(r){
+                vm.course = r.course;
             });
 		},
 		reload: function (event) {
@@ -147,16 +126,6 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		},
-        getCateList: function (event) {
-            $.get(baseURL + "sys/productcategory/findAll", function(r){
-                vm.cateList = r.arrayData;
-                var cate = {};
-                cate.id = 0;
-                cate.lev = 0;
-                cate.name = '顶级分类';
-                vm.cateList.unshift(cate)
-            });
-        }
+		}
 	}
 });

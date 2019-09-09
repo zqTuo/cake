@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryDao, ProductCategoryEntity> implements ProductCategoryService {
 
     @Override
-    public List<CategoryDto> getProCateData() {
-        return baseMapper.getProCateData();
+    public List<CategoryDto> getProCateData(Integer sourceType) {
+        return baseMapper.getProCateData(sourceType);
     }
 }

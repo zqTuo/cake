@@ -25,7 +25,7 @@
         select c.id,c.category_name as parentName, c1.id as cid,c1.category_name
                from tb_product_category c
                 left join tb_product_category c1 on c.id=c1.category_parentid
-        where c.category_parentid=0 and c1.show_flag = 1 and c.show_flag = 1
+        where c.category_parentid=0 and c1.show_flag = #{sourceType}  and c.show_flag = #{sourceType}
         order by c.id,c1.id
     </select>
 

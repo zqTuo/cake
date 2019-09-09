@@ -20,9 +20,11 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -53,9 +55,12 @@ public class ProductController {
     private String video_pre;
 
     @GetMapping("cateInfo")
-    @ApiOperation(value = "获取商品分类数据接口")
-    public Result<CategoryDto> cateInfo(){
-        List<CategoryDto> categoryDtoList = productCategoryService.getProCateData();
+    @ApiOperation(value = "获取商品/课程分类数据接口")
+    public Result<CategoryDto> cateInfo(@ApiParam(value = "资源来源 : 1：商品类型 2：课程类型") Integer sourceType){
+        if(sourceType == null){
+            sourceType = 1;
+        }
+        List<CategoryDto> categoryDtoList = productCategoryService.getProCateData(sourceType);
         return new Result<>().ok(categoryDtoList);
     }
 

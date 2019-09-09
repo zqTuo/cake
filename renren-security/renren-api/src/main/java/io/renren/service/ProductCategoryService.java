@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface ProductCategoryService extends IService<ProductCategoryEntity> {
 
-    List<CategoryDto> getProCateData();
+    List<CategoryDto> getProCateData(Integer sourceType);
 }
 

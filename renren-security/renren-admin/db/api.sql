@@ -352,6 +352,19 @@ CREATE TABLE `tb_wx_key` (
      UNIQUE KEY `keyword` (`keyword`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信关键字表';
 
+-- 蛋糕课程表
+create table tb_course(
+    id bigint(20) auto_increment,
+    title varchar(200) not null default '' comment '课程名称',
+    cate_id bigint(20) not null default 0 comment '分类id',
+    course_img varchar(200) not null default '' comment '主图图片',
+    course_banner varchar(200) not null default '' comment '副图图片',
+    price decimal(11,2) not null default 0 comment '售价',
+    course_des varchar(200) not null default '' comment '课程简介',
+    course_info text not null comment '课程详情HTML代码',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='蛋糕课程表';
+
 
 
 

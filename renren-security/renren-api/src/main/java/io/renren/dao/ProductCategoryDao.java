@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.renren.dto.CategoryDto;
 import io.renren.entity.ProductCategoryEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ import java.util.List;
 @Mapper
 public interface ProductCategoryDao extends BaseMapper<ProductCategoryEntity> {
 
-    List<CategoryDto> getProCateData();
+    List<CategoryDto> getProCateData(@Param("sourceType") Integer sourceType);
 }

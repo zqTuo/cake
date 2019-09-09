@@ -57,7 +57,7 @@ public class BannerController {
     @RequiresPermissions("sys:banner:info")
     public R info(@PathVariable("id") Long id){
         BannerEntity banner = bannerService.getById(id);
-
+        banner.setBannerPic(pic_pre + banner.getBannerPic());
         return R.ok().put("banner", banner);
     }
 

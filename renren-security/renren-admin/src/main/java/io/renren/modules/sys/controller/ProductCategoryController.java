@@ -94,7 +94,6 @@ public class ProductCategoryController {
     @RequiresPermissions("sys:productcategory:info")
     public R info(@PathVariable("id") Long id){
         ProductCategoryEntity productCategory = productCategoryService.getById(id);
-
         return R.ok().put("productCategory", productCategory);
     }
 
