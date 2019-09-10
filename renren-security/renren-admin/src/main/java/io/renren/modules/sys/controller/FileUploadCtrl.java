@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,9 @@ public class FileUploadCtrl {
 
     @Value("${project.pic_pre}")
     private String pic_pre;
+    @Value("${project.video_pre}")
+    private String video_pre;
+
     @Value("${project.uploadFilePath}")
     private String uploadFilePath;
 
@@ -92,4 +96,33 @@ public class FileUploadCtrl {
 
         return rs;
     }
+
+
+    /**
+     * 上传视频
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/videoUpload",method = RequestMethod.POST)
+    @ResponseBody
+    public R videoUpload(@RequestParam(value = "file", required = false) MultipartFile file) {
+        if (file == null || file.getSize() <= 0) {
+            return R.error("文件不能为空");
+        }
+        if (file.getSize() > 50 * 1024 * 1024) {
+            return R.error("上传视频大小不能超过50Mb！");
+        }
+
+        try {
+            JSONObject res = FileFolderUtil.upload(file,video_pre,uploadFilePath);
+            logger.debug("视频路径{}",res);
+
+            return R.ok().put("data",res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error();
+        }
+    }
+
+
 }

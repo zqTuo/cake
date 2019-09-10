@@ -10,10 +10,17 @@
         <result property="cateId" column="cate_id"/>
         <result property="courseImg" column="course_img"/>
         <result property="courseBanner" column="course_banner"/>
+        <result property="courseVideo" column="course_video"/>
         <result property="price" column="price"/>
         <result property="courseDes" column="course_des"/>
         <result property="courseInfo" column="course_info"/>
     </resultMap>
+
+    <select id="list" resultType="io.renren.modules.sys.dto.CourseDto">
+        select c.id,c.title,p.category_name,c.course_img,c.price,c.course_des
+        from tb_course c left join tb_product_category p on c.cate_id=p.id
+        order by c.id desc
+    </select>
 
 
 </mapper>

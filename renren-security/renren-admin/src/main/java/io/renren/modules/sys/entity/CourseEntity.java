@@ -42,6 +42,10 @@ public class CourseEntity implements Serializable {
 	 */
 	private String courseBanner;
 	/**
+	 * 视频
+	 */
+	private String courseVideo;
+	/**
 	 * 售价
 	 */
 	private BigDecimal price;

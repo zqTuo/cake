@@ -1,5 +1,7 @@
 package io.renren.modules.sys.service.impl;
 
+import io.renren.modules.sys.dto.CourseDto;
+import io.renren.modules.sys.dto.ProductDto;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,10 +20,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseDao, CourseEntity> impl
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<CourseEntity> page = this.page(
-                new Query<CourseEntity>().getPage(params),
-                new QueryWrapper<CourseEntity>()
-        );
+        IPage<CourseDto> page = baseMapper.list(new Query<CourseDto>().getPage(params));
 
         return new PageUtils(page);
     }

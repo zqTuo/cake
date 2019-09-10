@@ -359,6 +359,7 @@ create table tb_course(
     cate_id bigint(20) not null default 0 comment '分类id',
     course_img varchar(200) not null default '' comment '主图图片',
     course_banner varchar(200) not null default '' comment '副图图片',
+    course_video varchar(200) default '' comment '视频介绍',
     price decimal(11,2) not null default 0 comment '售价',
     course_des varchar(200) not null default '' comment '课程简介',
     course_info text not null comment '课程详情HTML代码',

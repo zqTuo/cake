@@ -1,5 +1,6 @@
 package io.renren.modules.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 import io.renren.common.validator.ValidatorUtils;
@@ -10,8 +11,10 @@ import io.renren.modules.sys.service.ProductCategoryService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
@@ -40,9 +43,13 @@ public class ProductCategoryController {
     }
 
     @RequestMapping("/findAll")
-    public R findAll(){
+    public R findAll(HttpServletRequest request){
+        int showFlag = ServletRequestUtils.getIntParameter(request,"showFlag",1);
+
         //调取业务层获取所有商品种类数据
-        List<ProductCategoryEntity> mList = productCategoryService.list();
+        List<ProductCategoryEntity> mList = productCategoryService.list(
+                new QueryWrapper<ProductCategoryEntity>().eq("show_flag",showFlag));
+
         //最终得到的数据：经过无限分类，排序之后的数据
         List<CategoryDto> backList = new ArrayList<CategoryDto>();
         //对mList集合进行排序，并把排序之后的数据交给backList

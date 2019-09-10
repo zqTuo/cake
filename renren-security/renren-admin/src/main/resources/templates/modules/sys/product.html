@@ -9,6 +9,39 @@
     <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
     <!--产品展示-->
     <link rel="stylesheet" href="${request.contextPath}/statics/libs/productShow/css/shouye.css">
+    <!--layerui-->
+    <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui/css/layui.css?_${.now?long}">
+
+    <style>
+        .list {top: 15px;width: 140px;height: 40px; border:1px solid #0082E6; display:inline-block;border-radius: 2px;position: relative; line-height: 40px;}
+        #videoFile{position: absolute;opacity: 0;color:white;width: 100%;height: 100%;z-index: 100;}
+        .list span{
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            line-height: 40px;
+            position: absolute;
+            color: #0082E6;
+        }
+        video{
+            margin-top: 8px;
+            border-radius: 4px;
+        }
+        .container {
+            margin: 24px auto;
+        }
+        ._p{
+            margin: 14px;
+        }
+        ._p input{
+            display: inline-block;
+            width: 70%;
+            margin-left: 6px;
+        }
+        ._p span{
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -139,7 +172,57 @@
         <div class="form-group">
             <div class="col-sm-2 control-label">商品视频</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="product.productVideo" placeholder="商品视频"/>
+                <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo1">
+                    <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+                </div>
+                <div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">
+                    <button class="layui-btn site-demo-active" data-type="setPercent">设置50%</button>
+                    <button class="layui-btn site-demo-active" data-type="loading">模拟loading</button>
+                </div>
+
+
+
+                <div style="border-width: 2px;border-style: dashed;border-color: rgb(231, 230, 230);border-image: initial;width:1000px;min-height: 257px;">
+                    <div id="content"  style="width: 51%;float: left;padding: 10px;">
+                        <p class="_p">
+                            <span>选择视频： </span>
+                            <!--文件选择按钮-->
+                            <a class="list" href="javascript:;">
+                                <input id="videoFile" type="file" name="myfile" accept="video/*"  onchange="UpladFile();" /><span>选择视频</span>
+                            </a>
+                            <!--上传速度显示-->
+                            <span id="time"></span>
+                        </p>
+                        <!--显示消失-->
+                        <ul class="el-upload-list el-upload-list--text" style="display:  none;">
+                            <li tabindex="0" class="el-upload-list__item is-success" style="border-radius: 4px;height: 40px;padding: 5px;">
+                                <a class="el-upload-list__item-name">
+                                    <i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;<span id="videoName">food.jpeg</span>
+                                </a>
+                                <label class="el-upload-list__item-status-label" style="color: #13CE66;font-size: 14px;float: right;display: none;">
+                                    <i class="fa fa-check-square" aria-hidden="true"></i>
+                                </label>
+                                <i class="el-icon-close" onclick="del();"></i>
+                                <i class="el-icon-close-tip"></i>
+                            </li>
+                        </ul>
+
+                        <!--进度条-->
+                        <section class="container" style="display: none;">
+                            <div class="layui-progress" lay-showpercent="yes" lay-filter="demo" style="width: 40%;">
+                                <div class="layui-progress-bar layui-bg-blue" lay-percent="0%" ></div>
+                            </div>
+                        </section>
+
+                        <p class="_p"><span>上传视频</span>：<button class="btn btn-primary" type="button" onclick="sub();" style="margin-left: 5px;">上传</button></p>
+                    </div>
+                    <!--预览框-->
+                    <div class="preview" style="text-align: center;float: left;margin-left: 109px;" :data-videoSrc="product.productVideo">
+                        <video v-show="product.productVideo != '' && product.productVideo != undefined"  controls='' autoplay='' name='media' style='max-width: 563px;'>
+                            <source :src="product.productVideo" type='video/mp4'>
+                        </video>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -236,6 +319,7 @@
             </div>
         </div>
 
+
         <div class="form-group">
             <div class="f_l black-div"></div>
             <span class="f_l basic-data">商品描述信息</span>
@@ -274,7 +358,48 @@
 <script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgPlugin.js?_${.now?long}"></script>
 <!--产品展示-->
 <script type="text/javascript" src="${request.contextPath}/statics/libs/productShow/js/modernizr-custom-v2.7.1.min.js?_${.now?long}"></script>
+<!--layerui-->
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/layui/layui.js?_${.now?long}"></script>
+<!--视频上传-->
+<!--<script type="text/javascript" src="${request.contextPath}/statics/plugins/videoUpload/videoUpload.js?_${.now?long}"></script>-->
 
 <script type="text/javascript" src="${request.contextPath}/statics/js/modules/sys/product.js?_${.now?long}"></script>
+
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            setPercent: function(){
+                //设置50%进度
+                element.progress('demo1', '50%')
+            }
+            ,loading: function(othis){
+                var DISABLED = 'layui-btn-disabled';
+                if(othis.hasClass(DISABLED)) return;
+
+                //模拟loading
+                var n = 0, timer = setInterval(function(){
+                    n = n + Math.random()*10|0;
+                    if(n>100){
+                        n = 100;
+                        clearInterval(timer);
+                        othis.removeClass(DISABLED);
+                    }
+                    element.progress('demo1', n+'%');
+                }, 300+Math.random()*1000);
+
+                othis.addClass(DISABLED);
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = $(this).data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+</script>
 </body>
 </html>

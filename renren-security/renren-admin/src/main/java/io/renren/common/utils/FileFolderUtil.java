@@ -42,13 +42,13 @@ public class FileFolderUtil {
         }
     }
 
-    public static JSONObject upload(MultipartFile file, String pic_url, String outFileRootPath) throws IOException {
+    public static JSONObject upload(MultipartFile file, String read_url, String outFileRootPath) throws IOException {
         //图片文件夹名称
         String path = FileFolderUtil.getFileUrl();
         //图片文件夹路径
         String rpath = outFileRootPath + path; //服务器上
 //        String rpath = request.getSession().getServletContext().getRealPath("/images/" + path); //本地
-        logger.info("图片上传路径：" + rpath);
+        logger.info("文件上传路径：" + rpath);
         //生成图片文件夹
         FileFolderUtil.isExists(rpath);
         //根据uid生成图片名称
@@ -70,7 +70,8 @@ public class FileFolderUtil {
         }
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("fileUrl", pic_url + path + File.separator  + fileName);
+        jsonObject.put("fileUrl", read_url + path + File.separator  + fileName);
         return jsonObject;
     }
+
 }

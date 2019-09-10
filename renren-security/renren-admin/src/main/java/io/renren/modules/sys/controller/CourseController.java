@@ -1,11 +1,14 @@
 package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,11 @@ import io.renren.common.utils.R;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Value("${project.pic_pre}")
+    private String pic_pre;
+    @Value("${project.video_pre}")
+    private String video_pre;
+
 
     /**
      * 列表
@@ -52,7 +60,23 @@ public class CourseController {
     public R info(@PathVariable("id") Long id){
         CourseEntity course = courseService.getById(id);
 
-        return R.ok().put("course", course);
+        course.setCourseImg(pic_pre + course.getCourseImg());
+
+        if(StringUtils.isNotBlank(course.getCourseVideo())){
+            course.setCourseVideo(video_pre + course.getCourseVideo());
+        }
+
+        String[] bannerArr = course.getCourseBanner().split(",");
+        for (int i = 0; i < bannerArr.length; i++) {
+            if(!bannerArr[i].equals("")){
+                bannerArr[i] = pic_pre + bannerArr[i];
+            }
+        }
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("course",course);
+        map.put("bannerArr",bannerArr);
+        return R.ok(map);
     }
 
     /**

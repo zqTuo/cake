@@ -161,7 +161,7 @@ var vm = new Vue({
 
                 vm.product.productImg = $("#imgProDetail100").attr("src");
                 if(vm.product.productImg === "/cake-admin/statics/img/a11.png"){
-
+                    layer.alert("请上传商品主图！");
                 }
 
                 var data ={
@@ -588,7 +588,6 @@ $(document).on('mouseover','.Xcontent08>div',function (event){
     $(".pdtaste").text($(this).attr('data-detailtaste'));
     $(".pdsku").text($(this).attr('data-detailsku'));
 })
-
 
 
 
