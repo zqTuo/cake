@@ -42,6 +42,11 @@ public class SendTimeEntity implements Serializable {
 	@Min(value = 1,message = "缺少最大预约订单数")
 	private Integer maxOrder;
 	/**
+	 * 时间类别：0：配送时间 1：课程时间
+	 */
+	@Min(value = 0,message = "缺少时间类别")
+	private Integer type;
+	/**
 	 * 创建时间
 	 */
 	private Date createTime;

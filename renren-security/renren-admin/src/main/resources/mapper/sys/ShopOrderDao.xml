@@ -16,6 +16,7 @@
         <result property="orderState" column="order_state"/>
         <result property="orderSourceType" column="order_source_type"/>
         <result property="orderRemark" column="order_remark"/>
+        <result property="orderDes" column="order_des"/>
         <result property="addrPro" column="addr_pro"/>
         <result property="addrCity" column="addr_city"/>
         <result property="addrDis" column="addr_dis"/>

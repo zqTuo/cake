@@ -72,6 +72,10 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private String orderRemark;
 	/**
+	 * 备注
+	 */
+	private String orderDes;
+	/**
 	 * 配送省份 x
 	 */
 	private String addrPro;

@@ -55,7 +55,7 @@ public class SendTimeServiceImpl extends ServiceImpl<SendTimeDao, SendTimeEntity
             }
 
             // 判断是否已经约满
-            int curOrderNum = orderDao.countToday(selectedDate + " " + sendTimeDto.getStartTime() ,selectedDate + " " + sendTimeDto.getEndTime());
+            int curOrderNum = orderDao.countToday(selectedDate + " " + sendTimeDto.getStartTime() ,selectedDate + " " + sendTimeDto.getEndTime(), 0);
             if(curOrderNum >= sendTimeDto.getMaxOrder()){
                 // 已经约满 不能再预约了
                 sendTimeDto.setState(0);

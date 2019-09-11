@@ -19,9 +19,10 @@ import java.util.List;
 @Mapper
 public interface ShopOrderDao extends BaseMapper<ShopOrderEntity> {
 
-    int countToday(@Param("startTime") String startTime, @Param("endTime") String endTime);
+    int countToday(@Param("startTime") String startTime, @Param("endTime") String endTime, @Param("sourceType") int sourceType);
 
     List<OrderDto> findMyOrder(@Param("form") MyOrderForm form, @Param("userid") long userId);
 
     OrderDto findByOrderNo(@Param("orderNo") String orderNo);
+
 }

@@ -3,6 +3,9 @@
 <head>
     <title>配送时间表</title>
 		<#include "/header.html">
+    <!--layerui-->
+    <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui/css/layui.css?_${.now?long}">
+
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -22,36 +25,47 @@
         <div id="jqGridPager"></div>
     </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">派送开始时间点</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.startTime" placeholder="派送开始时间点 HH:mm"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">派送结束时间点</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.endTime" placeholder="派送结束时间点 HH:mm"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">最大预约订单数</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="sendTime.maxOrder" placeholder="最大预约订单数"/>
-                        </div>
-                    </div>
-			<div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-2 control-label">开始时间点</div>
+            <div class="col-sm-10">
+                <input type="text" autocomplete="off"  v-model="sendTime.startTime" class="layui-input" id="datetimeStart">
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">结束时间点</div>
+            <div class="col-sm-10">
+                <input type="text" autocomplete="off" v-model="sendTime.endTime" class="layui-input" id="datetimeEnd">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">最大预约订单数</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="sendTime.maxOrder" placeholder="最大预约订单数"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">时间类型</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="sendTime.type">
+                    <option :value="0">配送选择时间</option>
+                    <option :value="1">课程选择时间</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
 </div>
-
+</div>
+<!--layerui-->
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/layui/layui.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/sendtime.js?_${.now?long}"></script>
 </body>
 </html>

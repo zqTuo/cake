@@ -113,4 +113,10 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrderEnt
     public OrderDto findByOrderNo(String orderNo) {
         return baseMapper.findByOrderNo(orderNo);
     }
+
+    @Override
+    public int countToday(String startDate, String endDate, int sourceType) {
+        return baseMapper.countToday(startDate,endDate,sourceType);
+    }
+
 }

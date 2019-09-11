@@ -185,19 +185,19 @@ public class OrderController {
 
         log.info("====== 用户:" + userId + "统一下单参数：" + form.toString());
 
-        String sendTimeHHss = ""; // 配送时间段
-        Date sendDate = null; // 配送时间 日
+        String sendTimeHHss = ""; // 配送时间段/上课时间点
+        Date sendDate = null; // 配送时间 日 / 上课时间点
         try {
             sendDate = JodaTimeUtil.strToDate(form.getSendTime(),"yyyy-MM-dd HH:mm");
             sendTimeHHss = JodaTimeUtil.getTimeStrForHHss(form.getSendTime());
             SendTimeEntity sendTimeEntity = sendTimeService.getOne(new QueryWrapper<SendTimeEntity>()
-                    .eq("start_time",sendTimeHHss));
+                    .eq("start_time",sendTimeHHss).eq("type",0));
             if(sendTimeEntity == null){
                 return new Result<>().error("无此时间派送");
             }
 
             sendTimeHHss = sendTimeEntity.getStartTime() + "-" + sendTimeEntity.getEndTime();
-            log.info("配送时间段：" + sendTimeHHss);
+            log.info("配送时间/上课时间段：" + sendTimeHHss);
         } catch (ParseException e) {
             e.printStackTrace();
             return new Result<>().error("配送时间格式错误，请遵照yyyy-MM-dd HH:ss格式");
@@ -247,33 +247,40 @@ public class OrderController {
             orderItemService.saveBatch(orderItemList);
             log.info("********** 订单条目：" + orderItemList.size() + "已录入成功！******** ");
 
-            log.info("订单原始支付金额：" + totalPrice);
+        }else if(form.getSourceType() == 1){ // 预约课程
 
-            if(form.getCouponUserId() > 0){
-                //计算优惠券
-                BigDecimal discount = couponUserService.calculate(form.getCouponUserId(),totalPrice);
-                log.info( "使用优惠券优惠金额：" + discount);
-                totalPrice = totalPrice.subtract(discount);
-                discountFee = discountFee.add(discount);
-            }
+        }else{ // 购买会员
 
-            if(form.getMeituanId() > 0){
-                // 计算美团券包含商品金额
-                BigDecimal discount = meituanItemService.countPrice(form.getMeituanId());
-                log.info( "使用美团商品抵扣券优惠金额：" + discount);
-                totalPrice = totalPrice.subtract(discount);
-                discountFee = discountFee.add(discount);
-                form.setDiscountType(2);
-            }
+        }
 
-            if(form.getCouponUserId() > 0 && form.getMeituanId() > 0){
-                form.setDiscountType(3);
-            }
+        log.info("订单原始支付金额：" + totalPrice);
 
+        if(form.getCouponUserId() > 0){
+            //计算优惠券
+            BigDecimal discount = couponUserService.calculate(form.getCouponUserId(),totalPrice);
+            log.info( "使用优惠券优惠金额：" + discount);
+            totalPrice = totalPrice.subtract(discount);
+            discountFee = discountFee.add(discount);
+        }
 
-            String sendAddr = "";
-            String addrReceiver = "";
-            String addrPhone = "";
+        if(form.getMeituanId() > 0){
+            // 计算美团券包含商品金额
+            BigDecimal discount = meituanItemService.countPrice(form.getMeituanId());
+            log.info( "使用美团商品抵扣券优惠金额：" + discount);
+            totalPrice = totalPrice.subtract(discount);
+            discountFee = discountFee.add(discount);
+            form.setDiscountType(2);
+        }
+
+        if(form.getCouponUserId() > 0 && form.getMeituanId() > 0){
+            form.setDiscountType(3);
+        }
+
+        String sendAddr = "";
+        String addrReceiver = "";
+        String addrPhone = "";
+
+        if(form.getSourceType() == 0){
             if(form.getSendType() == 0){
                 //计算配送费
                 AddressEntity addressEntity = addressService.getById(form.getAddressId());
@@ -298,29 +305,27 @@ public class OrderController {
                 totalPrice = new BigDecimal("0");
                 orderState = Constant.ORDER_PAY_SUCCESS;
             }
+        }
 
-            ShopOrderEntity orderEntity = ShopOrderEntity.builder().orderNo(orderNo).userId(userId)
-                    .orderPrice(totalPrice).orderDiscount(discountFee).orderDiscountType(form.getDiscountType())
-                    .couponUserId(form.getCouponUserId()).orderState(orderState).orderSourceType(form.getSourceType())
-                    .orderRemark(form.getOrderRemark()).addrDetail(sendAddr).sendType(form.getSendType())
-                    .sendPrice(sendPrice).sendTime(sendTimeHHss)
-                    .addrPhone(addrPhone).addrReceiver(addrReceiver).sendDate(sendDate)
-                    .createTime(new Date()).payType(0).shopId(form.getShopId())
-                    .build();
+        ShopOrderEntity orderEntity = ShopOrderEntity.builder().orderNo(orderNo).userId(userId)
+                .orderPrice(totalPrice).orderDiscount(discountFee).orderDiscountType(form.getDiscountType())
+                .couponUserId(form.getCouponUserId()).orderState(orderState).orderSourceType(form.getSourceType())
+                .orderRemark(form.getOrderRemark()).addrDetail(sendAddr).sendType(form.getSendType())
+                .sendPrice(sendPrice).sendTime(sendTimeHHss)
+                .addrPhone(addrPhone).addrReceiver(addrReceiver).sendDate(sendDate)
+                .createTime(new Date()).payType(0).shopId(form.getShopId())
+                .build();
 
-            orderService.save(orderEntity);
-            log.info("******** 订单创建成功：" + orderEntity.toString());
+        orderService.save(orderEntity);
+        log.info("******** 订单创建成功：" + orderEntity.toString());
 
-            if (form.getSourceFrom() == 1) {
-                shoppingCartService.remove(new QueryWrapper<ShoppingCartEntity>().eq("user_id",userId));
-                log.info("已删除购物车中的购买商品");
-            }
+        if (form.getSourceFrom() == 1) {
+            shoppingCartService.remove(new QueryWrapper<ShoppingCartEntity>().eq("user_id",userId));
+            log.info("已删除购物车中的购买商品");
+        }
 
-            if(orderState == Constant.ORDER_PAY_SUCCESS){
-                orderService.payFinished(orderEntity);
-            }
-
-
+        if(orderState == Constant.ORDER_PAY_SUCCESS){
+            orderService.payFinished(orderEntity);
         }
 
         OrderFormDto res = OrderFormDto.builder().orderNo(orderNo).orderState(orderState).build();

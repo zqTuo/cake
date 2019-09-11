@@ -1,14 +1,15 @@
-package io.renren.modules.sys.entity;
+package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
 import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * 蛋糕课程表
@@ -19,6 +20,7 @@ import java.util.Date;
  */
 @Data
 @TableName("tb_course")
+@ApiModel(value = "课程实体")
 public class CourseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,10 +28,12 @@ public class CourseEntity implements Serializable {
 	 * 
 	 */
 	@TableId
+	@ApiModelProperty(value = "课程ID")
 	private Long id;
 	/**
 	 * 课程名称
 	 */
+	@ApiModelProperty(value = "课程名称")
 	@NotBlank(message = "请填写课程名称")
 	private String title;
 	/**
@@ -40,11 +44,13 @@ public class CourseEntity implements Serializable {
 	/**
 	 * 主图图片
 	 */
+	@ApiModelProperty(value = "课程主图")
 	@NotBlank(message = "请选择主图图片")
 	private String courseImg;
 	/**
 	 * 副图图片
 	 */
+	@ApiModelProperty(value = "课程副图图片")
 	@NotBlank(message = "请选择副图图片")
 	private String courseBanner;
 	/**

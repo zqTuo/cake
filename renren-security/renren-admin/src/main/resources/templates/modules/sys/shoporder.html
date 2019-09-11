@@ -3,6 +3,9 @@
 <head>
     <title>订单表</title>
 		<#include "/header.html">
+    <!--layerui-->
+    <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui/css/layui.css?_${.now?long}">
+
     <style>
         .input-text{
             box-sizing: border-box;
@@ -55,12 +58,7 @@
                 <input type="text" class="form-control" v-model="shopOrder.orderNo" placeholder="订单编号"/>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">用户ID</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.userId" placeholder="用户ID"/>
-            </div>
-        </div>
+
         <div class="form-group">
             <div class="col-sm-2 control-label">订单支付金额</div>
             <div class="col-sm-10">
@@ -74,36 +72,42 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">订单优惠类型 0：无优惠 1：优惠券</div>
+            <div class="col-sm-2 control-label">订单优惠类型</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.orderDiscountType"
-                       placeholder="订单优惠类型 0：无优惠 1：优惠券"/>
+                <select class="form-control" v-model="shopOrder.orderDiscountType">
+                    <option :value="0">无优惠</option>
+                    <option :value="1">优惠券</option>
+                    <option :value="2">美团券</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">订单状态</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="shopOrder.orderState">
+                    <option :value="-1">未支付</option>
+                    <option :value="0">已取消</option>
+                    <option :value="1">已支付</option>
+                    <option :value="2">已发货</option>
+                    <option :value="3">（已确认）已签收</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">用户的优惠券ID</div>
+            <div class="col-sm-2 control-label">订单来源</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.couponUserId" placeholder="用户的优惠券ID"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.orderState"
-                       placeholder="订单状态 -1：未支付 0：已取消 1：已支付 2：已发货 3：（已确认）已签收"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.orderSourceType"
-                       placeholder="订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员"/>
+                <select class="form-control" v-model="shopOrder.orderSourceType">
+                    <option :value="0">蛋糕订购</option>
+                    <option :value="1">预约烘焙课程</option>
+                    <option :value="2">购买会员</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-2 control-label">备注</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.orderRemark" placeholder="备注"/>
+                <textarea type="text" class="form-control" v-model="shopOrder.orderRemark" placeholder="备注"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -137,9 +141,12 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">配送方式 0：送货上门 1：门店自取</div>
+            <div class="col-sm-2 control-label">配送方式</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.sendType" placeholder="配送方式 0：送货上门 1：门店自取"/>
+                <select class="form-control" v-model="shopOrder.sendType">
+                    <option :value="0">送货上门</option>
+                    <option :value="1">门店自取</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -149,13 +156,13 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">派送时间</div>
+            <div class="col-sm-2 control-label">派送/上课时间</div>
             <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.sendTime" placeholder="派送时间"/>
+                <input type="text" autocomplete="off"  v-model="shopOrder.sendTime" class="layui-input" id="datetimeStart">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">创建时间</div>
+            <div class="col-sm-2 control-label">下单时间</div>
             <div class="col-sm-10">
                 <input type="text" class="form-control" v-model="shopOrder.createTime" placeholder="创建时间"/>
             </div>
@@ -187,8 +194,8 @@
     </form>
 </div>
 </div>
-
-<script type="text/javascript" src="${request.contextPath}/statics/plugins/My97DatePicker/4.8/WdatePicker.js"></script>
+<!--layerui-->
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/layui/layui.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/shoporder.js?_${.now?long}"></script>
 </body>
 </html>

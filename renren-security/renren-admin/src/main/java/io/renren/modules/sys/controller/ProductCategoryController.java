@@ -43,12 +43,18 @@ public class ProductCategoryController {
     }
 
     @RequestMapping("/findAll")
-    public R findAll(HttpServletRequest request){
-        int showFlag = ServletRequestUtils.getIntParameter(request,"showFlag",1);
+    public R findAll(Integer showFlag){
+//        int showFlag = ServletRequestUtils.getIntParameter(request,"showFlag",1);
 
         //调取业务层获取所有商品种类数据
-        List<ProductCategoryEntity> mList = productCategoryService.list(
-                new QueryWrapper<ProductCategoryEntity>().eq("show_flag",showFlag));
+        List<ProductCategoryEntity> mList;
+
+        if(showFlag == null){
+            mList = productCategoryService.list();
+        }else{
+            mList = productCategoryService.list(
+                    new QueryWrapper<ProductCategoryEntity>().eq("show_flag",showFlag));
+        }
 
         //最终得到的数据：经过无限分类，排序之后的数据
         List<CategoryDto> backList = new ArrayList<CategoryDto>();

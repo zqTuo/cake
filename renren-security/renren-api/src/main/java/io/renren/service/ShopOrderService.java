@@ -23,5 +23,8 @@ public interface ShopOrderService extends IService<ShopOrderEntity> {
     List<OrderDto> findMyOrder(MyOrderForm form, long userId);
 
     OrderDto findByOrderNo(String orderNo);
+
+    int countToday(String startDate, String endDate, int sourceType);
+
 }
 

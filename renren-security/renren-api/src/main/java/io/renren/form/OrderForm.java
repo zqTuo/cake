@@ -35,15 +35,14 @@ public class OrderForm {
     @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约烘焙课程 2：购买会员",required = true)
     private int sourceType;
 
-    @Min(value = 0,message = "缺少配送方式参数")
     @ApiModelProperty(value = "配送方式 0：送货上门 1：门店自取",required = true)
     private int sendType;
 
     @ApiModelProperty(value = "配送地址ID")
     private long addressId;
 
-    @NotBlank(message = "缺少配送/取货时间参数")
-    @ApiModelProperty(value = "配送/取货时间 格式：yyyy-MM-dd HH:mm",required = true)
+    @NotBlank(message = "缺少配送/取货/上课时间参数")
+    @ApiModelProperty(value = "配送/取货/上课时间 格式：yyyy-MM-dd HH:mm",required = true)
     private String sendTime;
 
     @Min(value = 0,message = "缺少门店参数")
@@ -55,8 +54,13 @@ public class OrderForm {
     private int sourceFrom;
 
     /**
-     * 备注
+     * 寄语
      */
     @ApiModelProperty(value = "寄语")
     private String orderRemark;
+    /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    private String orderDes;
 }

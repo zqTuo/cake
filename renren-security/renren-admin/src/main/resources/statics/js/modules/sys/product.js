@@ -269,7 +269,7 @@ var vm = new Vue({
             });
 		},
         getCateList: function (event) {
-            $.get(baseURL + "sys/productcategory/findAll", function(r){
+            $.get(baseURL + "sys/productcategory/findAll?showFlag=1", function(r){
                 vm.cateList = r.arrayData;
                 var cate = {};
                 cate.id = 0;

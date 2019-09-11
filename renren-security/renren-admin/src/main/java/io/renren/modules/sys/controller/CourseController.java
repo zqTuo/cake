@@ -85,6 +85,15 @@ public class CourseController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:course:save")
     public R save(@RequestBody CourseEntity course){
+        ValidatorUtils.validateEntity(course);
+
+        course.setCourseImg(course.getCourseImg().replaceFirst(pic_pre,""));
+
+        if(StringUtils.isNotBlank(course.getCourseVideo())){
+            course.setCourseVideo(course.getCourseVideo().replaceFirst(video_pre,""));
+        }
+
+        course.setCourseBanner(course.getCourseBanner().replaceAll(pic_pre,""));
         courseService.save(course);
 
         return R.ok();
@@ -97,6 +106,15 @@ public class CourseController {
     @RequiresPermissions("sys:course:update")
     public R update(@RequestBody CourseEntity course){
         ValidatorUtils.validateEntity(course);
+
+        course.setCourseImg(course.getCourseImg().replaceFirst(pic_pre,""));
+
+        if(StringUtils.isNotBlank(course.getCourseVideo())){
+            course.setCourseVideo(course.getCourseVideo().replaceFirst(video_pre,""));
+        }
+
+        course.setCourseBanner(course.getCourseBanner().replaceAll(pic_pre,""));
+
         courseService.updateById(course);
         
         return R.ok();

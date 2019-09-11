@@ -7,7 +7,14 @@ $(function () {
 			{ label: '派送开始时间点', name: 'startTime', index: 'start_time', width: 80 },
 			{ label: '派送时间点', name: 'endTime', index: 'end_time', width: 80 },
 			{ label: '最大预约订单数', name: 'maxOrder', index: 'max_order', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
+			{ label: '类别', name: 'type', index: 'type', width: 80 ,formatter:function (cellValue, options, rowObject) {
+                    if(cellValue === 0){
+                        return '配送选择时间'
+                    }else{
+                        return '课程选择时间'
+                    }
+                }},
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 },
 			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
 			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
         ],
@@ -35,6 +42,32 @@ $(function () {
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
+    });
+});
+
+layui.use('laydate', function(){
+    var laydate = layui.laydate;
+
+    //时间有效范围设定在: 上午九点半到下午五点半
+    var start = laydate.render({
+        elem: '#datetimeStart'
+        ,type: 'time'
+        ,format: 'HH:mm'
+        ,min: '06:00:00'
+        ,max: '23:59:00'
+        ,choose: function(datas){ //选择日期完毕的回调
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    });
+
+    //时间有效范围设定在: 上午九点半到下午五点半
+    var end = laydate.render({
+        elem: '#datetimeEnd'
+        ,type: 'time'
+        ,format: 'HH:mm'
+        ,min: '06:00:00'
+        ,max: '23:59:00'
     });
 });
 
@@ -67,6 +100,10 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.sendTime.id == null ? "sys/sendtime/save" : "sys/sendtime/update";
+
+                vm.sendTime.startTime = $("#datetimeStart").val();
+                vm.sendTime.endTime = $("#datetimeEnd").val();
+
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,

@@ -73,6 +73,7 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.productCategory = {};
+			vm.getCateList();
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -82,7 +83,8 @@ var vm = new Vue({
 			vm.showList = false;
             vm.title = "修改";
             
-            vm.getInfo(id)
+            vm.getInfo(id);
+            vm.getCateList();
 		},
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {

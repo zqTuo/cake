@@ -1,3 +1,5 @@
+var ue;
+
 $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/course/list',
@@ -36,6 +38,25 @@ $(function () {
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
+    });
+
+    // 文章内容 实例化百度富文本编辑器
+    ue = UE.getEditor('baseDataEditor',{
+        initialFrameWidth : 645
+    });
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    UE.Editor.prototype.getActionUrl = function (action) {
+        if (action === 'uploadimage') {
+            console.log("正在进行ueditor图片上传....");
+            return '/cake-admin/admin/upload/action';    /* 这里填上你自己的上传图片的接口地址 */
+        } else {
+            return this._bkGetActionUrl.call(this, action);
+        }
+    };
+
+    $("#banner_pic").takungaeImgup({
+        formData: {},
+        url:"/cake-admin/admin/upload/uploadFile.do" //上传路径
     });
 });
 
@@ -102,12 +123,13 @@ var vm = new Vue({
                     url: baseURL + url,
                     contentType: "application/json",
                     data: JSON.stringify(vm.course),
+                    headers: {
+                        auth: "ueditor"
+                    },
                     success: function(r){
                         if(r.code === 0){
                              layer.msg("操作成功", {icon: 1});
-                             vm.reload();
-                             $('#btnSaveOrUpdate').button('reset');
-                             $('#btnSaveOrUpdate').dequeue();
+                            location.replace(location.href);
                         }else{
                             layer.alert(r.msg);
                             $('#btnSaveOrUpdate').button('reset');
@@ -150,6 +172,10 @@ var vm = new Vue({
 			$.get(baseURL + "sys/course/info/"+id, function(r){
                 vm.course = r.course;
                 vm.bannerArr = r.bannerArr;
+                var content = r.course.courseInfo;
+                ue.ready(function () {
+                    ue.setContent(content);
+                });
             });
 		},
 		reload: function (event) {
