@@ -27,7 +27,7 @@ public class PageForm {
     @ApiModelProperty(value = "资源类型 0:热门商品,1:分类商品",example = "0",required = true)
     private int sourceType;
 
-    @ApiModelProperty(value = "类别ID，查询分类商品时必传",example = "1",required = true)
+    @ApiModelProperty(value = "类别ID，查询分类数据时必传",example = "1",required = true)
     private long cateid;
 
     @ApiModelProperty(value = "门店ID",required = true,example = "1")

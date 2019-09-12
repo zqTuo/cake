@@ -2,6 +2,9 @@ package io.renren.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.entity.CourseEntity;
+import io.renren.form.PageForm;
+
+import java.util.List;
 
 
 /**
@@ -13,5 +16,6 @@ import io.renren.entity.CourseEntity;
  */
 public interface CourseService extends IService<CourseEntity> {
 
+    List<CourseEntity> getDataByPage(PageForm form);
 }
 

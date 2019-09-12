@@ -137,6 +137,14 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Long shopId;
 	/**
+	 * 同行人数 - 大人
+	 */
+	private Integer adultNum;
+	/**
+	 * 同行人数 - 小孩
+	 */
+	private Integer kidNum;
+	/**
 	 * 取消时间
 	 */
 	private Date cancelTime;

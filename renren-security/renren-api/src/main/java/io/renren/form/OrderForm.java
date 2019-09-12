@@ -32,7 +32,7 @@ public class OrderForm {
     private long meituanId;
 
     @Min(value = 0,message = "缺少业务类型参数")
-    @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约烘焙课程 2：购买会员",required = true)
+    @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约单次体验课程 2：购买套餐课程",required = true)
     private int sourceType;
 
     @ApiModelProperty(value = "配送方式 0：送货上门 1：门店自取",required = true)
@@ -63,4 +63,27 @@ public class OrderForm {
      */
     @ApiModelProperty(value = "备注")
     private String orderDes;
+
+    /**
+     * 预约课程ID
+     */
+    @ApiModelProperty(value = "课程ID")
+    private Long courseId;
+
+    @ApiModelProperty(value = "预约姓名")
+    private String realName;
+
+    @ApiModelProperty(value = "预约手机号")
+    private String userPhone;
+
+    /**
+     * 同行人数 - 大人
+     */
+    @ApiModelProperty(value = "同行人数 - 大人")
+    private Integer adultNum;
+    /**
+     * 同行人数 - 小孩
+     */
+    @ApiModelProperty(value = "同行人数 - 小孩")
+    private Integer kidNum;
 }

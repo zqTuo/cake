@@ -32,6 +32,8 @@
         <result property="payType" column="pay_type"/>
         <result property="shopId" column="shop_id"/>
         <result property="kfNick" column="kf_nick"/>
+        <result property="adultNum" column="adult_num"/>
+        <result property="kidNum" column="kid_num"/>
         <result property="cancelTime" column="cancel_time"/>
         <result property="finishTime" column="finish_time"/>
         <result property="updateTime" column="update_time"/>

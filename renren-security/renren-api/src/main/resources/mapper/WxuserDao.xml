@@ -21,6 +21,10 @@
         <result property="updateTime" column="update_time"/>
         <result property="updateBy" column="update_by"/>
     </resultMap>
+    <select id="getUserInfo" resultType="io.renren.dto.UserDto">
+        select id,user_name,user_head,user_member,user_phone from tb_wxuser
+        where id=#{id}
+    </select>
 
 
 </mapper>

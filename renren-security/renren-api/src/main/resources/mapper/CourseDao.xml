@@ -16,7 +16,10 @@
         <result property="courseInfo" column="course_info"/>
     </resultMap>
 
-    
+    <select id="getDataByPage" resultMap="courseMap">
+        select * from tb_course where cate_id=#{cateid}
+        order by id desc limit #{pageNo} ,#{pageSize}
+    </select>
 
 
 </mapper>

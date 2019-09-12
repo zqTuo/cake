@@ -56,21 +56,25 @@ public class CourseEntity implements Serializable {
 	/**
 	 * 视频
 	 */
+	@ApiModelProperty(value = "课程视频")
 	private String courseVideo;
 	/**
 	 * 售价
 	 */
 	@Min(value = 1,message = "请填写售价")
+	@ApiModelProperty(value = "课程售价")
 	private BigDecimal price;
 	/**
 	 * 课程简介
 	 */
 	@NotBlank(message = "请填写课程简介")
+	@ApiModelProperty(value = "课程简介")
 	private String courseDes;
 	/**
 	 * 课程详情HTML代码
 	 */
 	@NotBlank(message = "请填写课程详情介绍")
+	@ApiModelProperty(value = "课程详情HTML")
 	private String courseInfo;
 
 }

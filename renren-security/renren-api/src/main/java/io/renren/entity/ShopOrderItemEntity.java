@@ -71,4 +71,5 @@ public class ShopOrderItemEntity implements Serializable {
 	 */
 	private Long courseId;
 
+
 }

@@ -64,6 +64,8 @@ public class OrderController {
     private ShoppingCartService shoppingCartService;
     @Resource
     private MeituanItemService meituanItemService;
+    @Resource
+    private CourseService courseService;
 
     @Value("${project.pic_pre}")
     private String pic_pre;
@@ -248,6 +250,43 @@ public class OrderController {
             log.info("********** 订单条目：" + orderItemList.size() + "已录入成功！******** ");
 
         }else if(form.getSourceType() == 1){ // 预约课程
+            if(form.getCourseId() == null || form.getCourseId() == 0){
+                return new Result<>().error("缺少课程参数");
+            }
+            if(StringUtils.isEmpty(form.getRealName()) || StringUtils.isEmpty(form.getUserPhone())){
+                return new Result<>().error("请准确填写预约姓名或手机号");
+            }
+
+
+            CourseEntity courseEntity = courseService.getById(form.getCourseId());
+            if(courseEntity == null){
+                return new Result<>().error("课程已下架");
+            }
+            if(form.getAdultNum() + form.getKidNum() > 3){
+                return new Result<>().error("同行人数不能超过3人哦");
+            }
+
+            ShopOrderItemEntity orderItemEntity = ShopOrderItemEntity.builder().courseId(form.getCourseId())
+                    .orderNo(orderNo).productId(0L).productName(courseEntity.getTitle())
+                    .productDesc(courseEntity.getCourseDes()).detailCover(courseEntity.getCourseImg())
+                    .detailPrice(courseEntity.getPrice()).buyNum(0).userMember(0).build();
+
+            orderItemService.save(orderItemEntity);
+
+            log.info("单次课程订单栏目生成成功：" + orderItemEntity.toString());
+            totalPrice = totalPrice.add(courseEntity.getPrice());
+            //查看是否有同行人数
+            if(form.getKidNum() == 2 || form.getAdultNum() == 2
+                    || (form.getAdultNum() == 2 && form.getKidNum() == 1)){ // 2小  2大 2大1小 加收50
+                BigDecimal extraPrice = new BigDecimal("50");
+                log.info("同行人数额外加收：" + extraPrice);
+                totalPrice = totalPrice.add(extraPrice);
+            }else if((form.getKidNum() == 2 && form.getAdultNum() == 1) || form.getAdultNum() == 3 || form.getKidNum() == 3){
+                BigDecimal extraPrice = new BigDecimal("100");
+                log.info("同行人数额外加收：" + extraPrice);
+                totalPrice = totalPrice.add(extraPrice);
+            }
+
 
         }else{ // 购买会员
 
@@ -313,7 +352,8 @@ public class OrderController {
                 .orderRemark(form.getOrderRemark()).addrDetail(sendAddr).sendType(form.getSendType())
                 .sendPrice(sendPrice).sendTime(sendTimeHHss)
                 .addrPhone(addrPhone).addrReceiver(addrReceiver).sendDate(sendDate)
-                .createTime(new Date()).payType(0).shopId(form.getShopId())
+                .createTime(new Date()).payType(0).shopId(form.getShopId()).adultNum(form.getAdultNum())
+                .kidNum(form.getKidNum())
                 .build();
 
         orderService.save(orderEntity);

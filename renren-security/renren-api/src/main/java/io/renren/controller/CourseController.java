@@ -52,9 +52,24 @@ public class CourseController {
     @Resource
     private ShopOrderService orderService;
 
-    @PostMapping("getInfo")
-    @ApiOperation(value = "获取课程详情数据接口")
-    public Result<HashMap> getInfo(@RequestParam("id") @ApiParam(value = "课程ID",required = true)long id){
+    @PostMapping("courseInfo")
+    @ApiOperation(value = "获取课程列表数据接口")
+    public Result<CourseEntity> courseInfo(@RequestBody PageForm form){
+        ValidatorUtils.validateEntity(form);
+
+        form.setPageNo(form.getPageNo() > 0 ? (form.getPageNo()-1) * form.getPageSize() : 0);
+
+        List<CourseEntity> courseEntityList = courseService.getDataByPage(form);
+
+        for (CourseEntity courseEntity:courseEntityList){
+            courseEntity.setCourseImg(pic_pre + courseEntity.getCourseImg());
+        }
+        return new Result<>().ok(courseEntityList);
+    }
+
+    @PostMapping("courseDetail")
+    @ApiOperation(value = "获取课程详情数据接口",notes = "course课程数据参考课程列表接口，bannerArr为副图图片数组")
+    public Result<HashMap> courseDetail(@RequestParam("id") @ApiParam(value = "课程ID",required = true)long id){
         CourseEntity courseEntity = courseService.getById(id);
         courseEntity.setCourseImg(pic_pre + courseEntity.getCourseImg());
         String[] bannerArr = courseEntity.getCourseBanner().split(",");

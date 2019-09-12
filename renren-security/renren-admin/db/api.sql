@@ -120,6 +120,8 @@ create table tb_shop_order(
     pay_type int default 0 comment '支付方式 0：微信支付',
     shop_id bigint(20) not null default 0 comment '门店ID',
     kf_nick varchar(20) default '' comment '接单客服昵称',
+    adult_num varchar(100) not null comment '同行人数 - 大人',
+    kid_num varchar(100) not null comment '同行人数 - 小孩',
     cancel_time datetime comment '取消时间',
     finish_time datetime comment '签收时间',
     update_time datetime COMMENT '修改时间',
@@ -368,6 +370,31 @@ create table tb_course(
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='蛋糕课程表';
 
+-- 课程套餐表
+create table tb_set_course(
+     id bigint(20) auto_increment,
+     title varchar(100) not null default '' comment '套餐名称',
+     pic_url varchar(200) not null default '' comment '套餐图片',
+     valid_period int(3) not null default 0 comment '有效期 0：永久有效',
+     price decimal(11,2) not null default 0 comment '套餐价格',
+     remark varchar(500) not null default '' comment '套餐描述',
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程套餐表';
 
+-- 套餐课程类别表
+create table tb_set_type(
+    id bigint(20) auto_increment,
+    title varchar(100) not null default '' comment '类别名称',
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐课程类别表';
+
+-- 套餐详情表
+create table tb_set_course_item(
+    id bigint(11) auto_increment,
+    set_course_id bigint(11) not null default 0 comment '课程套餐ID',
+    type_id bigint(11) not null default 0 comment '套餐课程类别ID',
+    num int(5) not null default 1 comment '包含课程次数',
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐课程表';
 
 

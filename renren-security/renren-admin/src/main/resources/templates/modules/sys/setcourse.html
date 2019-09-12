@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>课程套餐表</title>
+		<#include "/header.html">
+    <!--都是图片上传的css-->
+    <link href="${request.contextPath}/statics/libs/imgUp/common.css?_${.now?long}" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/index.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("sys:setcourse:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("sys:setcourse:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("sys:setcourse:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="f_l black-div"></div>
+            <span class="f_l basic-data">套餐基本信息</span>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">套餐名称</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="setCourse.title" placeholder="套餐名称"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">套餐图片</div>
+            <div class="col-sm-10">
+                <div class="proDetailPic" style="width:230px;">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                            <div id="preview1" style="width: 190px;height: 180px;">
+                                <img id="imgProDetail100" border="0" :src="setCourse.picUrl != '' && setCourse.picUrl != undefined ? setCourse.picUrl : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg100').click();">
+                            </div>
+                            <input type="file" onchange="onePicUpLoad(this,100,190,180)" style="display: none;" id="previewImg100">
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">有效期</div>
+            <div class="col-sm-10">
+                <select class="form-control" v-model="setCourse.validPeriod">
+                    <option :value="0">永久有效</option>
+                    <option :value="1" >1个月有效</option>
+                    <option :value="2" >2个月有效</option>
+                    <option :value="3" >3个月有效</option>
+                    <option :value="4" >4个月有效</option>
+                    <option :value="5" >5个月有效</option>
+                    <option :value="6" >6个月有效</option>
+                    <option :value="7" >7个月有效</option>
+                    <option :value="8" >8个月有效</option>
+                    <option :value="9" >9个月有效</option>
+                    <option :value="10" >10个月有效</option>
+                    <option :value="11" >11个月有效</option>
+                    <option :value="12" >12个月有效</option>
+                    <option :value="13" >13个月有效</option>
+                    <option :value="14" >14个月有效</option>
+                    <option :value="15" >15个月有效</option>
+                    <option :value="16" >16个月有效</option>
+                    <option :value="17" >17个月有效</option>
+                    <option :value="18" >18个月有效</option>
+                    <option :value="19" >19个月有效</option>
+                    <option :value="20" >20个月有效</option>
+                    <option :value="21" >21个月有效</option>
+                    <option :value="22" >22个月有效</option>
+                    <option :value="23" >23个月有效</option>
+                    <option :value="24" >24个月有效</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">套餐价格</div>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" v-model="setCourse.price" placeholder="套餐价格"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">套餐描述</div>
+            <div class="col-sm-10">
+                <textarea type="text" class="form-control" v-model="setCourse.remark" placeholder="套餐描述"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="f_l black-div"></div>
+            <span class="f_l basic-data">套餐详情</span>
+        </div>
+
+        <div class="form-group">
+            <a class="btn btn-primary radius" @click="prodetail_addOrUpdate('添加产品规格','900px','600px','add')" href="javascript:;" style="margin-left: 159px;color: #fff">
+                <span class="layui-icon layui-icon-add-1">添加课时</span>
+            </a>
+            <div class="col-sm-10">
+                <div class="col-sm-2 control-label"></div>
+                <div class="col-sm-10">
+                    <table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer">
+                    <thead style="background-color: #f5fafe;text-align: center;">
+                    <tr>
+                        <td>套餐类别</td>
+                        <td>包含课程数</td>
+                    </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        <tr v-if="detailList.length == 0">
+                            <td colspan="2"><span>暂无配置课程！</span></td>
+                        </tr>
+                        <tr v-else>
+
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label"></div>
+            <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                   @click="saveOrUpdate" value="确定"/>
+            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+        </div>
+    </form>
+</div>
+</div>
+<!--单图上传js-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgUp.js?_${.now?long}"></script>
+<script src="${request.contextPath}/statics/js/modules/sys/setcourse.js?_${.now?long}"></script>
+</body>
+</html>
