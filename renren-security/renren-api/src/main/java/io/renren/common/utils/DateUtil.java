@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @Author: Clarence
@@ -130,16 +128,30 @@ public class DateUtil {
         return curTime.after(delayTime);
     }
 
-    public static void main(String[] args) throws ParseException {
-        String temp = "这是真的商品【商品DIY#sku1,sku2是吧】我就说嘛";
-        Pattern p = Pattern.compile("#(.*?)#");
-        Matcher m=p.matcher(temp);
 
-        String[] arr = new String[1];
-        while(m.find()){
-            arr = m.group(1).split(",");
+    /**
+     * 根据日期获取当天是周几
+     * @param datetime 日期
+     * @return 周几
+     */
+    public static String dateToWeek(String datetime) {
+        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        Calendar cal = Calendar.getInstance();
+        Date date;
+        try {
+            date = sdf_yyyyMMddHHmm.parse(datetime);
+            cal.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        System.out.println(arr.length);
+        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        return weekDays[w];
+    }
+
+
+    public static void main(String[] args) throws ParseException {
+        String temp = "2019-09-12 22:27";
+        System.out.println(dateToWeek(temp));
 //        System.out.println(isToday("2019-08-26"));
 //        System.out.println(isAfter(4,"20:49", start, end));
     }

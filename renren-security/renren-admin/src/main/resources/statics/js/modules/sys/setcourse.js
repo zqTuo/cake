@@ -127,6 +127,7 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get(baseURL + "sys/setcourse/info/"+id, function(r){
                 vm.setCourse = r.setCourse;
+                vm.detailList = r.detailList;
             });
 		},
 		reload: function (event) {
@@ -135,6 +136,71 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+        course_addOrUpdate:function (title,opt,e) {
+            var html = '<select class="form-control cateOpt" >';
+            var idx = e.target.dataset.idx;
+            var detail = {};
+
+            if(opt === 'update'){
+                detail = vm.detailList[idx]
+            }
+
+            var that = this;
+            $.get(baseURL + "sys/setcourse/cateList", function(r){
+                if(r.code === 0){
+                    $.each(r.typeList,function (index,item) {
+                        if(opt === 'update'){
+                            var typeid = $(that).closest('tr').find('td').eq(0).attr('data-typeid');
+                            console.log(typeid);
+                            if(typeid === item.id){
+                                html += '<option value="' + item.id + '" selected>'+ item.title +'</option>';
+                            }else{
+                                html += '<option value="' + item.id + '" >'+ item.title +'</option>';
+                            }
+
+                        }else{
+                            html += '<option value="' + item.id + '" >'+ item.title +'</option>';
+                        }
+
+                    })
+                    html += '</select>' +
+                        '<input type="number" class="form-control courseNum" style="margin-top: 10px;" placeholder="课时数量"/>';
+
+                    layer.confirm(html,{title:title},function () {
+                        var num = $(".courseNum").val();
+                        var typeid = $(".cateOpt").val();
+                        var title = $(".cateOpt").find("option:selected").text();
+                        if(num > 0 && typeid > 0){
+
+                            detail.typeId = typeid;
+                            detail.num = num;
+                            detail.title = title;
+                            if(opt === 'update'){
+                                detail.setCourseId = vm.setCourse.id;
+                                var idx = e.target.dataset.idx;
+                                vm.detailList[idx] = detail;
+                            }else{
+                                vm.detailList.push(detail)
+                            }
+
+                            layer.close(layer.index);
+                        }else{
+                            layer.msg("请将课程填完整",{icon: 7})
+                        }
+                    })
+                }
+            });
+
+
+
+
+        },
+        delCourseItem:function (e) {
+            var idx = e.target.dataset.idx;
+            layer.confirm("确定删除此课程？",function () {
+                vm.detailList.splice(idx,1)
+            })
+        }
 	}
 });

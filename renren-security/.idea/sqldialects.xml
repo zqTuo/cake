@@ -3,6 +3,8 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/renren-admin/db/api.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/renren-admin/db/menu/meituancoupon_menu.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/renren-admin/db/menu/setcourse_menu.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/renren-admin/db/menu/settype_menu.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/renren-admin/db/mysql.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/renren-api/db/mysql.sql" dialect="MySQL" />
   </component>

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.annotation.Login;
 import io.renren.common.result.Result;
-import io.renren.common.utils.Constant;
-import io.renren.common.utils.JodaTimeUtil;
-import io.renren.common.utils.R;
-import io.renren.common.utils.UniqueOrderGenerate;
+import io.renren.common.utils.*;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.dto.*;
 import io.renren.entity.*;
@@ -178,6 +175,60 @@ public class OrderController {
 
         return new Result().ok(payMoneyDto);
     }
+
+
+    @Login
+    @PostMapping("getCourseMoney")
+    @ApiOperation(value = "计算课程预约支付金额接口")
+    public Result<CoursePayDto> getCourseMoney(@RequestBody CourseForm form,@ApiIgnore @RequestAttribute("userId")long userId){
+        ValidatorUtils.validateEntity(form);
+
+        CourseEntity courseEntity = courseService.getById(form.getCourseId());
+        if(courseEntity == null){
+            return new Result<>().error("课程不存在或已下架");
+        }
+
+        String time = DateUtil.dateToWeek(form.getSendTime()); // 获取周几
+        time = form.getSendTime().split(" ")[0] + "(" + time + ")" + form.getSendTime().split(" ")[1];
+
+        ShopEntity shopEntity = shopService.getById(form.getShopId());
+
+        BigDecimal coursePrice = courseEntity.getPrice();
+        CoursePayDto coursePayDto = new CoursePayDto();
+
+        //查看是否有同行人数
+        if(form.getKidNum() == 2 || form.getAdultNum() == 2
+                || (form.getAdultNum() == 2 && form.getKidNum() == 1)){ // 2小  2大 2大1小 加收50
+            BigDecimal extraPrice = new BigDecimal("50");
+            log.info("同行人数额外加收：" + extraPrice);
+            coursePrice = coursePrice.add(extraPrice);
+        }else if((form.getKidNum() == 2 && form.getAdultNum() == 1) || form.getAdultNum() == 3 || form.getKidNum() == 3){
+            BigDecimal extraPrice = new BigDecimal("100");
+            log.info("同行人数额外加收：" + extraPrice);
+            coursePrice = coursePrice.add(extraPrice);
+        }
+        coursePayDto.setCoursePrice(coursePrice);
+
+        BigDecimal orderPrice = coursePrice;
+
+        //判断优惠券
+        if(form.getCouponUserId() > 0){
+            //计算优惠券
+            BigDecimal discount = couponUserService.calculate(form.getCouponUserId(),coursePrice);
+            log.info( "使用优惠券优惠金额：" + discount);
+            orderPrice = orderPrice.subtract(discount);
+            coursePayDto.setDiscountPrice(discount);
+        }
+
+        coursePayDto.setOrderPrice(orderPrice);
+        coursePayDto.setSendTime(time);
+        coursePayDto.setShopName(shopEntity.getShopName());
+        coursePayDto.setUserPhone(form.getUserPhone());
+        coursePayDto.setCourseName(courseEntity.getTitle());
+
+        return new Result<>().ok(coursePayDto);
+    }
+
 
     @Login
     @ApiOperation(value = "统一下单接口")

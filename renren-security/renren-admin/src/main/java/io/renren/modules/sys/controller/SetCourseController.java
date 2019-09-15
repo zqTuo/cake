@@ -1,21 +1,24 @@
 package io.renren.modules.sys.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import io.renren.common.validator.ValidatorUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.modules.sys.entity.SetCourseEntity;
-import io.renren.modules.sys.service.SetCourseService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
+import io.renren.common.validator.ValidatorUtils;
+import io.renren.modules.sys.entity.SetCourseEntity;
+import io.renren.modules.sys.entity.SetCourseItemEntity;
+import io.renren.modules.sys.entity.SetTypeEntity;
+import io.renren.modules.sys.service.SetCourseItemService;
+import io.renren.modules.sys.service.SetCourseService;
+import io.renren.modules.sys.service.SetTypeService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -31,6 +34,10 @@ import io.renren.common.utils.R;
 public class SetCourseController {
     @Autowired
     private SetCourseService setCourseService;
+    @Resource
+    private SetTypeService setTypeService;
+    @Resource
+    private SetCourseItemService setCourseItemService;
 
     /**
      * 列表
@@ -51,8 +58,21 @@ public class SetCourseController {
     @RequiresPermissions("sys:setcourse:info")
     public R info(@PathVariable("id") Long id){
         SetCourseEntity setCourse = setCourseService.getById(id);
+        List<SetCourseItemEntity> detailList = setCourseItemService.list(new QueryWrapper<SetCourseItemEntity>().eq("set_course_id",id));
+        Map<String,Object> map = new HashMap<>();
+        map.put("detailList",detailList);
+        map.put("setCourse",setCourse);
+        return R.ok(map);
+    }
 
-        return R.ok().put("setCourse", setCourse);
+    /**
+     * 获取所有课程类别
+     */
+    @RequestMapping("/cateList")
+    public R cateList(){
+        List<SetTypeEntity> typeEntityList = setTypeService.list();
+
+        return R.ok().put("typeList", typeEntityList);
     }
 
     /**

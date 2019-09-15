@@ -16,7 +16,7 @@ $.ajax({
 	data: {},
 	success: function(r){
 		if(r.code !== 0){
-			window.location.href = "/cake-admin/sys/meituancoupon/auth"
+			parent.window.open("/cake-admin/sys/meituancoupon/auth","_blank")
 		}
 	}
 });
