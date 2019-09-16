@@ -162,6 +162,7 @@ var vm = new Vue({
                 vm.product.productImg = $("#imgProDetail100").attr("src");
                 if(vm.product.productImg === "/cake-admin/statics/img/a11.png"){
                     layer.alert("请上传商品主图！");
+                    return;
                 }
 
                 var data ={

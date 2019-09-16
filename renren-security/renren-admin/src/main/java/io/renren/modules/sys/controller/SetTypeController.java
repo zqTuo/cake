@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.renren.modules.sys.entity.SetTypeEntity;
-import io.renren.modules.sys.service.SetTypeService;
+import io.renren.modules.sys.entity.ComboTypeEntity;
+import io.renren.modules.sys.service.ComboTypeService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
@@ -30,7 +30,7 @@ import io.renren.common.utils.R;
 @RequestMapping("sys/settype")
 public class SetTypeController {
     @Autowired
-    private SetTypeService setTypeService;
+    private ComboTypeService comboTypeService;
 
     /**
      * 列表
@@ -38,7 +38,7 @@ public class SetTypeController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:settype:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = setTypeService.queryPage(params);
+        PageUtils page = comboTypeService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -50,7 +50,7 @@ public class SetTypeController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("sys:settype:info")
     public R info(@PathVariable("id") Long id){
-        SetTypeEntity setType = setTypeService.getById(id);
+        ComboTypeEntity setType = comboTypeService.getById(id);
 
         return R.ok().put("setType", setType);
     }
@@ -60,8 +60,8 @@ public class SetTypeController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:settype:save")
-    public R save(@RequestBody SetTypeEntity setType){
-        setTypeService.save(setType);
+    public R save(@RequestBody ComboTypeEntity setType){
+        comboTypeService.save(setType);
 
         return R.ok();
     }
@@ -71,9 +71,9 @@ public class SetTypeController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:settype:update")
-    public R update(@RequestBody SetTypeEntity setType){
+    public R update(@RequestBody ComboTypeEntity setType){
         ValidatorUtils.validateEntity(setType);
-        setTypeService.updateById(setType);
+        comboTypeService.updateById(setType);
         
         return R.ok();
     }
@@ -84,7 +84,7 @@ public class SetTypeController {
     @RequestMapping("/delete")
     @RequiresPermissions("sys:settype:delete")
     public R delete(@RequestBody Long[] ids){
-        setTypeService.removeByIds(Arrays.asList(ids));
+        comboTypeService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

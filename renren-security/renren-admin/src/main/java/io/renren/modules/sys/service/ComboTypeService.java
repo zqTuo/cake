@@ -2,7 +2,7 @@ package io.renren.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.renren.common.utils.PageUtils;
-import io.renren.modules.sys.entity.SetTypeEntity;
+import io.renren.modules.sys.entity.ComboTypeEntity;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ import java.util.Map;
  * @email sunlightcs@gmail.com
  * @date 2019-09-12 15:49:25
  */
-public interface SetTypeService extends IService<SetTypeEntity> {
+public interface ComboTypeService extends IService<ComboTypeEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 }

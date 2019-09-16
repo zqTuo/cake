@@ -8,19 +8,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.Query;
 
-import io.renren.modules.sys.dao.SetTypeDao;
-import io.renren.modules.sys.entity.SetTypeEntity;
-import io.renren.modules.sys.service.SetTypeService;
+import io.renren.modules.sys.dao.ComboTypeDao;
+import io.renren.modules.sys.entity.ComboTypeEntity;
+import io.renren.modules.sys.service.ComboTypeService;
 
 
 @Service("setTypeService")
-public class SetTypeServiceImpl extends ServiceImpl<SetTypeDao, SetTypeEntity> implements SetTypeService {
+public class ComboTypeServiceImpl extends ServiceImpl<ComboTypeDao, ComboTypeEntity> implements ComboTypeService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<SetTypeEntity> page = this.page(
-                new Query<SetTypeEntity>().getPage(params),
-                new QueryWrapper<SetTypeEntity>()
+        IPage<ComboTypeEntity> page = this.page(
+                new Query<ComboTypeEntity>().getPage(params),
+                new QueryWrapper<ComboTypeEntity>()
         );
 
         return new PageUtils(page);

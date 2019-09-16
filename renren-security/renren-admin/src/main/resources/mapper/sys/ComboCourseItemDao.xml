@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.ComboCourseItemDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.ComboCourseItemEntity" id="setCourseItemMap">
+        <result property="id" column="id"/>
+        <result property="comboCourseId" column="combo_course_id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="num" column="num"/>
+    </resultMap>
+
+    <select id="getList" resultType="io.renren.modules.sys.dto.ComboCourseItemDto">
+        select s.*,t.title from tb_combo_course_item s left join tb_combo_type t on s.type_id=t.id
+        where s.combo_course_id=#{id}
+    </select>
+
+    <delete id="removeByCourseIds" parameterType="collection">
+        delete from tb_combo_course_item where combo_course_id in
+        <foreach collection="idArr" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+</mapper>

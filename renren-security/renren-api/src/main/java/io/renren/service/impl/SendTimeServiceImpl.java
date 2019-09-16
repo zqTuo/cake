@@ -77,7 +77,7 @@ public class SendTimeServiceImpl extends ServiceImpl<SendTimeDao, SendTimeEntity
     }
 
     @Override
-    public List<SendTimeDto> getData() {
-        return baseMapper.getData();
+    public List<SendTimeDto> getData(int type) {
+        return baseMapper.getData(type);
     }
 }

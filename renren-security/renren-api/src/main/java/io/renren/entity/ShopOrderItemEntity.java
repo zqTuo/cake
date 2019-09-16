@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 订单详情表
@@ -71,5 +72,12 @@ public class ShopOrderItemEntity implements Serializable {
 	 */
 	private Long courseId;
 
-
+	/**
+	 * 课程套餐ID
+	 */
+	private Long comboCourseId;
+	/**
+	 * 课程套餐截止日期
+	 */
+	private Date expiredDate;
 }

@@ -1,11 +1,10 @@
-package io.renren.modules.sys.entity;
+package io.renren.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 套餐课程表
@@ -15,8 +14,8 @@ import java.util.Date;
  * @date 2019-09-12 15:49:25
  */
 @Data
-@TableName("tb_set_course_item")
-public class SetCourseItemEntity implements Serializable {
+@TableName("tb_combo_course_item")
+public class ComboCourseItemEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,7 +26,7 @@ public class SetCourseItemEntity implements Serializable {
 	/**
 	 * 课程套餐ID
 	 */
-	private Long setCourseId;
+	private Long comboCourseId;
 	/**
 	 * 套餐课程类别ID
 	 */

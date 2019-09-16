@@ -1,17 +1,18 @@
 package io.renren.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.common.utils.Constant;
 import io.renren.common.utils.Signature;
-import io.renren.dao.OrderSalesDao;
-import io.renren.dao.ShopOrderDao;
-import io.renren.dao.WxuserDao;
+import io.renren.common.utils.notice.CreateJsonUtil;
+import io.renren.dao.*;
 import io.renren.dto.OrderDto;
-import io.renren.entity.OrderSalesEntity;
-import io.renren.entity.ShopOrderEntity;
-import io.renren.entity.WxuserEntity;
+import io.renren.entity.*;
 import io.renren.form.MyOrderForm;
 import io.renren.service.ShopOrderService;
+import io.renren.service.WechatAuthService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,16 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrderEnt
     private OrderSalesDao orderSalesDao;
     @Resource
     private WxuserDao wxuserDao;
+    @Resource
+    private ShopOrderItemDao shopOrderItemDao;
+    @Resource
+    private ComboCourseItemDao comboCourseItemDao;
+    @Resource
+    private CreateJsonUtil createJsonUtil;
+    @Resource
+    private WechatAuthService wechatAuthService;
+    @Resource
+    private ShopDao shopDao;
 
     @Override
     public String generatePayOrderXml(String weCatAppId, String mchId, String noncestr, String desc, String orderNo, int price, String ipAddr, String notify_url, String openid, String type) {
@@ -93,13 +104,37 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrderEnt
         }
 
         WxuserEntity user = wxuserDao.selectById(order.getUserId());
+        ShopEntity shopEntity = shopDao.selectById(order.getShopId());
 
         if(order.getOrderSourceType() == Constant.ORDER_TYPE_CAKE){ // 购买蛋糕
+            StringBuilder productName = new StringBuilder();
+            List<ShopOrderItemEntity> itemList = shopOrderItemDao.selectList(new QueryWrapper<ShopOrderItemEntity>()
+                    .eq("order_no",order.getOrderNo()));
+
+            for (ShopOrderItemEntity shopOrderItemEntity:itemList){
+                productName.append(shopOrderItemEntity.getProductName());
+                if(StringUtils.isNotBlank(shopOrderItemEntity.getDetailSize())){
+                    productName.append("，").append(shopOrderItemEntity.getDetailSize());
+                }
+            }
+
             //通知用户预订成功
+            try {
+                //创建交易提醒json包;
+                log.info("蛋糕预订通知中：" + user.getId() +" --> " + user.getUserOpenid() );
+                JSONObject jsonObject = createJsonUtil.cake_self_Json(order.getOrderNo(),productName.toString(),order.getSendTime(),shopEntity.getShopName(),order.getAddrReceiver(),order.getAddrPhone(),user.getUserOpenid());
+                log.info("json包创建成功");
+                //发送交易提醒模板消息;
+                String accessToken = wechatAuthService.getLastAccessToken();
+                String result = createJsonUtil.send_Json(jsonObject.toString(), accessToken);
+                log.info("通知结果：" + result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }else if(order.getOrderSourceType() == Constant.ORDER_TYPE_COURSE){ // 预约烘焙课程
 
-        }else { // 购买会员
+        }else if(order.getOrderSourceType() == Constant.ORDER_TYPE_SETCOURSE) { // 购买课程套餐
 
         }
     }

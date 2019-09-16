@@ -15,8 +15,8 @@ import java.util.Date;
  * @date 2019-09-12 15:49:25
  */
 @Data
-@TableName("tb_set_type")
-public class SetTypeEntity implements Serializable {
+@TableName("tb_combo_type")
+public class ComboTypeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

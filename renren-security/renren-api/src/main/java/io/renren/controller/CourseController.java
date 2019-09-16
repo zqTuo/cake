@@ -1,16 +1,17 @@
 package io.renren.controller;
 
+import io.renren.annotation.Login;
 import io.renren.common.result.Result;
 import io.renren.common.utils.JodaTimeUtil;
 import io.renren.common.validator.ValidatorUtils;
-import io.renren.dto.ProductDto;
 import io.renren.dto.SendTimeDto;
+import io.renren.dto.ComboCourseDto;
 import io.renren.entity.CourseEntity;
+import io.renren.entity.ComboCourseEntity;
+import io.renren.form.CourseDetailForm;
 import io.renren.form.PageForm;
-import io.renren.form.SendTimeForm;
-import io.renren.service.CourseService;
-import io.renren.service.SendTimeService;
-import io.renren.service.ShopOrderService;
+import io.renren.form.SetCoursePayForm;
+import io.renren.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,8 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,10 @@ public class CourseController {
     private SendTimeService sendTimeService;
     @Resource
     private ShopOrderService orderService;
+    @Resource
+    private ComboCourseService comboCourseService;
+    @Resource
+    private CouponUserService couponUserService;
 
     @PostMapping("courseInfo")
     @ApiOperation(value = "获取课程列表数据接口")
@@ -69,7 +74,7 @@ public class CourseController {
 
     @PostMapping("courseDetail")
     @ApiOperation(value = "获取课程详情数据接口",notes = "course课程数据参考课程列表接口，bannerArr为副图图片数组")
-    public Result<HashMap> courseDetail(@RequestParam("id") @ApiParam(value = "课程ID",required = true)long id){
+    public Result<CourseDetailForm> courseDetail(@RequestParam("id") @ApiParam(value = "课程ID",required = true)long id){
         CourseEntity courseEntity = courseService.getById(id);
         courseEntity.setCourseImg(pic_pre + courseEntity.getCourseImg());
         String[] bannerArr = courseEntity.getCourseBanner().split(",");
@@ -83,16 +88,17 @@ public class CourseController {
             courseEntity.setCourseVideo(video_pre + courseEntity.getCourseVideo());
         }
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("course",courseEntity);
-        map.put("bannerArr",bannerArr);
-        return new Result<>().ok(map);
+        CourseDetailForm res = new CourseDetailForm();
+        res.setBannerArr(bannerArr);
+        res.setCourse(courseEntity);
+
+        return new Result<>().ok(res);
     }
 
     @PostMapping("getSendTime")
     @ApiOperation(value = "获取课程到达时间接口")
     public Result<SendTimeDto> getSendTime(@RequestParam("selectedDate") @ApiParam(value = "派送日期，默认当天，格式yyyy-MM-dd",required = true)String selectedDate) throws ParseException {
-        List<SendTimeDto> sendTimeEntityList = sendTimeService.getData();
+        List<SendTimeDto> sendTimeEntityList = sendTimeService.getData(1);
 
         for (SendTimeDto sendTimeDto:sendTimeEntityList){
             //判断当前时间是否已经过了这个点了 selectedDate -> yyyy-MM-dd  startTime -> HH:mm
@@ -106,8 +112,54 @@ public class CourseController {
             if(curOrderNum >= sendTimeDto.getMaxOrder()){
                 // 已经约满 不能再预约了
                 sendTimeDto.setState(0);
+            }else{
+                sendTimeDto.setState(2);
             }
         }
         return new Result<>().ok(sendTimeEntityList);
     }
+
+    @PostMapping("getSetCourse")
+    @ApiOperation(value = "获取套餐列表接口")
+    public Result<ComboCourseEntity> getSetCourse(){
+        List<ComboCourseEntity> courseEntityList = comboCourseService.list();
+
+        for (ComboCourseEntity comboCourseEntity :courseEntityList){
+            comboCourseEntity.setPicUrl(pic_pre + comboCourseEntity.getPicUrl());
+        }
+
+        return new Result<>().ok(courseEntityList);
+    }
+
+    @Login
+    @PostMapping("getSetPay")
+    @ApiOperation(value = "获取课程套餐结算数据接口")
+    public Result<ComboCourseDto> getSetPay(@RequestBody SetCoursePayForm form){
+        ValidatorUtils.validateEntity(form);
+
+        ComboCourseDto comboCourseDto = comboCourseService.findById(form.getComboCourseId());
+        comboCourseDto.setPicUrl(pic_pre + comboCourseDto.getPicUrl());
+
+        if(comboCourseDto.getValidPeriod() > 0){
+            comboCourseDto.setExpiredDate(JodaTimeUtil.getDateFromToday(comboCourseDto.getValidPeriod()));
+        }else{
+            comboCourseDto.setExpiredDate("无期限");
+        }
+
+        comboCourseDto.setTotalPrice(comboCourseDto.getPrice());
+
+        if(form.getCouponUserId() != null && form.getCouponUserId() > 0){
+            //计算优惠券
+            BigDecimal discount = couponUserService.calculate(form.getCouponUserId(), comboCourseDto.getTotalPrice());
+            log.info( "使用优惠券优惠金额：" + discount);
+            comboCourseDto.setTotalPrice(comboCourseDto.getTotalPrice().subtract(discount));
+            comboCourseDto.setDiscount(discount);
+        }else{
+            comboCourseDto.setDiscount(new BigDecimal("0.00"));
+        }
+
+        return new Result().ok(comboCourseDto);
+    }
+
+
 }

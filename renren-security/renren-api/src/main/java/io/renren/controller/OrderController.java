@@ -63,6 +63,8 @@ public class OrderController {
     private MeituanItemService meituanItemService;
     @Resource
     private CourseService courseService;
+    @Resource
+    private ComboCourseService comboCourseService;
 
     @Value("${project.pic_pre}")
     private String pic_pre;
@@ -73,7 +75,7 @@ public class OrderController {
     public Result<SendTimeDto> getSendTime(@RequestBody SendTimeForm form) throws ParseException {
         ValidatorUtils.validateEntity(form);
         log.info("获取配送时间参数：" + form.toString());
-        List<SendTimeDto> sendTimeEntityList = sendTimeService.getData();
+        List<SendTimeDto> sendTimeEntityList = sendTimeService.getData(0);
 
         // 根据派送地址系统时间 计算可选时段
         float distance = 0;
@@ -188,13 +190,18 @@ public class OrderController {
             return new Result<>().error("课程不存在或已下架");
         }
 
-        String time = DateUtil.dateToWeek(form.getSendTime()); // 获取周几
-        time = form.getSendTime().split(" ")[0] + "(" + time + ")" + form.getSendTime().split(" ")[1];
+        CoursePayDto coursePayDto = new CoursePayDto();
+
+        if(StringUtils.isNotBlank(form.getSendTime())){
+            String time = DateUtil.dateToWeek(form.getSendTime()); // 获取周几
+            time = form.getSendTime().split(" ")[0] + "(" + time + ")" + form.getSendTime().split(" ")[1];
+            coursePayDto.setSendTime(time);
+        }
 
         ShopEntity shopEntity = shopService.getById(form.getShopId());
 
         BigDecimal coursePrice = courseEntity.getPrice();
-        CoursePayDto coursePayDto = new CoursePayDto();
+
 
         //查看是否有同行人数
         if(form.getKidNum() == 2 || form.getAdultNum() == 2
@@ -212,7 +219,7 @@ public class OrderController {
         BigDecimal orderPrice = coursePrice;
 
         //判断优惠券
-        if(form.getCouponUserId() > 0){
+        if(form.getCouponUserId() != null && form.getCouponUserId() > 0){
             //计算优惠券
             BigDecimal discount = couponUserService.calculate(form.getCouponUserId(),coursePrice);
             log.info( "使用优惠券优惠金额：" + discount);
@@ -221,7 +228,7 @@ public class OrderController {
         }
 
         coursePayDto.setOrderPrice(orderPrice);
-        coursePayDto.setSendTime(time);
+
         coursePayDto.setShopName(shopEntity.getShopName());
         coursePayDto.setUserPhone(form.getUserPhone());
         coursePayDto.setCourseName(courseEntity.getTitle());
@@ -268,7 +275,7 @@ public class OrderController {
 
         int orderState = Constant.ORDER_UNPAY; // 是否已经抵扣完的订单状态
 
-        if(form.getSourceType() == 0){//蛋糕预订
+        if(form.getSourceType() == Constant.ORDER_TYPE_CAKE){//蛋糕预订
             JSONArray proArr = JSONArray.parseArray(form.getProds());
             for (int i = 0; i < proArr.size(); i++) {
                 long detailId = proArr.getJSONObject(i).getLong("detailId");
@@ -300,7 +307,7 @@ public class OrderController {
             orderItemService.saveBatch(orderItemList);
             log.info("********** 订单条目：" + orderItemList.size() + "已录入成功！******** ");
 
-        }else if(form.getSourceType() == 1){ // 预约课程
+        }else if(form.getSourceType() == Constant.ORDER_TYPE_COURSE){ // 预约课程
             if(form.getCourseId() == null || form.getCourseId() == 0){
                 return new Result<>().error("缺少课程参数");
             }
@@ -320,7 +327,7 @@ public class OrderController {
             ShopOrderItemEntity orderItemEntity = ShopOrderItemEntity.builder().courseId(form.getCourseId())
                     .orderNo(orderNo).productId(0L).productName(courseEntity.getTitle())
                     .productDesc(courseEntity.getCourseDes()).detailCover(courseEntity.getCourseImg())
-                    .detailPrice(courseEntity.getPrice()).buyNum(0).userMember(0).build();
+                    .detailPrice(courseEntity.getPrice()).buyNum(1).userMember(0).build();
 
             orderItemService.save(orderItemEntity);
 
@@ -339,7 +346,26 @@ public class OrderController {
             }
 
 
-        }else{ // 购买会员
+        }else if(form.getSourceType() == 2){ // 购买课程套餐
+            if(form.getComboCourseId() == null || form.getComboCourseId() == 0){
+                return new Result<>().error("请传入课程套餐ID");
+            }
+
+            ComboCourseEntity comboCourseEntity = comboCourseService.getById(form.getComboCourseId());
+            if(comboCourseEntity == null){
+                return new Result<>().error("该课程套餐已下架");
+            }
+
+            ShopOrderItemEntity orderItemEntity = ShopOrderItemEntity.builder().comboCourseId(form.getComboCourseId())
+                    .orderNo(orderNo).productId(0L).productName(comboCourseEntity.getTitle())
+                    .productDesc(comboCourseEntity.getRemark()).detailCover(comboCourseEntity.getPicUrl())
+                    .detailPrice(comboCourseEntity.getPrice()).expiredDate(DateUtil.getDayAfterMonth(comboCourseEntity.getValidPeriod(),new Date()))
+                    .buyNum(1).userMember(0).courseId(0L).build();
+
+            orderItemService.save(orderItemEntity);
+
+            log.info("课程套餐订单栏目生成成功：" + orderItemEntity.toString());
+            totalPrice = totalPrice.add(comboCourseEntity.getPrice());
 
         }
 

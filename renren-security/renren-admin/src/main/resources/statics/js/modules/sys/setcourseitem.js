@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '课程套餐ID', name: 'setCourseId', index: 'set_course_id', width: 80 }, 			
+			{ label: '课程套餐ID', name: 'setCourseId', index: 'combo_course_id', width: 80 },
 			{ label: '套餐课程类别ID', name: 'typeId', index: 'type_id', width: 80 }, 			
 			{ label: '包含课程次数', name: 'num', index: 'num', width: 80 }			
         ],

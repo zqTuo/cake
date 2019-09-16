@@ -17,6 +17,8 @@
         <result property="buyNum" column="buy_num"/>
         <result property="userMember" column="user_member"/>
         <result property="courseId" column="course_id"/>
+        <result property="comboCourseId" column="combo_course_id"/>
+        <result property="expiredDate" column="expire_date"/>
     </resultMap>
 
 

@@ -20,6 +20,7 @@ public class JodaTimeUtil {
 
     public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat sdf_yyyyMMdd = new SimpleDateFormat("yyyy年MM月dd日");
     public static final SimpleDateFormat STANDARD_DATE_FORMAT = new SimpleDateFormat(STANDARD_FORMAT);
     public static final String IDCARD_FORMAT = "yyyyMMdd";
     private static final SimpleDateFormat sdf_yyyyMMddHHmm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -192,11 +193,17 @@ public class JodaTimeUtil {
 
 
     public static void main(String[] args) throws ParseException {
-        String temp = "2019-9-10 11:00";
-        System.out.println(strToDate(temp,"yyyy-MM-dd HH:mm"));
+        System.out.println(getDateFromToday(6));
     }
 
     public static String getTimeStrForHHss(String sendTime) throws ParseException {
         return sdf_HHmm.format(sdf_yyyyMMddHHmm.parse(sendTime));
+    }
+
+    public static String getDateFromToday(int validPeriod) {
+        String validDate = sdf_yyyyMMdd.format(new Date());
+        validDate += "至" + sdf_yyyyMMdd.format(DateUtil.getDayAfterMonth(validPeriod,new Date()));
+
+        return validDate;
     }
 }

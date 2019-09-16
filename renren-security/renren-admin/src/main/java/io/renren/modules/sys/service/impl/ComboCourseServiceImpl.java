@@ -8,19 +8,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.Query;
 
-import io.renren.modules.sys.dao.SetCourseItemDao;
-import io.renren.modules.sys.entity.SetCourseItemEntity;
-import io.renren.modules.sys.service.SetCourseItemService;
+import io.renren.modules.sys.dao.ComboCourseDao;
+import io.renren.modules.sys.entity.ComboCourseEntity;
+import io.renren.modules.sys.service.ComboCourseService;
 
 
-@Service("setCourseItemService")
-public class SetCourseItemServiceImpl extends ServiceImpl<SetCourseItemDao, SetCourseItemEntity> implements SetCourseItemService {
+@Service("setCourseService")
+public class ComboCourseServiceImpl extends ServiceImpl<ComboCourseDao, ComboCourseEntity> implements ComboCourseService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<SetCourseItemEntity> page = this.page(
-                new Query<SetCourseItemEntity>().getPage(params),
-                new QueryWrapper<SetCourseItemEntity>()
+        IPage<ComboCourseEntity> page = this.page(
+                new Query<ComboCourseEntity>().getPage(params),
+                new QueryWrapper<ComboCourseEntity>()
         );
 
         return new PageUtils(page);

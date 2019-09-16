@@ -142,6 +142,8 @@ create table tb_shop_order_item(
     buy_num int not null default 1 comment '购买数量',
     user_member int default 0 comment '购买会员等级',
     course_id bigint(20) default 0 comment '购买课程ID',
+    combo_course_id bigint(20) default 0 comment '课程套餐ID',
+    expired_date datetime comment '课程套餐截止日期',
     primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单详情表';
 
@@ -371,7 +373,7 @@ create table tb_course(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='蛋糕课程表';
 
 -- 课程套餐表
-create table tb_set_course(
+create table tb_combo_course(
      id bigint(20) auto_increment,
      title varchar(100) not null default '' comment '套餐名称',
      pic_url varchar(200) not null default '' comment '套餐图片',
@@ -382,19 +384,29 @@ create table tb_set_course(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程套餐表';
 
 -- 套餐课程类别表
-create table tb_set_type(
+create table tb_combo_type(
     id bigint(20) auto_increment,
     title varchar(100) not null default '' comment '类别名称',
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐课程类别表';
 
 -- 套餐详情表
-create table tb_set_course_item(
+create table tb_combo_course_item(
     id bigint(11) auto_increment,
-    set_course_id bigint(11) not null default 0 comment '课程套餐ID',
+    combo_course_id bigint(11) not null default 0 comment '课程套餐ID',
     type_id bigint(11) not null default 0 comment '套餐课程类别ID',
     num int(5) not null default 1 comment '包含课程次数',
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='套餐课程表';
+
+-- 课程菜单表
+create table tb_course_menu(
+    id bigint(20) auto_increment,
+    send_time_id bigint(20) not null default 0 comment '时间ID',
+    course_id bigint(20) not null default 0 comment '课程ID',
+    num int not null default 0 comment '最大人数',
+    primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程菜单表';
+
 
 

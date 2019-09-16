@@ -17,5 +17,5 @@ import java.util.List;
 @Mapper
 public interface SendTimeDao extends BaseMapper<SendTimeEntity> {
 
-    List<SendTimeDto> getData();
+    List<SendTimeDto> getData(int type);
 }

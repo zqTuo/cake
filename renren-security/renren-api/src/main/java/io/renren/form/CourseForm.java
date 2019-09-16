@@ -45,8 +45,7 @@ public class CourseForm {
     @NotBlank(message = "请传入手机号")
     private String userPhone;
 
-    @NotBlank(message = "缺少上课时间参数")
-    @ApiModelProperty(value = "上课时间 格式：yyyy-MM-dd HH:mm",required = true)
+    @ApiModelProperty(value = "上课时间 格式：yyyy-MM-dd HH:mm")
     private String sendTime;
 
     @Min(value = 0,message = "缺少门店参数")

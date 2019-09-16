@@ -61,6 +61,7 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.setCourse = {};
+			vm.detailList = [];
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -75,17 +76,27 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.setCourse.id == null ? "sys/setcourse/save" : "sys/setcourse/update";
+
+                vm.setCourse.picUrl = $("#imgProDetail100").attr("src");
+                if(vm.setCourse.picUrl === "/cake-admin/statics/img/a11.png"){
+                    layer.alert("请上传套餐主图！");
+                    return;
+                }
+
+                var data = {
+                    setCourse:vm.setCourse,
+                    detailList:vm.detailList
+                }
+
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
                     contentType: "application/json",
-                    data: JSON.stringify(vm.setCourse),
+                    data: JSON.stringify(data),
                     success: function(r){
                         if(r.code === 0){
                              layer.msg("操作成功", {icon: 1});
-                             vm.reload();
-                             $('#btnSaveOrUpdate').button('reset');
-                             $('#btnSaveOrUpdate').dequeue();
+                            location.replace(location.href);
                         }else{
                             layer.alert(r.msg);
                             $('#btnSaveOrUpdate').button('reset');
@@ -140,6 +151,7 @@ var vm = new Vue({
         course_addOrUpdate:function (title,opt,e) {
             var html = '<select class="form-control cateOpt" >';
             var idx = e.target.dataset.idx;
+            console.log("序号：" + idx)
             var detail = {};
 
             if(opt === 'update'){
@@ -164,8 +176,14 @@ var vm = new Vue({
                         }
 
                     })
-                    html += '</select>' +
-                        '<input type="number" class="form-control courseNum" style="margin-top: 10px;" placeholder="课时数量"/>';
+
+                    if(opt === 'update'){
+                        html += '</select>' +
+                            '<input type="number" class="form-control courseNum" value="'+ detail.num +'" style="margin-top: 10px;" placeholder="课时数量"/>';
+                    }else{
+                        html += '</select>' +
+                            '<input type="number" class="form-control courseNum" style="margin-top: 10px;" placeholder="课时数量"/>';
+                    }
 
                     layer.confirm(html,{title:title},function () {
                         var num = $(".courseNum").val();
@@ -191,15 +209,39 @@ var vm = new Vue({
                     })
                 }
             });
-
-
-
-
         },
         delCourseItem:function (e) {
             var idx = e.target.dataset.idx;
+            var id = e.target.dataset.itemid;
+            var len = vm.detailList.length;
+
+            if(len === 1){
+                layer.msg("至少需要留下一个课程",{icon: 7})
+                return;
+            }
+
             layer.confirm("确定删除此课程？",function () {
-                vm.detailList.splice(idx,1)
+                if(id != undefined && id > 0){
+
+                    $.ajax({
+                        type: "POST",
+                        url: baseURL + "sys/setcourse/deleteItem",
+                        contentType: "application/json",
+                        data: JSON.stringify(id),
+                        success: function(r){
+                            if(r.code === 0){
+                                layer.msg("操作成功", {icon: 1});
+                                vm.detailList.splice(idx,1)
+                                layer.close(layer.index);
+                            }else{
+                                layer.alert(r.msg);
+                            }
+                        }
+                    });
+                }else{
+                    vm.detailList.splice(idx,1)
+                    layer.close(layer.index);
+                }
             })
         }
 	}

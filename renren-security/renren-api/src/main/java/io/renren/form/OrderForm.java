@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class OrderForm {
 
-    @ApiModelProperty(value = "购买商品数据,格式：[{\"detailId\":1,buyNum:1}]",required = true)
+    @ApiModelProperty(value = "购买商品数据,格式：[{\"detailId\":1,buyNum:1}]")
     private String prods;
 
     @ApiModelProperty(value = "优惠类型：0无优惠 1：优惠券 2：美团券",required = true)
@@ -35,7 +35,7 @@ public class OrderForm {
     @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约单次体验课程 2：购买套餐课程",required = true)
     private int sourceType;
 
-    @ApiModelProperty(value = "配送方式 0：送货上门 1：门店自取",required = true)
+    @ApiModelProperty(value = "配送方式 0：送货上门 1：门店自取")
     private int sendType;
 
     @ApiModelProperty(value = "配送地址ID")
@@ -86,4 +86,7 @@ public class OrderForm {
      */
     @ApiModelProperty(value = "同行人数 - 小孩")
     private Integer kidNum;
+
+    @ApiModelProperty(value = "课程套餐ID")
+    private Long comboCourseId;
 }

@@ -18,6 +18,6 @@ public interface SendTimeService extends IService<SendTimeEntity> {
 
     void resolveTimeList(List<SendTimeDto> sendTimeList, float distance, String selectedDate,int sendType) throws ParseException;
 
-    List<SendTimeDto> getData();
+    List<SendTimeDto> getData(int type);
 }
 

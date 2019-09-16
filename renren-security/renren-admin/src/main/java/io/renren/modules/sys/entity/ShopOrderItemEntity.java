@@ -65,5 +65,12 @@ public class ShopOrderItemEntity implements Serializable {
 	 * 购买课程ID
 	 */
 	private Long courseId;
-
+	/**
+	 * 课程套餐ID
+	 */
+	private Long comboCourseId;
+	/**
+	 * 课程套餐截止日期
+	 */
+	private Date expiredDate;
 }

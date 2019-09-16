@@ -5,8 +5,12 @@ import io.renren.common.result.Result;
 import io.renren.common.utils.JodaTimeUtil;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.dto.CouponDto;
+import io.renren.entity.ComboCourseEntity;
+import io.renren.entity.CourseEntity;
 import io.renren.form.CouponForm;
+import io.renren.service.ComboCourseService;
 import io.renren.service.CouponUserService;
+import io.renren.service.CourseService;
 import io.renren.service.ProductDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +40,10 @@ public class CouponController {
 
     @Resource
     private CouponUserService couponUserService;
+    @Resource
+    private CourseService courseService;
+    @Resource
+    private ComboCourseService comboCourseService;
 
     @Login
     @PostMapping("getMyCoupon")
@@ -45,7 +53,12 @@ public class CouponController {
 
         if(form.getSourceType() == 0 && form.getProds() == null){
             return new Result<>().error("请传入商品参数");
+        }else if(form.getSourceType() == 2 && form.getCourseId() == 0){
+            return new Result<>().error("请传入课程ID");
+        }else if(form.getSourceType() == 3 && form.getComboCourseId() == 0){
+            return new Result<>().error("请传入课程套餐ID");
         }
+
 
         // 查询可用状态的优惠券
 
@@ -54,6 +67,14 @@ public class CouponController {
         if(form.getSourceType() == 0){
             totalPrice = productDetailService.countTotalPrice(form.getProds());
             log.info("商品购买总金额：" + totalPrice);
+        }else if(form.getSourceType() == 2){
+            CourseEntity courseEntity = courseService.getById(form.getCourseId());
+            totalPrice = courseEntity.getPrice();
+            log.info("课程预订总金额：" + totalPrice);
+        }else if(form.getSourceType() == 3){
+            ComboCourseEntity comboCourseEntity = comboCourseService.getById(form.getComboCourseId());
+            totalPrice = comboCourseEntity.getPrice();
+            log.info("课程套餐预订总金额：" + totalPrice);
         }
 
         List<CouponDto> couponList = new ArrayList<>();
@@ -69,9 +90,11 @@ public class CouponController {
                     couponDto.setDateFlag(1);
                 }
                 couponDto.setExpiredTime(JodaTimeUtil.dateToStr(couponDto.getEndTime(),"yyyy年MM月dd日") + "前");
+            }else{
+                couponDto.setExpiredTime("无期限限制");
             }
 
-            if(form.getSourceType() == 0){ // 预定蛋糕结算页
+            if(form.getSourceType() != 1){ // 预定蛋糕结算页
                 //判断订单价格是否达到触发价格
                 if(totalPrice.compareTo(couponDto.getPrice()) < 0){
                     log.info("==》优惠券：" + couponDto.toString() + ",订单未达到触发价格，不可用");

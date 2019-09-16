@@ -67,6 +67,7 @@ weCat:
   dnbx_token: weixinMsg
   download_media_url: http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
   online_kf_list: https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist
+  cake_self_templateid: 4RVnkQ_aD2HPhJtd_EYU0slgIZY9sLXPQWFKxwMWPCY
 
 # 百度地图
 baiduMap:

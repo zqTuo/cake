@@ -51,6 +51,7 @@ public class Constant {
     public static final int ORDER_TYPE_CAKE = 0; // 蛋糕订购
     public static final int ORDER_TYPE_COURSE = 1;// 预约烘焙课程
     public static final int ORDER_CANCELED = 0; // 订单状态 已取消
+    public static final int ORDER_TYPE_SETCOURSE = 2; // 购买课程套餐
 
     /**
 	 * 菜单类型

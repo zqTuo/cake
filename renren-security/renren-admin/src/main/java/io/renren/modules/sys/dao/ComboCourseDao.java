@@ -1,7 +1,7 @@
-package io.renren.dao;
+package io.renren.modules.sys.dao;
 
+import io.renren.modules.sys.entity.ComboCourseEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.renren.entity.SetCourseEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2019-09-12 15:49:25
  */
 @Mapper
-public interface SetCourseDao extends BaseMapper<SetCourseEntity> {
+public interface ComboCourseDao extends BaseMapper<ComboCourseEntity> {
 	
 }

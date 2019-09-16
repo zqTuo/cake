@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.renren.modules.sys.entity.SetCourseItemEntity;
-import io.renren.modules.sys.service.SetCourseItemService;
+import io.renren.modules.sys.entity.ComboCourseItemEntity;
+import io.renren.modules.sys.service.ComboCourseItemService;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 
@@ -30,7 +30,7 @@ import io.renren.common.utils.R;
 @RequestMapping("sys/setcourseitem")
 public class SetCourseItemController {
     @Autowired
-    private SetCourseItemService setCourseItemService;
+    private ComboCourseItemService comboCourseItemService;
 
     /**
      * 列表
@@ -38,7 +38,7 @@ public class SetCourseItemController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:setcourseitem:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = setCourseItemService.queryPage(params);
+        PageUtils page = comboCourseItemService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -50,7 +50,7 @@ public class SetCourseItemController {
     @RequestMapping("/info/{id}")
     @RequiresPermissions("sys:setcourseitem:info")
     public R info(@PathVariable("id") Long id){
-        SetCourseItemEntity setCourseItem = setCourseItemService.getById(id);
+        ComboCourseItemEntity setCourseItem = comboCourseItemService.getById(id);
 
         return R.ok().put("setCourseItem", setCourseItem);
     }
@@ -60,8 +60,8 @@ public class SetCourseItemController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("sys:setcourseitem:save")
-    public R save(@RequestBody SetCourseItemEntity setCourseItem){
-        setCourseItemService.save(setCourseItem);
+    public R save(@RequestBody ComboCourseItemEntity setCourseItem){
+        comboCourseItemService.save(setCourseItem);
 
         return R.ok();
     }
@@ -71,9 +71,9 @@ public class SetCourseItemController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:setcourseitem:update")
-    public R update(@RequestBody SetCourseItemEntity setCourseItem){
+    public R update(@RequestBody ComboCourseItemEntity setCourseItem){
         ValidatorUtils.validateEntity(setCourseItem);
-        setCourseItemService.updateById(setCourseItem);
+        comboCourseItemService.updateById(setCourseItem);
         
         return R.ok();
     }
@@ -84,7 +84,7 @@ public class SetCourseItemController {
     @RequestMapping("/delete")
     @RequiresPermissions("sys:setcourseitem:delete")
     public R delete(@RequestBody Long[] ids){
-        setCourseItemService.removeByIds(Arrays.asList(ids));
+        comboCourseItemService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }
