@@ -40,13 +40,17 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
-    <select id="findByPage" resultType="io.renren.modules.sys.entity.ShopOrderEntity">
-        select * from tb_shop_order
+    <select id="findByPage" resultType="io.renren.modules.sys.dto.OrderDto">
+        select o.*,w.user_name,s.shop_name from tb_shop_order o left join tb_wxuser w on o.user_id=w.id
+        left join tb_shop s on o.shop_id=s.id
         <where>
+            <if test="map.searchVal !=null and map.searchVal !=''">
+               lower(concat(order_no,w.user_name,ifnull(o.addr_receiver,''),ifnull(o.addr_phone,''))) like #{map.date}
+            </if>
             <if test="map.date !=null and map.date !=''">AND send_date <![CDATA[>=]]> #{map.date} </if>
             <if test="map.dateEnd !=null and map.dateEnd !=''">AND send_date <![CDATA[<]]> #{map.dateEnd}</if>
         </where>
-        order by id desc
+        order by o.id desc
     </select>
 
     <select id="getData" resultType="io.renren.modules.sys.dto.ExcelOrderDto">

@@ -31,5 +31,9 @@
         where cu.id=#{id} and cu.state = 1
     </select>
 
+    <update id="userCoupon">
+        update tb_coupon_user set state = 0 where id=#{id}
+    </update>
+
 
 </mapper>

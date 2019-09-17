@@ -87,7 +87,6 @@ function layer_full(url,title) {
 	layer.full(index);
 }
 
-
 //选择一条记录
 function getSelectedRow() {
     var grid = $("#jqGrid");

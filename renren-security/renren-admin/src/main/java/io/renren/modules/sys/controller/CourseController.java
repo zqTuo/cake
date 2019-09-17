@@ -2,6 +2,7 @@ package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.renren.common.validator.ValidatorUtils;
@@ -49,6 +50,16 @@ public class CourseController {
         PageUtils page = courseService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    /**
+     * 获取所有课程列表
+     */
+    @RequestMapping("/all")
+    public R all(){
+        List<CourseEntity> courseList = courseService.list();
+
+        return R.ok().put("courseList", courseList);
     }
 
 

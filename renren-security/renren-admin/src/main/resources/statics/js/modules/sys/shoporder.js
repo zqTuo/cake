@@ -11,18 +11,10 @@ $(function () {
 			{ label: '订单状态', name: 'orderState', index: 'order_state', width: 80 },
 			{ label: '订单来源', name: 'orderSourceType', index: 'order_source_type', width: 80 },
 			{ label: '备注', name: 'orderRemark', index: 'order_remark', width: 80 }, 			
-			{ label: '配送地址', name: 'addrDetail', index: 'addr_detail', width: 80 },
-			{ label: '收货人', name: 'addrReceiver', index: 'addr_receiver', width: 80 }, 			
+			{ label: '收货人', name: 'addrReceiver', index: 'addr_receiver', width: 80 },
 			{ label: '配送方式', name: 'sendType', index: 'send_type', width: 80 },
 			{ label: '联系方式', name: 'addrPhone', index: 'addr_phone', width: 80 }, 			
 			{ label: '时间', name: 'sendTime', index: 'send_time', width: 80 },
-			{ label: '支付方式', name: 'payType', index: 'pay_type', width: 80 ,formatter:function (cellValue) {
-                    if(cellValue === 0){
-                        return "微信支付";
-                    }else{
-                        return ''
-                    }
-                } },
 			{ label: '下单门店', name: 'shopId', index: 'shop_id', width: 80 }
         ],
 		viewrecords: true,
@@ -51,6 +43,34 @@ $(function () {
         }
     });
 });
+
+
+function JumpByEnter() {
+    var lKeyCode = (navigator.appname == "Netscape") ? event.which : window.event.keyCode; //event.keyCode按的建的代码，13表示回车
+    if (lKeyCode == 13) {
+        var searchVal = encodeURIComponent($("#orderSearch").val());
+        var postJson = {searchVal:searchVal};
+
+        //传入查询条件参数
+        $("#jqGrid").jqGrid("setGridParam",{postData:postJson});
+        //每次提出新的查询都转到第一页
+        $("#jqGrid").jqGrid("setGridParam",{page:1});
+        //提交post并刷新表格
+        $("#jqGrid").jqGrid("setGridParam",{url:searchUrl}).trigger("reloadGrid");
+    }
+}
+
+$("#orderSearch").click(function () {
+    var searchVal = encodeURIComponent($("#orderSearch").val());
+    var postJson = {searchVal:searchVal};
+
+    //传入查询条件参数
+    $("#jqGrid").jqGrid("setGridParam",{postData:postJson});
+    //每次提出新的查询都转到第一页
+    $("#jqGrid").jqGrid("setGridParam",{page:1});
+    //提交post并刷新表格
+    $("#jqGrid").jqGrid("setGridParam",{url:searchUrl}).trigger("reloadGrid");
+})
 
 var vm = new Vue({
 	el:'#rrapp',

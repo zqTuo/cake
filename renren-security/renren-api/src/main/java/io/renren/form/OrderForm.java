@@ -32,7 +32,7 @@ public class OrderForm {
     private long meituanId;
 
     @Min(value = 0,message = "缺少业务类型参数")
-    @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约单次体验课程 2：购买套餐课程",required = true)
+    @ApiModelProperty(value = "业务类型 0:蛋糕订购 1：预约单次体验课程 2：购买套餐课程 3：使用套餐",required = true)
     private int sourceType;
 
     @ApiModelProperty(value = "配送方式 0：送货上门 1：门店自取")
@@ -41,7 +41,6 @@ public class OrderForm {
     @ApiModelProperty(value = "配送地址ID")
     private long addressId;
 
-    @NotBlank(message = "缺少配送/取货/上课时间参数")
     @ApiModelProperty(value = "配送/取货/上课时间 格式：yyyy-MM-dd HH:mm",required = true)
     private String sendTime;
 

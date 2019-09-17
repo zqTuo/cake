@@ -33,6 +33,7 @@
         <result property="kfNick" column="kf_nick"/>
         <result property="adultNum" column="adult_num"/>
         <result property="kidNum" column="kid_num"/>
+        <result property="comboUserId" column="combo_user_id"/>
         <result property="cancelTime" column="cancel_time"/>
         <result property="finishTime" column="finish_time"/>
         <result property="updateTime" column="update_time"/>

@@ -53,4 +53,9 @@ public class CouponUserServiceImpl extends ServiceImpl<CouponUserDao, CouponUser
 
         return couponDto.getPrice();
     }
+
+    @Override
+    public void userCoupon(long id) {
+        baseMapper.userCoupon(id);
+    }
 }

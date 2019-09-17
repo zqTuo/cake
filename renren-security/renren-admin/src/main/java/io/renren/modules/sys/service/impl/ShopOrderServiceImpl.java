@@ -6,6 +6,7 @@ import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.Query;
 import io.renren.modules.sys.dao.ShopOrderDao;
 import io.renren.modules.sys.dto.ExcelOrderDto;
+import io.renren.modules.sys.dto.OrderDto;
 import io.renren.modules.sys.dto.SmallOrderDto;
 import io.renren.modules.sys.entity.ShopOrderEntity;
 import io.renren.modules.sys.service.ShopOrderService;
@@ -20,7 +21,7 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrderEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<ShopOrderEntity> page = baseMapper.findByPage(new Query<ShopOrderEntity>().getPage(params),params);
+        IPage<OrderDto> page = baseMapper.findByPage(new Query<OrderDto>().getPage(params),params);
 
         return new PageUtils(page);
     }

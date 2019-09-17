@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.sys.dao.CourseMenuDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.sys.entity.CourseMenuEntity" id="courseMenuMap">
+        <result property="id" column="id"/>
+        <result property="sendTimeId" column="send_time_id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="num" column="num"/>
+        <result property="menuDate" column="menu_date"/>
+    </resultMap>
+
+    <select id="findByPage" resultType="io.renren.modules.sys.dto.CourseMenuDto">
+        select m.*,concat(t.start_time,' - ',t.end_time) as courseTime,c.title
+        from tb_course_menu m left join tb_send_time t on m.send_time_id=t.id
+        left join tb_course c on m.course_id=c.id
+        <where>
+            <if test="map.date !=null and map.date !=''">AND m.menu_date = #{map.date} </if>
+        </where>
+        order by id desc
+    </select>
+
+
+</mapper>

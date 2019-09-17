@@ -122,6 +122,7 @@ create table tb_shop_order(
     kf_nick varchar(20) default '' comment '接单客服昵称',
     adult_num varchar(100) not null comment '同行人数 - 大人',
     kid_num varchar(100) not null comment '同行人数 - 小孩',
+    combo_user_id bigint(20) not null default 0 comment '用户课程套餐ID',
     cancel_time datetime comment '取消时间',
     finish_time datetime comment '签收时间',
     update_time datetime COMMENT '修改时间',
@@ -363,6 +364,7 @@ create table tb_course(
     id bigint(20) auto_increment,
     title varchar(200) not null default '' comment '课程名称',
     cate_id bigint(20) not null default 0 comment '分类id',
+    combo_type_id bigint(20) not null default 0 comment '套餐课程类别',
     course_img varchar(200) not null default '' comment '主图图片',
     course_banner varchar(200) not null default '' comment '副图图片',
     course_video varchar(200) default '' comment '视频介绍',
@@ -405,8 +407,22 @@ create table tb_course_menu(
     send_time_id bigint(20) not null default 0 comment '时间ID',
     course_id bigint(20) not null default 0 comment '课程ID',
     num int not null default 0 comment '最大人数',
+    menu_date date not null comment '课程当前日期',
+    cost int not null default 1 comment '消耗课程类别次数',
     primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程菜单表';
+
+-- 用户剩余套餐次数表
+create table tb_combo_user(
+    id bigint(11) auto_increment,
+    user_id bigint(11) not null default 0 comment '用户ID',
+    type_id bigint(11) not null default 0 comment '课程类别ID',
+    num int not null default 0 comment '剩余次数',
+    create_time datetime not null COMMENT '创建时间',
+    update_time datetime COMMENT '修改时间',
+    expired_time datetime COMMENT '过期时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户剩余套餐次数表';
 
 
 

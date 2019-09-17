@@ -1,9 +1,11 @@
 package io.renren.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.renren.dto.CourseDto;
 import io.renren.entity.CourseEntity;
 import io.renren.form.PageForm;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +20,5 @@ import java.util.List;
 public interface CourseDao extends BaseMapper<CourseEntity> {
 
     List<CourseEntity> getDataByPage(PageForm form);
+
 }

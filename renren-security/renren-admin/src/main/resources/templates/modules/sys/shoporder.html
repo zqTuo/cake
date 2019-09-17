@@ -3,8 +3,6 @@
 <head>
     <title>订单表</title>
 		<#include "/header.html">
-    <!--layerui-->
-    <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui/css/layui.css?_${.now?long}">
 
     <style>
         .input-text{
@@ -25,7 +23,13 @@
 <body>
 <div id="rrapp" v-cloak>
     <div v-show="showList">
-        <div class="grid-btn">
+        <div style="text-align: center">
+            <input type="text" name="" onfocus="this.select()" onkeypress="JumpByEnter()" id="orderSearch" placeholder=" 订单号、收货人姓名、用户昵称、手机号" style="width:400px" class="input-text">
+            <button name="" id="orderSearch_btn" class="btn btn-success" type="submit">
+                <i class="fa fa-search" aria-hidden="true"> 搜订单</i>
+            </button>
+        </div>
+        <div class="grid-btn" style="margin-top: 20px">
 			<#if shiro.hasPermission("sys:shoporder:update")>
                 <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
 			</#if>
@@ -194,8 +198,7 @@
     </form>
 </div>
 </div>
-<!--layerui-->
-<script type="text/javascript" src="${request.contextPath}/statics/plugins/layui/layui.js?_${.now?long}"></script>
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/My97DatePicker/4.8/WdatePicker.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/shoporder.js?_${.now?long}"></script>
 </body>
 </html>

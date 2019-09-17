@@ -59,7 +59,7 @@ public class ShopOrderEntity implements Serializable {
 	 */
 	private Integer orderState;
 	/**
-	 * 订单来源 0：蛋糕订购 1：预约烘焙课程 2:购买会员
+	 * 订单来源 0:蛋糕订购 1：预约单次体验课程 2：购买套餐课程 3：使用套餐
 	 */
 	private Integer orderSourceType;
 	/**
@@ -138,6 +138,11 @@ public class ShopOrderEntity implements Serializable {
 	 * 门店ID
 	 */
 	private Long shopId;
+
+	/**
+	 * 用户课程套餐ID
+	 */
+	private Long comboUserId;
 	/**
 	 * 取消时间
 	 */

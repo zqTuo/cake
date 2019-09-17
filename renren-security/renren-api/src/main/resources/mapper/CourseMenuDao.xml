@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.CourseMenuDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.CourseMenuEntity" id="courseMenuMap">
+        <result property="id" column="id"/>
+        <result property="sendTimeId" column="send_time_id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="num" column="num"/>
+        <result property="menuDate" column="menu_date"/>
+        <result property="cost" column="cost"/>
+    </resultMap>
+
+    <select id="getMenu" resultType="io.renren.dto.CourseMenuDto">
+        select t.start_time,t.end_time,c.id as courseId,c.title,m.id,m.num,m.cost
+        from tb_send_time t
+            left join
+            (select * from tb_course_menu where menu_date = #{date}) m on t.id=m.send_time_id
+            left join tb_course c on m.course_id=c.id
+        where t.type=1
+        order by t.start_time
+    </select>
+
+</mapper>

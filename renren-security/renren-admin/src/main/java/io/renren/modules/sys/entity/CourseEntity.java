@@ -38,6 +38,11 @@ public class CourseEntity implements Serializable {
 	@Min(value = 1,message = "请选择分类")
 	private Long cateId;
 	/**
+	 * 套餐课程分类id
+	 */
+	@Min(value = 1,message = "请选择套餐课程分类")
+	private Long comboTypeId;
+	/**
 	 * 主图图片
 	 */
 	@NotBlank(message = "请选择主图图片")

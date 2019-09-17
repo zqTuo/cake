@@ -16,6 +16,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -62,6 +63,12 @@ public class RRExceptionHandler {
 	public R httpMessageNotReadableException(HttpRequestMethodNotSupportedException e){
 		logger.error(e.getMessage());
 		return R.error(e.getMessage() + "，缺少参数");
+	}
+
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public R missingServletRequestParameterException(HttpRequestMethodNotSupportedException e){
+		logger.error(e.getMessage());
+		return R.error(e.getMessage() + "，参数异常");
 	}
 
 	@ExceptionHandler(Exception.class)

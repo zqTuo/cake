@@ -21,5 +21,7 @@ public interface CouponUserService extends IService<CouponUserEntity> {
     CouponDto findById(long id);
 
     BigDecimal calculate(long couponUserId, BigDecimal totalPrice);
+
+    void userCoupon(long id);
 }
 

@@ -1,13 +1,13 @@
 package io.renren.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.annotation.Login;
 import io.renren.common.result.Result;
+import io.renren.common.utils.DateUtil;
 import io.renren.common.utils.JodaTimeUtil;
 import io.renren.common.validator.ValidatorUtils;
-import io.renren.dto.SendTimeDto;
-import io.renren.dto.ComboCourseDto;
-import io.renren.entity.CourseEntity;
-import io.renren.entity.ComboCourseEntity;
+import io.renren.dto.*;
+import io.renren.entity.*;
 import io.renren.form.CourseDetailForm;
 import io.renren.form.PageForm;
 import io.renren.form.SetCoursePayForm;
@@ -20,10 +20,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +58,12 @@ public class CourseController {
     private ComboCourseService comboCourseService;
     @Resource
     private CouponUserService couponUserService;
+    @Resource
+    private CourseMenuService courseMenuService;
+    @Resource
+    private ComboTypeService comboTypeService;
+    @Resource
+    private ComboUserService comboUserService;
 
     @PostMapping("courseInfo")
     @ApiOperation(value = "获取课程列表数据接口")
@@ -159,6 +167,85 @@ public class CourseController {
         }
 
         return new Result().ok(comboCourseDto);
+    }
+
+
+    @PostMapping("getMenu")
+    @ApiOperation(value = "获取课程菜单接口")
+    public Result<CourseMenuDto> getMenu(@RequestParam("selectedDate") @ApiParam(value = "派送日期，默认当天，格式yyyy-MM-dd",required = true)String selectedDate) throws ParseException {
+        ValidatorUtils.validateEntity(selectedDate);
+
+        List<CourseMenuDto> menuDtoList = courseMenuService.getMenu(selectedDate);
+
+        for (CourseMenuDto courseMenuDto:menuDtoList){
+            if(courseMenuDto.getCourseId() == 0){
+                courseMenuDto.setState(1);
+                courseMenuDto.setTitle("暂无课程");
+                continue;
+            }
+
+            // 判断是否已经约满
+            int curOrderNum = orderService.countToday(selectedDate + " " + courseMenuDto.getStartTime() ,selectedDate + " " + courseMenuDto.getEndTime(),2);
+            if(curOrderNum >= courseMenuDto.getNum()){
+                // 已经约满 不能再预约了
+                courseMenuDto.setState(0);
+                courseMenuDto.setTitle("约满");
+            }else{
+                courseMenuDto.setState(2);
+            }
+        }
+        return new Result<>().ok(menuDtoList);
+    }
+
+    @Login
+    @PostMapping("courseUsePay")
+    @ApiOperation(value = "使用套餐课程结算接口")
+    public Result<CourseDto> courseUsePay(
+            @RequestParam("courseMenuId") @ApiParam(value = "课程菜单ID",required = true)Long courseMenuId
+            , @ApiIgnore @RequestAttribute("userId")long userId){
+
+        CourseMenuEntity courseMenuEntity = courseMenuService.getById(courseMenuId);
+
+        if(courseMenuEntity == null){
+            return new Result<>().error("此课程已结束");
+        }
+
+        CourseEntity courseEntity = courseService.getById(courseMenuEntity.getCourseId());
+
+        //查询用户所有套餐剩余次数
+        List<RemandCourseDto> remandCourseDtoList = comboUserService.findByUserId(userId);
+
+        CourseDto courseDto = new CourseDto();
+        courseDto.setId(courseMenuEntity.getCourseId());
+        courseDto.setTitle(courseEntity.getTitle());
+        courseDto.setPrice(courseEntity.getPrice());
+
+        ComboTypeEntity comboTypeEntity = comboTypeService.getById(courseEntity.getComboTypeId());
+        courseDto.setType(comboTypeEntity.getTitle());
+
+        courseDto.setCost("此次预约将消耗掉" + courseMenuEntity.getCost() + "次" + comboTypeEntity.getTitle());
+        courseDto.setRemandList(remandCourseDtoList);
+
+        //检测用户这类套餐次数是否使用完
+        ComboUserEntity comboUserEntity = comboUserService.getOne(
+                new QueryWrapper<ComboUserEntity>().eq("user_id",userId)
+                .eq("type_id",comboTypeEntity.getId())
+        );
+
+        if(comboUserEntity == null){
+            return new Result().error(courseDto,"您的套餐剩余次数不足！");
+        }
+
+        if(comboUserEntity.getNum() <= 0){
+            return new Result().error(courseDto,"您的套餐剩余次数不足！");
+        }else{
+            if(comboUserEntity.getExpiredTime() != null && JodaTimeUtil.isExpired(comboUserEntity.getExpiredTime(),new Date())){
+                log.info("套餐已过期");
+                return new Result().error(courseDto,"您的套餐已过期！");
+            }
+
+            return new Result().ok(courseDto);
+        }
     }
 
 

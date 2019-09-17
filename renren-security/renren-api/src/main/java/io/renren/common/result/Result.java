@@ -45,6 +45,10 @@ public class Result<T> {
         return new Result<>(0,"success",data);
     }
 
+    public Result error(T data,String msg){
+        return new Result<>(500,msg,data);
+    }
+
     public Result error(String msg){
         return new Result(500,msg);
     }

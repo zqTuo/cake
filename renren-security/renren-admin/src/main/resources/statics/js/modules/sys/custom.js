@@ -7,15 +7,19 @@ $(function () {
 			{ label: '微信昵称', name: 'userName', index: 'user_name', width: 80 }, 			
 			{ label: 'OPENID', name: 'userOpenId', index: 'user_open_id', width: 80 }, 			
 			{ label: '微信头像', name: 'userHead', index: 'user_head', width: 80 }, 			
-			{ label: '完整客服帐号，格式为：帐号前缀@公众号微信号', name: 'kfAccount', index: 'kf_account', width: 80 }, 			
+			{ label: '客服帐号', name: 'kfAccount', index: 'kf_account', width: 80 },
 			{ label: '客服昵称', name: 'kfNick', index: 'kf_nick', width: 80 }, 			
 			{ label: '客服编号', name: 'kfAccount', index: 'kf_account', width: 80 },
 			{ label: '客服头像', name: 'kfHeadImgUrl', index: 'kf_head_img_url', width: 80 }, 			
-			{ label: '如果客服帐号已绑定了客服人员微信号， 则此处显示微信号', name: 'kfWx', index: 'kf_wx', width: 80 }, 			
-			{ label: '客服状态 0：已停用 1：已启用', name: 'state', index: 'state', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '微信号', name: 'kfWx', index: 'kf_wx', width: 80 },
+			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 },
+            { label: '客服状态', name: 'state', index: 'state', width: 80 ,formatter:function (cellValue, options, rowObject) {
+                    if(cellValue === 1){
+                        return "<span class='label label-success radius'>启用中</span>";
+                    }else{
+                        return "<span class='label label-danger radius'>已停用</span>";
+                    }
+                }}
         ],
 		viewrecords: true,
         height: 385,

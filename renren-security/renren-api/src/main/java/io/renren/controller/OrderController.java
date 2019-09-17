@@ -12,6 +12,7 @@ import io.renren.form.*;
 import io.renren.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -65,6 +67,8 @@ public class OrderController {
     private CourseService courseService;
     @Resource
     private ComboCourseService comboCourseService;
+    @Resource
+    private ComboUserService comboUserService;
 
     @Value("${project.pic_pre}")
     private String pic_pre;
@@ -247,22 +251,24 @@ public class OrderController {
 
         String sendTimeHHss = ""; // 配送时间段/上课时间点
         Date sendDate = null; // 配送时间 日 / 上课时间点
-        try {
-            sendDate = JodaTimeUtil.strToDate(form.getSendTime(),"yyyy-MM-dd HH:mm");
-            sendTimeHHss = JodaTimeUtil.getTimeStrForHHss(form.getSendTime());
-            SendTimeEntity sendTimeEntity = sendTimeService.getOne(new QueryWrapper<SendTimeEntity>()
-                    .eq("start_time",sendTimeHHss).eq("type",0));
-            if(sendTimeEntity == null){
-                return new Result<>().error("无此时间派送");
+
+        if(form.getSourceType() < Constant.ORDER_TYPE_SETCOURSE){// 蛋糕预订 烘焙课程
+            try {
+                sendDate = JodaTimeUtil.strToDate(form.getSendTime(),"yyyy-MM-dd HH:mm");
+                sendTimeHHss = JodaTimeUtil.getTimeStrForHHss(form.getSendTime());
+                SendTimeEntity sendTimeEntity = sendTimeService.getOne(new QueryWrapper<SendTimeEntity>()
+                        .eq("start_time",sendTimeHHss).eq("type",0));
+                if(sendTimeEntity == null){
+                    return new Result<>().error("无此时间派送");
+                }
+
+                sendTimeHHss = sendTimeEntity.getStartTime() + "-" + sendTimeEntity.getEndTime();
+                log.info("配送时间/上课时间段：" + sendTimeHHss);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return new Result<>().error("配送时间格式错误，请遵照yyyy-MM-dd HH:ss格式");
             }
-
-            sendTimeHHss = sendTimeEntity.getStartTime() + "-" + sendTimeEntity.getEndTime();
-            log.info("配送时间/上课时间段：" + sendTimeHHss);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return new Result<>().error("配送时间格式错误，请遵照yyyy-MM-dd HH:ss格式");
         }
-
 
         UniqueOrderGenerate idWorker = new UniqueOrderGenerate(0, 0);
         String orderNo = String.valueOf(idWorker.nextId());//雪花算法 生成订单号
@@ -272,6 +278,8 @@ public class OrderController {
         BigDecimal totalPrice = new BigDecimal("0.00"); // 订单总价
         BigDecimal discountFee = new BigDecimal("0.00"); // 优惠金额
         BigDecimal sendPrice = new BigDecimal("0.00"); // 配送费用
+
+        long comboUserId = 0;//用户课程套餐ID
 
         int orderState = Constant.ORDER_UNPAY; // 是否已经抵扣完的订单状态
 
@@ -346,7 +354,7 @@ public class OrderController {
             }
 
 
-        }else if(form.getSourceType() == 2){ // 购买课程套餐
+        }else if(form.getSourceType() == Constant.ORDER_TYPE_SETCOURSE){ // 购买课程套餐
             if(form.getComboCourseId() == null || form.getComboCourseId() == 0){
                 return new Result<>().error("请传入课程套餐ID");
             }
@@ -367,6 +375,47 @@ public class OrderController {
             log.info("课程套餐订单栏目生成成功：" + orderItemEntity.toString());
             totalPrice = totalPrice.add(comboCourseEntity.getPrice());
 
+        }else if(form.getSourceType() == Constant.ORDER_TYPE_USECOMBO){//使用套餐
+            if(form.getCourseId() == null || form.getCourseId() == 0){
+                return new Result<>().error("请传入课程ID");
+            }
+
+            //查看课程
+            CourseEntity courseEntity = courseService.getById(form.getCourseId());
+            if(courseEntity == null){
+                return new Result<>().error("该课程已结束");
+            }
+
+            //检测用户这类套餐次数是否使用完
+            ComboUserEntity comboUserEntity = comboUserService.getOne(
+                    new QueryWrapper<ComboUserEntity>().eq("user_id",userId)
+                            .eq("type_id",courseEntity.getComboTypeId())
+            );
+            if(comboUserEntity == null){
+                return new Result().error("您的套餐剩余次数不足！");
+            }
+
+            if(comboUserEntity.getNum() <= 0){
+                log.info("用户：" + userId + ",套餐内该类课程剩余次数不足！");
+                return new Result<>().error("您的套餐内该类课程剩余次数不足！");
+            }
+
+            if(comboUserEntity.getExpiredTime() != null && JodaTimeUtil.isExpired(comboUserEntity.getExpiredTime(),new Date())){
+                log.info("套餐已过期");
+                return new Result().error("您的套餐已过期！");
+            }
+
+            ShopOrderItemEntity orderItemEntity = ShopOrderItemEntity.builder().courseId(form.getCourseId())
+                    .orderNo(orderNo).productId(0L).productName(courseEntity.getTitle())
+                    .productDesc(courseEntity.getCourseDes()).detailCover(courseEntity.getCourseImg())
+                    .detailPrice(courseEntity.getPrice())
+                    .buyNum(1).userMember(0).courseId(0L).build();
+
+            orderItemService.save(orderItemEntity);
+
+            log.info("用户使用套餐预约课程订单栏目生成成功：" + orderItemEntity.toString());
+            orderState = Constant.ORDER_PAY_SUCCESS;
+            comboUserId = comboUserEntity.getId();
         }
 
         log.info("订单原始支付金额：" + totalPrice);
@@ -430,11 +479,17 @@ public class OrderController {
                 .sendPrice(sendPrice).sendTime(sendTimeHHss)
                 .addrPhone(addrPhone).addrReceiver(addrReceiver).sendDate(sendDate)
                 .createTime(new Date()).payType(0).shopId(form.getShopId()).adultNum(form.getAdultNum())
-                .kidNum(form.getKidNum())
+                .kidNum(form.getKidNum()).comboUserId(comboUserId)
                 .build();
 
         orderService.save(orderEntity);
         log.info("******** 订单创建成功：" + orderEntity.toString());
+
+        if(form.getCouponUserId() > 0){
+            //扣除优惠券
+            couponUserService.userCoupon(form.getCouponUserId());
+            log.info("优惠券：" + form.getCouponUserId());
+        }
 
         if (form.getSourceFrom() == 1) {
             shoppingCartService.remove(new QueryWrapper<ShoppingCartEntity>().eq("user_id",userId));
@@ -498,5 +553,16 @@ public class OrderController {
         }
 
         return new Result<>().ok(orderDtos);
+    }
+
+    @GetMapping("getQrcode")
+    @ApiOperation(value = "获取订单二维码接口"
+            ,notes = "直接响应图片流，使用示例：<img src=\"/api/order/getQrcode?orderNo=54654654\"/>")
+    public void getQrcode(@RequestParam("orderNo") @ApiParam(value = "订单编号",required = true) String orderNo, HttpServletResponse response){
+        try {
+            QrCodeUtils.writeImage(orderNo,response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

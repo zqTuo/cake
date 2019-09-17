@@ -67,11 +67,13 @@ var vm = new Vue({
 		title: null,
 		course: {},
         cateList:[],
-        bannerArr:[]
+        bannerArr:[],
+        comboTypeList:[]
 	},
     mounted: function(){
         var that = this;
         that.getCateList();
+        that.getComboTypeList();
 
     },
 	methods: {
@@ -206,6 +208,13 @@ var vm = new Vue({
                 }
             }
 
+        },
+        getComboTypeList:function () {
+            $.get(baseURL + "sys/setcourse/cateList", function(r) {
+                if (r.code === 0) {
+                    vm.comboTypeList = r.typeList;
+                }
+            })
         }
 	}
 });

@@ -8,6 +8,7 @@
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="cateId" column="cate_id"/>
+        <result property="comboTypeId" column="combo_type_id"/>
         <result property="courseImg" column="course_img"/>
         <result property="courseBanner" column="course_banner"/>
         <result property="courseVideo" column="course_video"/>
@@ -20,6 +21,5 @@
         select * from tb_course where cate_id=#{cateid}
         order by id desc limit #{pageNo} ,#{pageSize}
     </select>
-
 
 </mapper>

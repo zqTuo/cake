@@ -45,4 +45,6 @@ public class CourseDto {
      */
     @NotBlank(message = "请填写分类名称")
     private String categoryName;
+
+    private String comboType;//课程套餐类别
 }

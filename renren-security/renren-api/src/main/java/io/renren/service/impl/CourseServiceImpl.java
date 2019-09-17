@@ -2,6 +2,7 @@ package io.renren.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.renren.dao.CourseDao;
+import io.renren.dto.CourseDto;
 import io.renren.entity.CourseEntity;
 import io.renren.form.PageForm;
 import io.renren.service.CourseService;
@@ -18,4 +19,5 @@ public class CourseServiceImpl extends ServiceImpl<CourseDao, CourseEntity> impl
     public List<CourseEntity> getDataByPage(PageForm form) {
         return baseMapper.getDataByPage(form);
     }
+
 }
