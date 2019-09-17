@@ -33,9 +33,7 @@ public class ShopOrderController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:shoporder:list")
     public R list(@RequestParam Map<String, Object> params){
-
         PageUtils page = shopOrderService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 

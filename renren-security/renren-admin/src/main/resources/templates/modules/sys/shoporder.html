@@ -18,6 +18,20 @@
             line-height: 1.42857;
             padding: 4px;
         }
+        .select-box, .select-box.size-M {
+            padding: 4px 5px;
+        }
+        .select-box {
+            border: solid 1px #ddd;
+            box-sizing: border-box;
+            vertical-align: middle;
+            width: 100%;
+            display: inline-block;
+        }
+        .select-box .select {
+            border: 0;
+            background-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -35,6 +49,15 @@
 			</#if>
 
         <div style="float: right;">
+            订单类型：
+            <span class="select-box" style="width: 150px;">
+                <select class="select" size="1" name="demo1" id="cateOptions" >
+                    <option value="0">蛋糕订购</option>
+                    <option value="1">预约单次体验课程</option>
+                    <option value="2">购买套餐课程</option>
+                    <option value="3">套餐课程</option>
+                </select>
+            </span>
             派送/取货时间：
             <input type="text" autocomplete="off"
                    onfocus="WdatePicker({onpicked:dateChange(),maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })"

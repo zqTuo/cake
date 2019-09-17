@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 /**
  * 功能描述: <br>
@@ -68,6 +67,12 @@ public class OrderForm {
      */
     @ApiModelProperty(value = "课程ID")
     private Long courseId;
+
+    /**
+     * 课程菜单ID
+     */
+    @ApiModelProperty(value = "课程菜单ID")
+    private Long courseMenuId;
 
     @ApiModelProperty(value = "预约姓名")
     private String realName;

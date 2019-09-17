@@ -1,7 +1,11 @@
 package io.renren.modules.sys.dto;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.renren.common.utils.NameTransUtil;
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -98,6 +102,10 @@ public class OrderDto {
      */
     private String sendTime;
     /**
+     * 派送日期 yyyy-MM-dd
+     */
+    private Date sendDate;
+    /**
      * 接单客服
      */
     private String kfNick;
@@ -141,4 +149,15 @@ public class OrderDto {
      * 配送时间
      */
     private Date updateTime;
+
+    public String getUserName(){
+        return NameTransUtil.transName(userName);
+    }
+
+    public String getAddrReceiver(){
+        if(StringUtils.isNotBlank(addrReceiver)){
+            return NameTransUtil.transName(addrReceiver);
+        }
+        return "";
+    }
 }

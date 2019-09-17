@@ -24,7 +24,7 @@ public interface ShopOrderDao extends BaseMapper<ShopOrderEntity> {
 
     List<ExcelOrderDto> getData(@Param("map") Map<String, Object> map);
 
-    IPage<OrderDto> findByPage(IPage<ShopOrderEntity> page, @Param("map") Map<String, Object> params);
+    IPage<OrderDto> findByPage(IPage<OrderDto> page, @Param("map") Map<String, Object> params);
 
     List<SmallOrderDto> getSmallData(@Param("map") Map<String, Object> map);
 }

@@ -41,6 +41,23 @@ public class JodaTimeUtil {
         }
     }
 
+    public static Date strToDate(Date dateTime,String timeStr,String formatStr){
+        if(StringUtils.isEmpty(formatStr)){
+            formatStr = STANDARD_FORMAT;
+        }
+        try {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(formatStr);
+            String date = DAY_FORMAT.format(dateTime);
+            date += " " + timeStr;
+
+            DateTime fullTime = dateTimeFormatter.parseDateTime(date);
+            return fullTime.toDate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String dateToStr(Date date,String formatStr){
         if(date == null){
             return StringUtils.EMPTY;

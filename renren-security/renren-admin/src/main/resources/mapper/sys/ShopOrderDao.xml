@@ -44,8 +44,9 @@
         select o.*,w.user_name,s.shop_name from tb_shop_order o left join tb_wxuser w on o.user_id=w.id
         left join tb_shop s on o.shop_id=s.id
         <where>
+            o.order_source_type = #{map.orderState}
             <if test="map.searchVal !=null and map.searchVal !=''">
-               lower(concat(order_no,w.user_name,ifnull(o.addr_receiver,''),ifnull(o.addr_phone,''))) like #{map.date}
+               and lower(concat(order_no,w.user_name,ifnull(o.addr_receiver,''),ifnull(o.addr_phone,''))) like #{map.date}
             </if>
             <if test="map.date !=null and map.date !=''">AND send_date <![CDATA[>=]]> #{map.date} </if>
             <if test="map.dateEnd !=null and map.dateEnd !=''">AND send_date <![CDATA[<]]> #{map.dateEnd}</if>

@@ -69,6 +69,8 @@ public class OrderController {
     private ComboCourseService comboCourseService;
     @Resource
     private ComboUserService comboUserService;
+    @Resource
+    private CourseMenuService courseMenuService;
 
     @Value("${project.pic_pre}")
     private String pic_pre;
@@ -279,6 +281,9 @@ public class OrderController {
         BigDecimal discountFee = new BigDecimal("0.00"); // 优惠金额
         BigDecimal sendPrice = new BigDecimal("0.00"); // 配送费用
 
+        String addrReceiver = "";//收货人姓名/预约姓名
+        String addrPhone = "";
+
         long comboUserId = 0;//用户课程套餐ID
 
         int orderState = Constant.ORDER_UNPAY; // 是否已经抵扣完的订单状态
@@ -315,7 +320,7 @@ public class OrderController {
             orderItemService.saveBatch(orderItemList);
             log.info("********** 订单条目：" + orderItemList.size() + "已录入成功！******** ");
 
-        }else if(form.getSourceType() == Constant.ORDER_TYPE_COURSE){ // 预约课程
+        }else if(form.getSourceType() == Constant.ORDER_TYPE_COURSE){ // 预约单次体验课程
             if(form.getCourseId() == null || form.getCourseId() == 0){
                 return new Result<>().error("缺少课程参数");
             }
@@ -353,6 +358,8 @@ public class OrderController {
                 totalPrice = totalPrice.add(extraPrice);
             }
 
+            addrReceiver = form.getRealName();
+            addrPhone = form.getUserPhone();
 
         }else if(form.getSourceType() == Constant.ORDER_TYPE_SETCOURSE){ // 购买课程套餐
             if(form.getComboCourseId() == null || form.getComboCourseId() == 0){
@@ -379,6 +386,18 @@ public class OrderController {
             if(form.getCourseId() == null || form.getCourseId() == 0){
                 return new Result<>().error("请传入课程ID");
             }
+            if(form.getCourseMenuId() == null || form.getCourseMenuId() == 0){
+                return new Result<>().error("请传入课程菜单ID");
+            }
+
+            //查看菜单
+            CourseMenuEntity courseMenuEntity = courseMenuService.getById(form.getCourseMenuId());
+
+            SendTimeEntity sendTimeEntity = sendTimeService.getById(courseMenuEntity.getSendTimeId());
+            sendDate = JodaTimeUtil.strToDate(courseMenuEntity.getMenuDate(),sendTimeEntity.getStartTime(),"yyyy-MM-dd HH:mm");
+
+            sendTimeHHss = sendTimeEntity.getStartTime() + "-" + sendTimeEntity.getEndTime();
+            log.info("上课时间段：" + sendTimeHHss);
 
             //查看课程
             CourseEntity courseEntity = courseService.getById(form.getCourseId());
@@ -442,8 +461,6 @@ public class OrderController {
         }
 
         String sendAddr = "";
-        String addrReceiver = "";
-        String addrPhone = "";
 
         if(form.getSourceType() == 0){
             if(form.getSendType() == 0){

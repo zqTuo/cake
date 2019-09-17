@@ -49,7 +49,7 @@ public class Constant {
     public static final int ORDER_PAY_SUCCESS = 1;
     public static final String WX_PAYTYPE_FRO_WX = "JSAPI"; // 微信支付类型 微信端
     public static final int ORDER_TYPE_CAKE = 0; // 蛋糕订购
-    public static final int ORDER_TYPE_COURSE = 1;// 预约烘焙课程
+    public static final int ORDER_TYPE_COURSE = 1;// 预约烘焙课程(单次体验课程)
     public static final int ORDER_CANCELED = 0; // 订单状态 已取消
     public static final int ORDER_TYPE_SETCOURSE = 2; // 购买课程套餐
     public static final int ORDER_TYPE_USECOMBO = 3; // 使用套餐
