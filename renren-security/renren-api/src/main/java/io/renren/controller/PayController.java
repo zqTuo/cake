@@ -93,15 +93,19 @@ public class PayController {
             return new Result().error("订单已支付成功，请勿重复支付");
         }
 
-        List<ShopOrderItemEntity> orderItemEntityList = orderItemService.list(
-                new QueryWrapper<ShopOrderItemEntity>().eq("order_no",form.getOrderNo()));
+        if(orderEntity.getOrderSourceType() == Constant.ORDER_TYPE_CAKE){
+            List<ShopOrderItemEntity> orderItemEntityList = orderItemService.list(
+                    new QueryWrapper<ShopOrderItemEntity>().eq("order_no",form.getOrderNo()));
 
-        for (ShopOrderItemEntity orderItem:orderItemEntityList){
-            ProductEntity productEntity = productService.getById(orderItem.getProductId());
-            if(productEntity.getProductFlag() == 0){
-                return new Result().error(productEntity.getProductName() + "已下架！");
+            for (ShopOrderItemEntity orderItem:orderItemEntityList){
+
+                ProductEntity productEntity = productService.getById(orderItem.getProductId());
+                if(productEntity.getProductFlag() == 0){
+                    return new Result().error(productEntity.getProductName() + "已下架！");
+                }
             }
         }
+
 
         log.info("预支付订单：" + form.getOrderNo());
 

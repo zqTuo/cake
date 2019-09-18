@@ -5,10 +5,13 @@ import io.renren.common.utils.R;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.modules.sys.entity.ShopOrderEntity;
 import io.renren.modules.sys.service.ShopOrderService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -33,6 +36,15 @@ public class ShopOrderController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:shoporder:list")
     public R list(@RequestParam Map<String, Object> params){
+        if(params.get("searchVal") != null){
+            try {
+                String searchVal = URLDecoder.decode(params.get("searchVal").toString(),"utf-8");
+                searchVal = "%" + searchVal + "%";
+                params.put("searchVal",searchVal);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
         PageUtils page = shopOrderService.queryPage(params);
         return R.ok().put("page", page);
     }
@@ -50,36 +62,15 @@ public class ShopOrderController {
     }
 
     /**
-     * 保存
-     */
-    @RequestMapping("/save")
-    @RequiresPermissions("sys:shoporder:save")
-    public R save(@RequestBody ShopOrderEntity shopOrder){
-        shopOrderService.save(shopOrder);
-
-        return R.ok();
-    }
-
-    /**
      * 修改
      */
     @RequestMapping("/update")
     @RequiresPermissions("sys:shoporder:update")
     public R update(@RequestBody ShopOrderEntity shopOrder){
         ValidatorUtils.validateEntity(shopOrder);
+
         shopOrderService.updateById(shopOrder);
         
-        return R.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    @RequiresPermissions("sys:shoporder:delete")
-    public R delete(@RequestBody Long[] ids){
-        shopOrderService.removeByIds(Arrays.asList(ids));
-
         return R.ok();
     }
 

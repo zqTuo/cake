@@ -4,6 +4,7 @@ import io.renren.common.utils.Constant;
 import io.renren.common.utils.DateUtil;
 import io.renren.common.utils.NameTransUtil;
 import io.renren.modules.sys.dto.ExcelOrderDto;
+import io.renren.modules.sys.dto.ExcelSmallOrderDto;
 import io.renren.modules.sys.dto.SmallOrderDto;
 import io.renren.modules.sys.service.ExcelService;
 import io.renren.modules.sys.service.ShopOrderService;
@@ -61,16 +62,19 @@ public class FileDownloadController {
             map.put("dateEnd",dateEnd);
         }
 
-        List<ExcelOrderDto> orderDtoList = orderService.getData(map);
+        List<ExcelSmallOrderDto> orderDtoList = orderService.getSmallData(map);
 
         if(orderDtoList.size()==0){
             logger.error("下载数据为空！");
             return;
         }
 
-        for (ExcelOrderDto orderDto:orderDtoList){
+        for (ExcelSmallOrderDto orderDto:orderDtoList){
             if(StringUtils.isNotBlank(orderDto.getUserName())){
                 orderDto.setUserName(NameTransUtil.transName(orderDto.getUserName()));
+            }
+            if(StringUtils.isNotBlank(orderDto.getAddrReceiver())){
+                orderDto.setAddrReceiver(NameTransUtil.transName(orderDto.getAddrReceiver()));
             }
         }
 

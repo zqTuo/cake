@@ -94,6 +94,10 @@ public class ShopOrderEntity implements Serializable {
 	 * 配送方式 0：送货上门 1：门店自取
 	 */
 	private Integer sendType;
+    /**
+     * 物流方式
+     */
+	private String express;
 	/**
 	 * 配送费用
 	 */
