@@ -62,14 +62,14 @@ public class FileDownloadController {
             map.put("dateEnd",dateEnd);
         }
 
-        List<ExcelSmallOrderDto> orderDtoList = orderService.getSmallData(map);
+        List<ExcelOrderDto> orderDtoList = orderService.getData(map);
 
         if(orderDtoList.size()==0){
             logger.error("下载数据为空！");
             return;
         }
 
-        for (ExcelSmallOrderDto orderDto:orderDtoList){
+        for (ExcelOrderDto orderDto:orderDtoList){
             if(StringUtils.isNotBlank(orderDto.getUserName())){
                 orderDto.setUserName(NameTransUtil.transName(orderDto.getUserName()));
             }
@@ -111,7 +111,7 @@ public class FileDownloadController {
             map.put("dateEnd",dateEnd);
         }
 
-        List<SmallOrderDto> smallOrderDtos = orderService.getSmallData(map);
+        List<ExcelSmallOrderDto> smallOrderDtos = orderService.getSmallData(map);
 
         if(smallOrderDtos.size()==0){
             logger.error("下载数据为空！");
@@ -121,7 +121,7 @@ public class FileDownloadController {
         try {
             String fileName = "蛋糕详情表_" + DateUtil.getNowLongTime();
             logger.info("正在下载订单表：" + smallOrderDtos.size() + " 条数据");
-            excelService.createExport(request,response,smallOrderDtos, Constant.EXPORT_SMALLORDER_EXCEL,fileName,null);
+            excelService.exportSmallOrder(request,response,smallOrderDtos, Constant.EXPORT_SMALLORDER_EXCEL,fileName,null);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -70,8 +70,9 @@
         LEFT JOIN tb_wxuser w on o.user_id=w.id
         LEFT JOIN tb_shop s on o.shop_id=s.id
         <where>
+            o.order_source_type = 0
             <if test="map.idArr != null">
-                o.id in
+                and o.id in
                 <foreach collection="map.idArr" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>
@@ -82,20 +83,27 @@
         order by o.send_date desc
     </select>
 
-    <select id="getSmallData" resultType="io.renren.modules.sys.dto.SmallOrderDto">
-        select date_format(o.create_time,'%Y年%m月%d日') as create_time,o.addr_receiver,
-        o.addr_phone,date_format(o.update_time,'%Y年%m月%d日 %Y:%m') as update_time,
-        if(o.send_type=0,'送货上门','自提') as send_type,
-        concat(o.addr_city,o.addr_detail) as addr,
-        ot.product_name,ot.detail_taste,ot.detail_size,
-        o.order_remark,o.kf_nick,if(o.meituan_id>0,'美团点评',s.shop_name) as source
+
+
+    <resultMap id="smallOrderDtoMap" type="io.renren.modules.sys.dto.ExcelSmallOrderDto" autoMapping="true">
+        <id column="id" property="id" />
+        <collection property="orderItemDtoList" ofType="io.renren.modules.sys.dto.OrderItemDto" autoMapping="true">
+            <id column="oid" property="id" />
+        </collection>
+    </resultMap>
+
+    <select id="getSmallData" resultMap="smallOrderDtoMap">
+        select o.id,o.send_date,o.send_time,o.addr_receiver,o.addr_phone,o.update_time,o.express,
+               o.addr_detail,o.order_des,o.order_remark,o.kf_nick,o.meituan_id,
+               ot.id as oid,ot.product_name,ot.detail_size,ot.detail_taste
         from
         tb_shop_order o LEFT JOIN tb_shop_order_item ot on o.order_no=ot.order_no
         LEFT JOIN tb_wxuser w on o.user_id=w.id
         left join tb_shop s on o.shop_id=s.id
         <where>
+            o.order_source_type = 0
             <if test="map.idArr != null">
-                o.id in
+                and o.id in
                 <foreach collection="map.idArr" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>

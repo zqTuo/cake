@@ -1,5 +1,6 @@
 package io.renren.modules.sys.dto;
 
+import io.renren.common.utils.poi.model.ExcelBean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExcelSmallOrderDto {
+public class ExcelSmallOrderDto extends ExcelBean {
     private long id;
     /**
      * 派送时间段

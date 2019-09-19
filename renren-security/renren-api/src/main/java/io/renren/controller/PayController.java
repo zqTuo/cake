@@ -120,7 +120,7 @@ public class PayController {
         //用户OPENID
         String openid = user.getUserOpenid();
         //微信支付成功回调地址
-        String notify_url = url_pre + "/api/pay/paySuccess";
+        String notify_url = url_pre + "/cake-api/api/pay/paySuccess";
 
         //支付金额 单位 分
         int price =  orderEntity.getOrderPrice().multiply(new BigDecimal("100")).intValue();
@@ -144,6 +144,9 @@ public class PayController {
         log.info("=====请求预支付结果：" + resultJSON);
         if(resultJSON.getString("prepay_id") == null){
             return new Result<>().error("请求微信支付错误，请重试或联系客服");
+        }
+        if(resultJSON.containsKey("result_code") && !resultJSON.getString("result_code").equals("SUCCESS")){
+            return new Result<>().error(resultJSON.getString("err_code_des"));
         }
 
         Map<String,Object> map = new HashMap<String,Object>();

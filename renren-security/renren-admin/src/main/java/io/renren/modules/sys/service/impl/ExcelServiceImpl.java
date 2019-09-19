@@ -43,4 +43,10 @@ public class ExcelServiceImpl implements ExcelService {
     public List<T> readExcel(String filePath) {
         return ExcelFactory.read(filePath);
     }
+
+
+    @Override
+    public void exportSmallOrder(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath) {
+
+    }
 }

@@ -123,6 +123,7 @@ create table tb_shop_order(
     adult_num varchar(100) not null comment '同行人数 - 大人',
     kid_num varchar(100) not null comment '同行人数 - 小孩',
     combo_user_id bigint(20) not null default 0 comment '用户课程套餐ID',
+    express varchar(200) not null default '' comment '物流方式',
     cancel_time datetime comment '取消时间',
     finish_time datetime comment '签收时间',
     update_time datetime COMMENT '修改时间',

@@ -78,8 +78,8 @@
                    onfocus="WdatePicker({onpicked:dateChange(), minDate:'#F{$dp.$D(\'logmin\')}'  })"
                    id="logmax" class="input-text Wdate datetimeEnd" style="width:120px;">
 
-            <a class="btn btn-success" id="export" ><i class="fa fa-download" aria-hidden="true"></i> 导出订单汇总表</a>
-            <a class="btn btn-primary" id="exportSmall" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕详情表</a>
+            <a class="btn btn-success" id="export" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕订单表</a>
+            <a class="btn btn-primary" id="exportSmall" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕小单表</a>
         </div>
 
         </div>
@@ -166,6 +166,12 @@
                     <option :value="0">送货上门</option>
                     <option :value="1">门店自取</option>
                 </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">物流方式</div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" v-model="shopOrder.express" placeholder="物流方式"/>
             </div>
         </div>
         <div class="form-group">

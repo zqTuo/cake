@@ -1,6 +1,7 @@
 package io.renren.modules.sys.service;
 
 import io.renren.common.utils.poi.model.ExcelBean;
+import io.renren.modules.sys.dto.ExcelSmallOrderDto;
 import org.apache.poi.ss.formula.functions.T;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,4 +18,6 @@ public interface ExcelService {
     boolean createExport(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath) throws IOException;
 
     List<T> readExcel(String filePath);
+
+    void exportSmallOrder(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath);
 }

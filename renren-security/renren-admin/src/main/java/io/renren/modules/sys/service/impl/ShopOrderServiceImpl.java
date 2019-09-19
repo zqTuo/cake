@@ -6,8 +6,8 @@ import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.Query;
 import io.renren.modules.sys.dao.ShopOrderDao;
 import io.renren.modules.sys.dto.ExcelOrderDto;
+import io.renren.modules.sys.dto.ExcelSmallOrderDto;
 import io.renren.modules.sys.dto.OrderDto;
-import io.renren.modules.sys.dto.SmallOrderDto;
 import io.renren.modules.sys.entity.ShopOrderEntity;
 import io.renren.modules.sys.service.ShopOrderService;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrderEnt
     }
 
     @Override
-    public List<SmallOrderDto> getSmallData(Map<String, Object> map) {
+    public List<ExcelSmallOrderDto> getSmallData(Map<String, Object> map) {
         return baseMapper.getSmallData(map);
     }
 

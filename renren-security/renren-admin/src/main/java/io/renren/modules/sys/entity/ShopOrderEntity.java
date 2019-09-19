@@ -126,6 +126,7 @@ public class ShopOrderEntity implements Serializable {
 	 * 同行人数 - 小孩
 	 */
 	private Integer kidNum;
+
 	/**
 	 * 创建时间
 	 */

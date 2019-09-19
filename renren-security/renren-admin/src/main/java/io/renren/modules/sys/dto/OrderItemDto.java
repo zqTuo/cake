@@ -28,6 +28,4 @@ public class OrderItemDto {
      * 商品口味
      */
     private String detailTaste;
-
-
 }
