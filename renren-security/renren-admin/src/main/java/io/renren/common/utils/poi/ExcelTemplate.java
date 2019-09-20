@@ -1,5 +1,7 @@
 package io.renren.common.utils.poi;
 
+import io.renren.modules.sys.dto.ExcelSmallOrderDto;
+import io.renren.modules.sys.dto.OrderItemDto;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -97,7 +99,7 @@ public class ExcelTemplate {
 
     public static void main(String[] args) {
         // 加载模板表格
-        ExcelTemplate excel = new ExcelTemplate("D:\\smallOrder.xlsx");
+        ExcelTemplate excel = new ExcelTemplate("excelTemplate" + File.separator + "smallOrder.xlsx");
         // 验证是否通过
         if(!excel.examine())
             return;
@@ -120,34 +122,116 @@ public class ExcelTemplate {
 //            e.printStackTrace();
 //        }
 
+        List<ExcelSmallOrderDto> orderDtoList = new ArrayList<>();
+
+        for (int i = 0; i < 1; i++) {
+            ExcelSmallOrderDto orderDto = new ExcelSmallOrderDto();
+            orderDto.setSendTime("10:00-11:00");
+            orderDto.setSendDate("2019-09-20");
+            orderDto.setAddrReceiver("梁庆");
+            orderDto.setAddrPhone("17688942200");
+            orderDto.setUpdateTime("2019-09-20 14:30");
+            orderDto.setExpress("uu跑腿");
+            orderDto.setAddrDetail("县下达的发电房详细地址");
+            orderDto.setOrderDes("特殊备注");
+            orderDto.setOrderRemark("生日牌");
+            orderDto.setKfNick("听听");
+            orderDto.setMeituanId("商城");
+
+            List<OrderItemDto> orderItemDtos = new ArrayList<>();
+            OrderItemDto orderItemDto = new OrderItemDto();
+            orderItemDto.setProductName("蛋糕名称");
+            orderItemDto.setDetailSize("6寸");
+            orderItemDto.setDetailTaste("标准口味");
+            orderItemDto.setBuyNum(1);
+            orderItemDtos.add(orderItemDto);
+
+            OrderItemDto orderItemDto1 = new OrderItemDto();
+            orderItemDto1.setProductName("蜡烛");
+            orderItemDto1.setDetailSize("");
+            orderItemDto1.setDetailTaste("");
+            orderItemDto1.setBuyNum(1);
+            orderItemDtos.add(orderItemDto1);
+
+            orderDto.setOrderItemDtoList(orderItemDtos);
+
+            orderDtoList.add(orderDto);
+        }
         //=====================插入数据
         try {
-            // 使用一个Map来存储所有的行区域，
-            // 每个行区域对应Map的一个键
-            LinkedHashMap<Integer,LinkedList<String>> rows = new LinkedHashMap<>();
-            // 创建第一个行区域里面填充的值，ExcelTemplate会按从左至右，
-            // 从上往下的顺序，挨个填充区域里面的${}，所以创建的时候注意顺序就好
-            LinkedList<String> row1 = new LinkedList<>();
-            row1.add("2019-09-10");
-            row1.add("10:00");
-            row1.add("张三");
-            row1.add("17688942200");
-            // 把第一个行区域row1添加进入rows
-            rows.put(1,row1);
-            // 创建第二个行区域里面填充的值
-            LinkedList<String> row2 = new LinkedList<>();
-            row2.add("2019-09-10 10:00");
-            row2.add("uu跑腿");
-            row2.add("深圳市");
-            // 把第二个行区域row2添加进入rows
-            rows.put(2,row2);
 
-            // 创建需要填充替换的值
-            Map<String,String> fill = new HashMap<>();
-            fill.put("总加班时长","11");
-            fill.put("公司名称","xxxx有限公司");
-            fill.put("创建人","王麻子");
-            fill.put("日期","2019-9-12");
+
+            //判断订单个数，决定需要复制的区域
+//            if(orderDtoList.size() > 1){
+//                // 第一个参数，需要操作的sheet的索引
+////            // 第二个参数，需要复制的区域的第一行索引
+////            // 第三个参数，需要复制的区域的最后一行索引
+////            // 第四个参数，需要插入的位置的索引
+////            // 第五个参数，需要复制几份
+////            // 第六个参数，是否需要删除原来的区域
+////            // 需要注意的是，行的索引一般要减一
+//                for (int i = 0; i < orderDtoList.size() - 1; i++) {
+//                    excel.addRowByExist(0,9*i,9*i + 9 - 1,9*i + 10,1,false);
+//                }
+//            }
+
+
+
+
+            for (int i = 0; i < orderDtoList.size(); i++) {
+                ExcelSmallOrderDto orderDto = orderDtoList.get(i);
+
+                // 创建需要填充替换的值 订单信息
+                Map<String,String> fill = new HashMap<>();
+                fill.put("sendDate",orderDto.getSendDate());
+                fill.put("sendTime",orderDto.getSendTime());
+                fill.put("addrReceiver",orderDto.getAddrReceiver());
+                fill.put("addrPhone",orderDto.getAddrPhone());
+                fill.put("updateTime",orderDto.getUpdateTime());
+                fill.put("express",orderDto.getExpress());
+                fill.put("addrDetail",orderDto.getAddrDetail());
+                fill.put("kfNick",orderDto.getKfNick());
+                fill.put("meituanId",orderDto.getMeituanId());
+                fill.put("orderRemark",orderDto.getOrderRemark());
+                fill.put("orderDes",orderDto.getOrderDes());
+
+                // 填充需要替换的数据
+                // 第一个参数，需要操作的sheet的索引
+                // 第二个参数，替换的值
+                excel.fillVariable(0,fill);
+
+                // 使用一个Map来存储所有的行区域，
+                // 每个行区域对应Map的一个键
+                LinkedHashMap<Integer,LinkedList<String>> rows = new LinkedHashMap<>();
+
+                //填充订单详情
+                // 创建第一个行区域里面填充的值，ExcelTemplate会按从左至右，
+                // 从上往下的顺序，挨个填充区域里面的${}，所以创建的时候注意顺序就好
+                for (int j = 0; j < orderDto.getOrderItemDtoList().size(); j++) {
+//                    if(j > 0){
+//                        //纯复制区域
+//                        excel.addRowByExist(0,8*i + 8,8*i + 9,8*i + 10,1,false);
+//                    }
+                    OrderItemDto item = orderDto.getOrderItemDtoList().get(j);
+
+                    LinkedList<String> row = new LinkedList<>();
+                    row.add(item.getProductName());
+                    row.add(item.getDetailSize());
+                    row.add(item.getDetailTaste());
+                    row.add(String.valueOf(item.getBuyNum()));
+                    // 把订单详情的行区域row数据 添加进入rows
+                    rows.put(j + 1,row);
+                }
+
+                // 填充蛋糕数据
+                // 第一个参数，需要操作的sheet的索引
+                // 第二个参数，需要复制的区域的第一行索引
+                // 第三个参数，需要复制的区域的最后一行索引
+                // 第四个个参数，需要插入的位置的索引
+                // 第五个参数，填充的值
+                // 第六个参数，是否需要删除原来的行
+                excel.addRowByExist(0,8*i + 8,8*i + 8,8*i + 8,rows,true);
+            }
 
             // 填充加班数据
             // 第一个参数，需要操作的sheet的索引
@@ -156,17 +240,12 @@ public class ExcelTemplate {
             // 第四个个参数，需要插入的位置的索引
             // 第五个参数，填充的值
             // 第六个参数，是否需要删除原来的行
-            excel.addRowByExist(0,16,16,17,rows,true);
-            // 填充需要替换的数据
-            // 第一个参数，需要操作的sheet的索引
-            // 第二个参数，替换的值
-            excel.fillVariable(0,fill);
+//            excel.addRowByExist(0,16,16,17,rows,false);
+
 
             // 保存到指定路径
-            excel.save("F:\\测试\\poi.xlsx");
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            excel.save("D:\\poi.xlsx");
+        } catch (InvalidFormatException | IOException e) {
             e.printStackTrace();
         }
 
@@ -182,8 +261,8 @@ public class ExcelTemplate {
     }
 
     private void init(){
-        File file = new File(path);
-        try (InputStream is = new FileInputStream(file)){
+        try{
+            InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
             workbook = WorkbookFactory.create(is);
             sheets = new Sheet[workbook.getNumberOfSheets()];
             for(int i = 0;i < sheets.length;i++){
@@ -191,9 +270,7 @@ public class ExcelTemplate {
             }
             if(sheets.length > 0)
                 sheet = sheets[0];
-        } catch (InvalidFormatException e) {
-            ex = e;
-        } catch (IOException e) {
+        } catch (InvalidFormatException | IOException e) {
             ex = e;
         }
     }
@@ -220,6 +297,7 @@ public class ExcelTemplate {
     }
 
     private boolean examineSheetRow(int index){
+        System.out.println("表格行数：" + sheet.getLastRowNum());
         if(index < 0 || index > sheet.getLastRowNum())
             return false;
         return true;
@@ -335,7 +413,9 @@ public class ExcelTemplate {
                 || !examineSheetRow(toRowIndex)
                 || fromRowStartIndex > fromRowEndIndex)
             return 0;
-        int areaNum;List<Row> rows = new ArrayList<>();
+
+        int areaNum;
+        List<Row> rows = new ArrayList<>();
         if(areaValues != null){
             int n = 0,f = areaValues.size() * (areaNum = (fromRowEndIndex - fromRowStartIndex + 1));
             // 在插入前腾出空间，避免新插入的行覆盖原有的行
@@ -680,7 +760,8 @@ public class ExcelTemplate {
         // 在腾出的空间上添加新的行，这些新的行不会具有任何的合并单元格，所以可以使用copyRow复制
         // 添加新的行之后删除旧的行
         for(int i= firstRowNum;i < size;i++){
-            sheet.createRow(i);
+//            sheet.createRow(i);
+            copyRow(tempSheetNo,tempSheet.getRow(i),sheetNo,sheet.getRow(i),true);
         }
         for(int i= firstRowNum;i < lastRowNum - firstRowNum + 1;i++){
             if(i < startRow)
@@ -693,7 +774,7 @@ public class ExcelTemplate {
                 sheet.removeRow(row);
         }
         // 删除临时的sheet
-        workbook.removeSheetAt(tempSheetNo);
+//        workbook.removeSheetAt(tempSheetNo);
     }
 
     /**

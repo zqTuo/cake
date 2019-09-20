@@ -39,7 +39,7 @@ public class ExcelSmallOrderDto extends ExcelBean {
     /**
      * 配送时间 送出时间
      */
-    private Date updateTime;
+    private String updateTime;
     /**
      * 物流方式
      */
@@ -62,9 +62,9 @@ public class ExcelSmallOrderDto extends ExcelBean {
     private String kfNick;
 
     /**
-     * 美团券验券记录ID
+     * 美团券验券记录ID 下单来源 大于0：美团/大众点评  0:商城
      */
-    private long meituanId;
+    private String meituanId;
 
     private List<OrderItemDto> orderItemDtoList;
 }

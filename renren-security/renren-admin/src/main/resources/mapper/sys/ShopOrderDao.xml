@@ -94,8 +94,8 @@
 
     <select id="getSmallData" resultMap="smallOrderDtoMap">
         select o.id,o.send_date,o.send_time,o.addr_receiver,o.addr_phone,o.update_time,o.express,
-               o.addr_detail,o.order_des,o.order_remark,o.kf_nick,o.meituan_id,
-               ot.id as oid,ot.product_name,ot.detail_size,ot.detail_taste
+               o.addr_detail,o.order_des,o.order_remark,o.kf_nick,if(o.meituan_id > 0,'美团/大众点评','商城') as meituan_id,
+               ot.id as oid,ot.product_name,ot.detail_size,ot.detail_taste,ot.buy_num
         from
         tb_shop_order o LEFT JOIN tb_shop_order_item ot on o.order_no=ot.order_no
         LEFT JOIN tb_wxuser w on o.user_id=w.id
