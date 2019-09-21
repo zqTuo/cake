@@ -19,5 +19,5 @@ public interface ExcelService {
 
     List<T> readExcel(String filePath);
 
-    void exportSmallOrder(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath);
+    void exportSmallOrder(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath) throws IOException;
 }

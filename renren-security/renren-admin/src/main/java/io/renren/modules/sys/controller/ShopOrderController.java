@@ -1,18 +1,24 @@
 package io.renren.modules.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.common.utils.PageUtils;
 import io.renren.common.utils.R;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.modules.sys.entity.ShopOrderEntity;
+import io.renren.modules.sys.entity.ShopOrderItemEntity;
+import io.renren.modules.sys.service.ShopOrderItemService;
 import io.renren.modules.sys.service.ShopOrderService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,6 +35,8 @@ import java.util.Map;
 public class ShopOrderController {
     @Autowired
     private ShopOrderService shopOrderService;
+    @Resource
+    private ShopOrderItemService shopOrderItemService;
 
     /**
      * 列表
@@ -57,8 +65,13 @@ public class ShopOrderController {
     @RequiresPermissions("sys:shoporder:info")
     public R info(@PathVariable("id") Long id){
         ShopOrderEntity shopOrder = shopOrderService.getById(id);
+        List<ShopOrderItemEntity> detailList = shopOrderItemService.
+                list(new QueryWrapper<ShopOrderItemEntity>().eq("order_no",shopOrder.getOrderNo()));
 
-        return R.ok().put("shopOrder", shopOrder);
+        Map<String,Object> map = new HashMap<>();
+        map.put("shopOrder", shopOrder);
+        map.put("detailList", detailList);
+        return R.ok(map);
     }
 
     /**

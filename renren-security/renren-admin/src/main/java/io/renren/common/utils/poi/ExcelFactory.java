@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.formula.functions.T;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 import java.io.IOException;
@@ -101,7 +102,7 @@ public class ExcelFactory {
         for(PropertyModel property:propertyModelList){
             HSSFCell cell = headRow.createCell(property.getPosition());
             cell.setCellValue(property.getTitle());
-            style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             style.setFillForegroundColor(HSSFColor.RED.index);
             HSSFFont headFont = workbook.createFont();
             headFont.setFontName("Courier New");

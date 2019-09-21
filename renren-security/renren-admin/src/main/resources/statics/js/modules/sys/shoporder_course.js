@@ -42,15 +42,7 @@ $(function () {
                         return "套餐课程";
                     }
                 }},
-			{ label: '生日牌', name: 'orderRemark', index: 'order_remark', width: 50 },
-			{ label: '收货人', name: 'addrReceiver', index: 'addr_receiver', width: 30 },
-			{ label: '配送方式', name: 'sendType', index: 'send_type', width: 30 ,formatter:function (cellValue, options, rowObject) {
-                    if(cellValue === 0){
-                        return "<span class='label label-warning radius'>送货上门</span>";
-                    }else{
-                        return "<span class='label label-primary radius'>门店自取</span>";
-                    }
-                }},
+			{ label: '预约人', name: 'addrReceiver', index: 'addr_receiver', width: 30 },
 			{ label: '联系方式', name: 'addrPhone', index: 'addr_phone', width: 40 },
 			{ label: '时间', name: 'sendTime', index: 'send_time', width: 80 ,formatter:function (cellValue, options, rowObject) {
 			    var html = '下单时间：' + rowObject.createTime;
@@ -97,7 +89,7 @@ $(function () {
             order: "order"
         },
         postData:{
-            orderSource: 0,
+            orderSource: $("#cateOptions").val(),
             orderState: $("#stateOptions").val()
         },
         gridComplete:function(){

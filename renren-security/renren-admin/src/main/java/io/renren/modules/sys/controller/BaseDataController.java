@@ -1,8 +1,11 @@
 package io.renren.modules.sys.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.renren.common.validator.ValidatorUtils;
 import io.renren.modules.sys.service.IRedisService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -50,12 +53,20 @@ public class BaseDataController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @RequestMapping("/info/{sourceType}")
     @RequiresPermissions("sys:basedata:info")
-    public R info(@PathVariable("id") Long id){
-        BaseDataEntity baseData = baseDataService.getById(id);
+    public R info(@PathVariable("sourceType") Integer sourceType){
+        BaseDataEntity baseData = baseDataService.getOne(
+                new QueryWrapper<BaseDataEntity>()
+                        .eq("source_type",sourceType));
 
-        return R.ok().put("baseData", baseData);
+        JSONObject data = new JSONObject();
+        if(baseData != null){
+            data = JSONObject.parseObject(baseData.getContent());
+            data.put("id",baseData.getId());
+        }
+
+        return R.ok().put("baseData", data);
     }
 
     /**
@@ -64,8 +75,8 @@ public class BaseDataController {
     @RequestMapping("/save")
     @RequiresPermissions("sys:basedata:save")
     public R save(@RequestBody BaseDataEntity baseData){
+        baseData.setCreateTime(new Date());
         baseDataService.save(baseData);
-
         return R.ok();
     }
 
@@ -76,6 +87,7 @@ public class BaseDataController {
     @RequiresPermissions("sys:basedata:update")
     public R update(@RequestBody BaseDataEntity baseData){
         ValidatorUtils.validateEntity(baseData);
+        baseData.setUpdateTime(new Date());
         baseDataService.updateById(baseData);
         
         return R.ok();

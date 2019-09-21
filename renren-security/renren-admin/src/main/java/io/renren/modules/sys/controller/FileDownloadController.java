@@ -120,7 +120,7 @@ public class FileDownloadController {
 
         try {
             String fileName = "蛋糕详情表_" + DateUtil.getNowLongTime();
-            logger.info("正在下载订单表：" + smallOrderDtos.size() + " 条数据");
+            logger.info("正在下载蛋糕详情表：" + smallOrderDtos.size() + " 条数据");
             excelService.exportSmallOrder(request,response,smallOrderDtos, Constant.EXPORT_SMALLORDER_EXCEL,fileName,null);
         } catch (Exception e) {
             e.printStackTrace();

@@ -38,7 +38,7 @@
 <div id="rrapp" v-cloak>
     <div v-show="showList">
         <div style="text-align: center">
-            <input type="text" name="" onfocus="this.select()" onkeypress="JumpByEnter()" id="orderSearch" placeholder=" 订单号、收货人姓名、用户昵称、手机号" style="width:400px" class="input-text">
+            <input type="text" name="" onfocus="this.select()" onkeypress="JumpByEnter()" id="orderSearch" placeholder=" 订单号、预约姓名、用户昵称、手机号" style="width:400px" class="input-text">
             <button name="" id="orderSearch_btn" class="btn btn-success" type="submit">
                 <i class="fa fa-search" aria-hidden="true"> 搜订单</i>
             </button>
@@ -49,18 +49,25 @@
 			</#if>
 
         <div style="float: right;">
+            订单类型：
+            <span class="select-box" style="width: 150px;">
+                <select class="select" size="1" name="demo1" id="cateOptions" >
+                    <option value="1">预约单次体验课程</option>
+                    <option value="2">购买套餐课程</option>
+                    <option value="3">使用套餐</option>
+                </select>
+            </span>
             订单状态：
             <span class="select-box" style="width: 150px;">
                 <select class="select" size="1" name="demo1" id="stateOptions" >
                     <option value="-2">--- 全部订单 ---</option>
                     <option value="-1">未支付</option>
                     <option value="0">已取消</option>
-                    <option value="1">已支付</option>
-                    <option value="2">配送中</option>
-                    <option value="3">（已确认）已签收</option>
+                    <option value="1">待上课</option>
+                    <option value="3">已体验</option>
                 </select>
             </span>
-            派送/取货时间：
+            上课时间：
             <input type="text" autocomplete="off"
                    onfocus="WdatePicker({onpicked:dateChange(),maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}' })"
                    id="logmin" class="input-text Wdate datetimeStart" style="width:120px;">
@@ -69,8 +76,8 @@
                    onfocus="WdatePicker({onpicked:dateChange(), minDate:'#F{$dp.$D(\'logmin\')}'  })"
                    id="logmax" class="input-text Wdate datetimeEnd" style="width:120px;">
 
-            <a class="btn btn-success" id="export" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕订单表</a>
-            <a class="btn btn-primary" id="exportSmall" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕小单表</a>
+<!--            <a class="btn btn-success" id="export" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕订单表</a>-->
+<!--            <a class="btn btn-primary" id="exportSmall" ><i class="fa fa-download" aria-hidden="true"></i> 导出蛋糕小单表</a>-->
         </div>
 
         </div>
@@ -101,19 +108,12 @@
                 <select class="form-control" v-model="shopOrder.orderState">
                     <option :value="-1">未支付</option>
                     <option :value="0">已取消</option>
-                    <option :value="1">已支付</option>
-                    <option :value="2">已发货</option>
-                    <option :value="3">（已确认）已签收</option>
+                    <option value="1">待上课</option>
+                    <option value="3">已体验</option>
                 </select>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-sm-2 control-label">生日牌</div>
-            <div class="col-sm-10">
-                <textarea type="text" class="form-control" v-model="shopOrder.orderRemark" placeholder="备注"></textarea>
-            </div>
-        </div>
         <div class="form-group">
             <div class="col-sm-2 control-label">特殊备注</div>
             <div class="col-sm-10">
@@ -121,48 +121,9 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">配送省份</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.addrPro" placeholder="配送省份"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">配送城市</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.addrCity" placeholder="配送城市"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">配送区域</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.addrDis" placeholder="配送区域"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">配送详细地址</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.addrDetail" placeholder="配送详细地址"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">收货人姓名</div>
+            <div class="col-sm-2 control-label">预约人姓名</div>
             <div class="col-sm-10">
                 <input type="text" class="form-control" v-model="shopOrder.addrReceiver" placeholder="收货人"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">配送方式</div>
-            <div class="col-sm-10">
-                <select class="form-control" v-model="shopOrder.sendType">
-                    <option :value="0">送货上门</option>
-                    <option :value="1">门店自取</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 control-label">物流方式</div>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" v-model="shopOrder.express" placeholder="物流方式"/>
             </div>
         </div>
         <div class="form-group">
@@ -172,7 +133,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-2 control-label">派送/上课时间</div>
+            <div class="col-sm-2 control-label">上课时间</div>
             <div class="col-sm-10">
                 <input type="text" autocomplete="off"  v-model="shopOrder.sendTime" class="layui-input" id="datetimeStart">
             </div>
@@ -205,23 +166,19 @@
         <table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer">
             <thead style="background-color: #f5fafe;text-align: center;">
             <tr>
-                <td>商品名称</td>
-                <td>商品规格图片</td>
-                <td>商品规格价格</td>
-                <td>商品尺寸</td>
-                <td>商品口味</td>
-                <td>购买数量</td>
+                <td>课程名称</td>
+                <td>同行人数(10岁以上)</td>
+                <td>同行人数(10岁以下)</td>
+                <td>上课时间</td>
             </tr>
             </thead>
             <tbody style="text-align: center;">
 
                 <tr v-for="(item,index) in detailList">
                     <td>{{item.productName}}</td>
-                    <td><img class="img-thumbnail" width="80px" src="/images/{{item.detailCover}}" alt="商品图片"></td>
-                    <td>{{item.detailPrice}}元</td>
-                    <td>{{item.detailSize}}</td>
-                    <td>{{item.detailTaste}}</td>
-                    <td>{{item.buyNum}}</td>
+                    <td>{{shopOrder.adultNum}}人</td>
+                    <td>{{shopOrder.kidNum}}人</td>
+                    <td>{{shopOrder.sendTime}}</td>
                 </tr>
             </tbody>
         </table>
@@ -229,6 +186,6 @@
 </div>
 </div>
 <script type="text/javascript" src="${request.contextPath}/statics/plugins/My97DatePicker/4.8/WdatePicker.js?_${.now?long}"></script>
-<script src="${request.contextPath}/statics/js/modules/sys/shoporder.js?_${.now?long}"></script>
+<script src="${request.contextPath}/statics/js/modules/sys/shoporder_course.js?_${.now?long}"></script>
 </body>
 </html>

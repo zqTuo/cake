@@ -3,67 +3,138 @@
 <head>
     <title>系统配置表</title>
 		<#include "/header.html">
+    <!--都是图片上传的css-->
+    <link href="${request.contextPath}/statics/libs/imgUp/common.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/index.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/libs/imgUp/normalize.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <div id="rrapp" v-cloak>
-    <div v-show="showList">
-        <div class="grid-btn">
-			<#if shiro.hasPermission("sys:basedata:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
-			<#if shiro.hasPermission("sys:basedata:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			</#if>
-			<#if shiro.hasPermission("sys:basedata:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
-        </div>
-        <table id="jqGrid"></table>
-        <div id="jqGridPager"></div>
-    </div>
-
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">菜单配置</div>
         <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配置类型 0：首页菜单icon</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="baseData.sourceType" placeholder="配置类型 0：首页菜单icon"/>
-                        </div>
+<!--            配置类型：-->
+<!--            <span class="select-box" style="width: 150px;">-->
+<!--                <select class="select" size="1" name="demo1" id="cateOptions" >-->
+<!--                    <option value="0">蛋糕首页菜单</option>-->
+<!--                </select>-->
+<!--            </span>-->
+            <div class="form-group">
+                <div class="f_l black-div"></div>
+                <span class="f_l basic-data">蛋糕按钮</span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="baseData.cake.title" placeholder="跳转地址"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮icon</div>
+                <div class="col-sm-10">
+                    <div class="proDetailPic" style="width:230px;">
+                        <section class=" img-section">
+                            <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                                <div id="preview1" style="width: 190px;height: 180px;">
+                                    <img id="imgProDetail1" border="0" :src="baseData.cake.icon != '' && baseData.cake.icon != undefined ? baseData.cake.icon : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg1').click();">
+                                </div>
+                                <input type="file" onchange="onePicUpLoad(this,1,190,180)" style="display: none;" id="previewImg1">
+                            </div>
+                        </section>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">配置数据内容</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="baseData.content" placeholder="配置数据内容"/>
-                        </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="f_l black-div"></div>
+                <span class="f_l basic-data">下午茶按钮</span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="baseData.tea.title" placeholder="按钮名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮icon</div>
+                <div class="col-sm-10">
+                    <div class="proDetailPic" style="width:230px;">
+                        <section class=" img-section">
+                            <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                                <div id="preview2" style="width: 190px;height: 180px;">
+                                    <img id="imgProDetail2" border="0" :src="baseData.tea.icon != '' && baseData.tea.icon != undefined ? baseData.tea.icon : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg2').click();">
+                                </div>
+                                <input type="file" onchange="onePicUpLoad(this,2,190,180)" style="display: none;" id="previewImg2">
+                            </div>
+                        </section>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">创建时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="baseData.createTime" placeholder="创建时间"/>
-                        </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="f_l black-div"></div>
+                <span class="f_l basic-data">人气推荐按钮</span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="baseData.hot.title" placeholder="按钮名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮icon</div>
+                <div class="col-sm-10">
+                    <div class="proDetailPic" style="width:230px;">
+                        <section class=" img-section">
+                            <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                                <div id="preview3" style="width: 190px;height: 180px;">
+                                    <img id="imgProDetail3" border="0" :src="baseData.hot.icon != '' && baseData.hot.icon != undefined ? baseData.hot.icon : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg3').click();">
+                                </div>
+                                <input type="file" onchange="onePicUpLoad(this,3,190,180)" style="display: none;" id="previewImg3">
+                            </div>
+                        </section>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改时间</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="baseData.updateTime" placeholder="修改时间"/>
-                        </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="f_l black-div"></div>
+                <span class="f_l basic-data">美团/大众点评按钮</span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="baseData.meituan.title" placeholder="按钮名称"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">按钮icon</div>
+                <div class="col-sm-10">
+                    <div class="proDetailPic" style="width:230px;">
+                        <section class=" img-section">
+                            <div class="z_photo upimg-div clear proDetail" style="border: 2px dashed #E7E6E6; width: 230px;height: 220px;padding: 18px;">
+                                <div id="preview4" style="width: 190px;height: 180px;">
+                                    <img id="imgProDetail4" border="0" :src="baseData.meituan.icon != '' && baseData.meituan.icon != undefined ? baseData.meituan.icon : '/cake-admin/statics/img/a11.png'" width="190" height="180" onclick="$('#previewImg4').click();">
+                                </div>
+                                <input type="file" onchange="onePicUpLoad(this,4,190,180)" style="display: none;" id="previewImg4">
+                            </div>
+                        </section>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">修改管理员</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="baseData.updateBy" placeholder="修改管理员"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
+                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                       @click="saveOrUpdate" value="确定"/>
                 &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
             </div>
         </form>
     </div>
 </div>
-
+<!--单图上传js-->
+<script type="text/javascript" src="${request.contextPath}/statics/libs/imgUp/imgUp.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/basedata.js?_${.now?long}"></script>
 </body>
 </html>

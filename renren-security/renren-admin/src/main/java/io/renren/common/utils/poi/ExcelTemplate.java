@@ -1,5 +1,6 @@
 package io.renren.common.utils.poi;
 
+import io.renren.common.utils.poi.model.ExcelBean;
 import io.renren.modules.sys.dto.ExcelSmallOrderDto;
 import io.renren.modules.sys.dto.OrderItemDto;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -195,10 +196,7 @@ public class ExcelTemplate {
                 fill.put("orderRemark",orderDto.getOrderRemark());
                 fill.put("orderDes",orderDto.getOrderDes());
 
-                // 填充需要替换的数据
-                // 第一个参数，需要操作的sheet的索引
-                // 第二个参数，替换的值
-                excel.fillVariable(0,fill);
+
 
                 // 使用一个Map来存储所有的行区域，
                 // 每个行区域对应Map的一个键
@@ -230,7 +228,13 @@ public class ExcelTemplate {
                 // 第四个个参数，需要插入的位置的索引
                 // 第五个参数，填充的值
                 // 第六个参数，是否需要删除原来的行
-                excel.addRowByExist(0,8*i + 8,8*i + 8,8*i + 8,rows,true);
+                excel.addRowByExist(0,8*i + 8,8*i + 8,8*i + 9,rows,false);
+//                excel.addRowByExist(0,8*i + 8,8*i + 8,8*i + 9,orderDto.getOrderItemDtoList().size() - 1,false);
+
+                // 填充需要替换的数据
+                // 第一个参数，需要操作的sheet的索引
+                // 第二个参数，替换的值
+                excel.fillVariable(0,fill);
             }
 
             // 填充加班数据
@@ -244,11 +248,79 @@ public class ExcelTemplate {
 
 
             // 保存到指定路径
-            excel.save("D:\\poi.xlsx");
+            excel.save("D:\\poi1.xlsx");
         } catch (InvalidFormatException | IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+
+    public static void export(String template, List<? extends ExcelBean> exportData, OutputStream outputStream) {
+        try {
+            // 加载模板表格
+            ExcelTemplate excel = new ExcelTemplate("excelTemplate" + File.separator + template);
+            // 验证是否通过
+            if(!excel.examine())
+                return;
+
+            for (int i = 0; i < exportData.size(); i++) {
+                ExcelSmallOrderDto orderDto = (ExcelSmallOrderDto) exportData.get(i);
+
+                // 创建需要填充替换的值 订单信息
+                Map<String,String> fill = new HashMap<>();
+                fill.put("sendDate",orderDto.getSendDate());
+                fill.put("sendTime",orderDto.getSendTime());
+                fill.put("addrReceiver",orderDto.getAddrReceiver());
+                fill.put("addrPhone",orderDto.getAddrPhone());
+                fill.put("updateTime",orderDto.getUpdateTime());
+                fill.put("express",orderDto.getExpress());
+                fill.put("addrDetail",orderDto.getAddrDetail());
+                fill.put("kfNick",orderDto.getKfNick());
+                fill.put("meituanId",orderDto.getMeituanId());
+                fill.put("orderRemark",orderDto.getOrderRemark());
+                fill.put("orderDes",orderDto.getOrderDes());
+
+                // 使用一个Map来存储所有的行区域，
+                // 每个行区域对应Map的一个键
+                LinkedHashMap<Integer, LinkedList<String>> rows = new LinkedHashMap<>();
+
+                //填充订单详情
+                // 创建第一个行区域里面填充的值，ExcelTemplate会按从左至右，
+                // 从上往下的顺序，挨个填充区域里面的${}，所以创建的时候注意顺序就好
+                for (int j = 0; j < orderDto.getOrderItemDtoList().size(); j++) {
+                    OrderItemDto item = orderDto.getOrderItemDtoList().get(j);
+
+                    LinkedList<String> row = new LinkedList<>();
+                    row.add(item.getProductName());
+                    row.add(item.getDetailSize());
+                    row.add(item.getDetailTaste());
+                    row.add(String.valueOf(item.getBuyNum()));
+                    // 把订单详情的行区域row数据 添加进入rows
+                    rows.put(j + 1,row);
+                }
+
+                // 填充蛋糕数据
+                // 第一个参数，需要操作的sheet的索引
+                // 第二个参数，需要复制的区域的第一行索引
+                // 第三个参数，需要复制的区域的最后一行索引
+                // 第四个个参数，需要插入的位置的索引
+                // 第五个参数，填充的值
+                // 第六个参数，是否需要删除原来的行
+                excel.addRowByExist(0,8*i + 8,8*i + 8,8*i + 9,rows,true);
+//                excel.addRowByExist(0,8*i + 8,8*i + 8,8*i + 9,orderDto.getOrderItemDtoList().size() - 1,false);
+
+                // 填充需要替换的数据
+                // 第一个参数，需要操作的sheet的索引
+                // 第二个参数，替换的值
+                excel.fillVariable(0,fill);
+            }
+
+            // 保存到指定路径
+            excel.save(outputStream);
+        } catch (InvalidFormatException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -259,6 +331,8 @@ public class ExcelTemplate {
         this.path = path;
         init();
     }
+
+
 
     private void init(){
         try{
@@ -444,6 +518,7 @@ public class ExcelTemplate {
                     Row row;
                     if(toRowIndex >= fromRowEndIndex && (row = sheet.getRow(i)) != null)
                         sheet.removeRow(row);
+//                        sheet.shiftRows(i + 1, i + 1, -1);
                     else if((row = sheet.getRow(i + f)) != null)
                         sheet.removeRow(row);
                 }
@@ -760,8 +835,8 @@ public class ExcelTemplate {
         // 在腾出的空间上添加新的行，这些新的行不会具有任何的合并单元格，所以可以使用copyRow复制
         // 添加新的行之后删除旧的行
         for(int i= firstRowNum;i < size;i++){
-//            sheet.createRow(i);
-            copyRow(tempSheetNo,tempSheet.getRow(i),sheetNo,sheet.getRow(i),true);
+            sheet.createRow(i);
+//            copyRow(tempSheetNo,tempSheet.getRow(i),sheetNo,sheet.getRow(i),true);
         }
         for(int i= firstRowNum;i < lastRowNum - firstRowNum + 1;i++){
             if(i < startRow)
@@ -794,6 +869,22 @@ public class ExcelTemplate {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void save(OutputStream outputStream){
+        try {
+            workbook.write(outputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(outputStream != null){
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

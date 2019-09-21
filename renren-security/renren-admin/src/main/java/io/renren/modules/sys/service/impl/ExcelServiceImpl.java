@@ -1,10 +1,14 @@
 package io.renren.modules.sys.service.impl;
 
 import io.renren.common.utils.poi.ExcelFactory;
+import io.renren.common.utils.poi.ExcelTemplate;
 import io.renren.common.utils.poi.FileUtil;
 import io.renren.common.utils.poi.model.ExcelBean;
+import io.renren.modules.sys.dto.ExcelSmallOrderDto;
+import io.renren.modules.sys.dto.OrderItemDto;
 import io.renren.modules.sys.service.ExcelService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: Clarence
@@ -24,7 +28,8 @@ import java.util.List;
 @Service
 public class ExcelServiceImpl implements ExcelService {
     @Override
-    public boolean createExport(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath) throws IOException {
+    public boolean createExport(HttpServletRequest request, HttpServletResponse response,
+                                List<? extends ExcelBean> exportData, String template, String fileName, String outPath) throws IOException {
         fileName = FileUtil.encodeDownloadFileName(fileName,request.getHeader("user-agent"));
 
         response.setContentType(request.getServletContext().getMimeType(fileName));
@@ -46,7 +51,19 @@ public class ExcelServiceImpl implements ExcelService {
 
 
     @Override
-    public void exportSmallOrder(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath) {
+    public void exportSmallOrder(HttpServletRequest request, HttpServletResponse response, List<? extends ExcelBean> exportData, String template, String fileName, String outPath) throws IOException {
+        fileName = FileUtil.encodeDownloadFileName(fileName,request.getHeader("user-agent"));
 
+        response.setContentType(request.getServletContext().getMimeType(fileName));
+        response.setHeader("Content-disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso8859-1")  + ".xlsx");
+        OutputStream outputStream = null;
+        if(StringUtils.isEmpty(outPath)){//直接浏览器下载
+            outputStream = response.getOutputStream();
+        }else{//输出到本地
+            File file = new File(outPath);
+            outputStream = new FileOutputStream(file);
+        }
+
+        ExcelTemplate.export(template,exportData,outputStream);
     }
 }

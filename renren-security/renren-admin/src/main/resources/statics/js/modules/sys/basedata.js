@@ -1,48 +1,13 @@
-$(function () {
-    $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/basedata/list',
-        datatype: "json",
-        colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '配置类型 0：首页菜单icon', name: 'sourceType', index: 'source_type', width: 80 }, 			
-			{ label: '配置数据内容', name: 'content', index: 'content', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '修改时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '修改管理员', name: 'updateBy', index: 'update_by', width: 80 }			
-        ],
-		viewrecords: true,
-        height: 385,
-        rowNum: 10,
-		rowList : [10,30,50],
-        rownumbers: true, 
-        rownumWidth: 25, 
-        autowidth:true,
-        multiselect: true,
-        pager: "#jqGridPager",
-        jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
-        },
-        prmNames : {
-            page:"page", 
-            rows:"limit", 
-            order: "order"
-        },
-        gridComplete:function(){
-        	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
-        }
-    });
-});
-
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		showList: true,
 		title: null,
 		baseData: {}
+	},
+	mounted: function(){
+		var that = this;
+		that.getInfo(0);
 	},
 	methods: {
 		query: function () {
@@ -66,6 +31,35 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.baseData.id == null ? "sys/basedata/save" : "sys/basedata/update";
+
+                var cake = {};
+				cake.title = vm.baseData.cake.title;
+				cake.icon = $("#imgProDetail1").attr("src");
+
+                var tea = {};
+				tea.title = vm.baseData.tea.title;
+				tea.icon = $("#imgProDetail2").attr("src");
+
+                var hot = {};
+				hot.title = vm.baseData.hot.title;
+				hot.icon = $("#imgProDetail3").attr("src");
+
+                var meituan = {};
+				meituan.title = vm.baseData.meituan.title;
+				meituan.icon = $("#imgProDetail4").attr("src");
+
+				var id = vm.baseData.id;
+				vm.baseData = {};
+                var content = {};
+                content.cake = cake;
+                content.tea = tea;
+                content.hot = hot;
+                content.meituan = meituan;
+
+                vm.baseData.content = JSON.stringify(content)
+				vm.baseData.sourceType = 0;
+                vm.baseData.id = id;
+
                 $.ajax({
                     type: "POST",
                     url: baseURL + url,
@@ -115,8 +109,8 @@ var vm = new Vue({
              }, function(){
              });
 		},
-		getInfo: function(id){
-			$.get(baseURL + "sys/basedata/info/"+id, function(r){
+		getInfo: function(sourceType){
+			$.get(baseURL + "sys/basedata/info/"+sourceType, function(r){
                 vm.baseData = r.baseData;
             });
 		},
