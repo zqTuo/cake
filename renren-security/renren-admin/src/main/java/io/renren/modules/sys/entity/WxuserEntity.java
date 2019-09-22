@@ -2,6 +2,7 @@ package io.renren.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.renren.common.utils.NameTransUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -81,4 +82,7 @@ public class WxuserEntity implements Serializable {
 	 */
 	private String updateBy;
 
+	public String getUserName(){
+		return NameTransUtil.transName(userName);
+	}
 }

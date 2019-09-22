@@ -8,13 +8,13 @@ $(function () {
 			{ label: '用户头像', name: 'userHead', index: 'user_head', width: 80 ,formatter:function (cellValue) {
                     return '<img class="img-thumbnail" height="80px" width="80px" src="'+cellValue+'">';
                 }},
-			{ label: '会员等级', name: 'userMember', index: 'user_member', width: 80,formatter:function (cellValue) {
-                    if(cellValue === 1){
-                        return "<span class='label label-success radius'>会员用户</span>";
-                    }else{
-                        return "<span class='label label-primary radius'>普通用户</span>";
-                    }
-                } },
+			// { label: '会员等级', name: 'userMember', index: 'user_member', width: 80,formatter:function (cellValue) {
+            //         if(cellValue === 1){
+            //             return "<span class='label label-success radius'>会员用户</span>";
+            //         }else{
+            //             return "<span class='label label-primary radius'>普通用户</span>";
+            //         }
+            //     } },
 			{ label: '上次登录IP地址', name: 'userLastip', index: 'user_lastIp', width: 80 },
 			{ label: '上次登录时间', name: 'userLastlogintime', index: 'user_lastLoginTime', width: 80 }, 			
 			{ label: '手机号', name: 'userPhone', index: 'user_phone', width: 80 }, 			
