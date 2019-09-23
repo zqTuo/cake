@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>banner表</title>
+    <title>微信公众号菜单管理</title>
 		<#include "/header.html">
     <link href="${request.contextPath}/statics/css/wxMenu.css" type="text/css" rel="stylesheet"/>
     <link href="${request.contextPath}/statics/plugins/layui/css/layui.css" type="text/css" rel="stylesheet"/>
@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-<div class="page-container">
+<div class="page-container" id="rrapp">
     <div class="col_main">
         <div>
             <div class="highlight_box">
@@ -27,14 +27,14 @@
             <div class="editBox portable_editor to_left">
                 <div class="menu_preview_area">
                     <div class="mobile_menu_preview">
-                        <div class="mobile_hd tc">猫迹商城</div>
+                        <div class="mobile_hd tc">ZUOSTUDIO</div>
 
                         <div class="mobile_bd">
                             <ul id="menuList" class="grid_line pre_menu_list">
                                 <c:choose>
                                     <c:when test="${not empty menu}">
                                         <c:forEach items="${menu.selfmenu_info.button}" var="item" varStatus="idx">
-                                            <li data-type="TYPE_${item.type}" data-key="${item.key}" data-url="${item.url}" data-mid="${item.media_id}" data-pagepath="${item.pagepath}" class="MenuLi publi jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3">
+                                            <li v-if="menu != " data-type="TYPE_${item.type}" data-key="${item.key}" data-url="${item.url}" data-mid="${item.media_id}" data-pagepath="${item.pagepath}" class="MenuLi publi jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3">
                                                 <a href="javascript:void(0);" class="pre_menu_link menu_a" draggable="false">
                                                     <i class="icon_menu_dot js_icon_menu_dot dn" style="display: none;"></i>
                                                     <i class="icon20_common sort_gray"></i>

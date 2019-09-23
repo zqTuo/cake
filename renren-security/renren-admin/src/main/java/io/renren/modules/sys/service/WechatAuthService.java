@@ -1,12 +1,15 @@
-package io.renren.service;
+package io.renren.modules.sys.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.renren.common.config.WechatConfig;
 import io.renren.common.utils.*;
+import io.renren.modules.sys.entity.wxMenu.Menu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -196,5 +199,137 @@ public class WechatAuthService {
         log.info("发送消息参数:" + params);
         String result = HttpClientTool.postData(url, params, "UTF-8","POST");
         log.info("发送消息result:" + result);
+    }
+
+    /**
+     * 自定义菜单的创建方法
+     * @param menu
+     * @return
+     */
+    public int createMenu(Menu menu) {
+        int result = 0;
+        String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+
+        // 拼装创建菜单的url
+        String url = menu_create_url.replace("ACCESS_TOKEN", getLastAccessToken());
+        // 将菜单对象转换成json字符串
+        Map params = BeanMap.create(menu);
+        // 调用接口创建菜单
+        String res = HttpClientTool.postData(url, params, "UTF-8","POST");
+        JSONObject jsonObject = JSONObject.parseObject(res);
+
+        if (null != jsonObject) {
+            if (0 != jsonObject.getIntValue("errcode")) {
+                result = jsonObject.getIntValue("errcode");
+                log.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getIntValue("errcode"), jsonObject.getString("errmsg"));
+            }
+        }
+
+        return result;
+    }
+
+    public JSONObject getMaterialOnlineByID(String mid) {
+        String material_get_url = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=ACCESS_TOKEN";
+
+        // 拼装创建菜单的url
+        String url = material_get_url.replace("ACCESS_TOKEN", getLastAccessToken());
+        // 调用接口创建菜单
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("media_id", mid);
+        String result = HttpClientTool.postData(url, params, "UTF-8","POST");
+        JSONObject jsonObject=new JSONObject();
+        if (null != result) {
+            try {
+                jsonObject= JSON.parseObject(result);
+                if (0 != jsonObject.getIntValue("errcode")) {
+                    log.error("即时获取素材失败 errcode:{} errmsg:{}", jsonObject.getIntValue("errcode"), jsonObject.getString("errmsg"));
+                }
+            } catch (Exception e) {
+                jsonObject.put("image",result);
+            }
+        }
+
+        return jsonObject;
+    }
+
+    public JSONObject addMaterialEver(String fileurl, String type, int mediaType) {
+        JSONObject resultJSON=new JSONObject();
+        try {
+            File file = new File(fileurl);
+            String token = getLastAccessToken();
+            //上传素材
+            String path = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=" + token + "&type=" + type;
+            if(mediaType == 1){
+                path = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=" + token + "&type=" + type;
+            }
+            String result = HttpClientTool.connectHttpsByPost(path, file);
+            result = result.replaceAll("[\\\\]", "");
+            log.info("result:" + result);
+            if(StringUtils.isEmpty(result)){
+                resultJSON = JSONObject.parseObject(result);
+                if (resultJSON.get("media_id") != null) {
+                    log.info("上传" + type + "永久素材成功");
+                } else {
+                    Integer errcode = (Integer) resultJSON.get("errcode");
+                    log.error("即时上传永久素材失败 errcode:{} errmsg:{}", errcode, resultJSON.getString("errmsg"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultJSON;
+    }
+
+    public JSONObject pushMenu(String requestJSON) {
+        String material_get_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+
+        // 拼装创建菜单的url
+        String url = material_get_url.replace("ACCESS_TOKEN", getLastAccessToken());
+
+        Map params = (Map)JSON.parse(requestJSON);
+        // 调用接口创建菜单
+        String res = HttpClientTool.postData(url, params, "UTF-8","POST");
+
+        return JSONObject.parseObject(res);
+    }
+
+    public JSONObject getMenuOnline() {
+        String menu_get_url = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN";
+
+        // 拼装创建菜单的url
+        String url = menu_get_url.replace("ACCESS_TOKEN", getLastAccessToken());
+        // 调用接口创建菜单
+        String res = HttpClientTool.postData(url, null, "UTF-8","POST");
+        JSONObject result = JSONObject.parseObject(res);
+        if (null != result) {
+            if (0 != result.getIntValue("errcode")) {
+                log.error("即时获取菜单失败 errcode:{} errmsg:{}", result.getIntValue("errcode"), result.getString("errmsg"));
+            }
+        }
+
+        return result;
+    }
+
+    public JSONObject getMaterialOnline(String type, String offset, String count) {
+        String material_get_url = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
+
+        // 拼装创建菜单的url
+        String url = material_get_url.replace("ACCESS_TOKEN", getLastAccessToken());
+        // 调用接口创建菜单
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("type",type);
+        params.put("offset", offset);
+        params.put("count", count);
+
+        String result = HttpClientTool.postData(url, params, "UTF-8","POST");
+        JSONObject jsonObject=new JSONObject();
+        if (null != result) {
+            jsonObject= JSON.parseObject(result);
+            if (0 != jsonObject.getIntValue("errcode")) {
+                log.error("即时获取素材失败 errcode:{} errmsg:{}", jsonObject.getIntValue("errcode"), jsonObject.getString("errmsg"));
+            }
+        }
+
+        return jsonObject;
     }
 }

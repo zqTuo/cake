@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<#include "/header.html">
+    <link href="${request.contextPath}/statics/css/wxMenu.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="page-container">
+    <div class="media_dialog">
+        <div class="dialog_media_inner">
+            <div class="js_appmsg_list appmsg_list media_dialog">
+                <!--左边-->
+                <div class="appmsg_col">
+                    <div class="inner">
+
+                    </div>
+                </div>
+                <!--右边-->
+                <div class="appmsg_col">
+                    <div class="inner">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination_wrp pageNavigator" style="display: none;">
+                <div class="pagination" id="wxPagebar_1505117397245">
+                        <span class="page_nav_area">
+                            <a href="javascript:void(0);" class="btn page_first" style="display: none;"></a>
+                            <a href="javascript:void(0);" class="btn page_prev" style="display: none;">
+                                <i class="arrow"></i>
+                            </a>
+                            <span class="page_num">
+                                <label>1</label>
+                                <span class="num_gap">/</span>
+                                <label>2</label>
+                            </span>
+                            <a href="javascript:void(0);" class="btn page_next"><i class="arrow"></i></a>
+                            <a href="javascript:void(0);" class="btn page_last" style="display: none;"></a>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/wxMedia.js?_${.now?long}"></script>
+</body>
+</html>

@@ -1,7 +1,30 @@
+
 layui.use('element', function(){
     var $ = layui.jquery
         ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 });
+
+var vm = new Vue({
+    el:'#rrapp',
+    data:{
+        menu:{}
+    },
+    mounted: function(){
+        var that = this;
+        that.getMenu();
+    },
+    methods:{
+        getMenu:function () {
+            $.get(baseURL + "sys/wxpublicmenu/getMenu", function(r){
+                if(r.code === 0){
+                    vm.menu = r.menu;
+                }else{
+                    layer.alert(r.msg);
+                }
+            });
+        }
+    }
+})
 
 
 var index=$("input[name='hello']:checked").val();
@@ -184,13 +207,13 @@ $(document).on('click',"#menuList li a",function () {
         $("#mini").css('display','none');
 
         //根据mid获取图文素材
-        postData("getMediaByID",{mid:mid},function (result) {
-            if(result.status == "1"){
-                var newsItemLen=result.result.news_item.length;
+        $.get(baseURL + "sys/wxpublicmenu/getMediaByID?mid="+mid, function(r){
+            if(r.code === 0){
+                var newsItemLen = r.result.news_item.length;
                 var mediaHtml='';
                 for(var j =0;j < newsItemLen ;j++){
-                    var newsItem=result.result.news_item[j];
-                    var updateTime=result.result.update_time;
+                    var newsItem = r.result.news_item[j];
+                    var updateTime = r.result.update_time;
                     if(newsItemLen >1 ){
                         if(j ==0){
                             mediaHtml+='<div class="appmsgLeft">' +
@@ -234,12 +257,10 @@ $(document).on('click',"#menuList li a",function () {
                 $(".send").find('.tab_content').eq(0).find('.jsMsgSendTab').css('display','none');
                 $(".send").find('.tab_content').eq(0).find('.appmsgLeft').remove();
                 $(".send").find('.tab_content').eq(0).find('.inner').append(mediaHtml);
-            }else if(result == "-1"){
+            }else{
                 layer.msg('参数有误....',{icon:7,time:2000});
             }
-        })
-
-
+        });
     }else if(type == 'TYPE_'){ //类型为空
         if($(this).parent().find('.sub_pre_menu_list li').length > 1){//有子菜单
             $(".typeIsShow").css('display','none');
@@ -358,7 +379,7 @@ $(document).on('change','.wxPicUpload',function () {
         data.append("mediaType", mediaType);
         $.ajax({
             type: 'POST',
-            url: "wxMediaUpload",
+            url: "sys/wxpublicmenu/wxMediaUpload",
             data: data,
             processData: false,
             contentType: false,
@@ -530,14 +551,14 @@ $(".pubBt").click(function () {
         }
     }
     jsonStr +=  ']}';
-    postData('pushMenu',{jsonStr:jsonStr},function (result) {
-        if(result.status == "1"){
+
+    $.get(baseURL + "sys/wxpublicmenu/pushMenu?jsonStr="+jsonStr, function(r){
+        if(r.code === 0){
             layer.msg('发布成功！将于24小时内生效...',{icon:1,time:3000});
         }else{
-            layer.msg('发布失败：' + result.errmsg,{icon:7,time:5000});
+            layer.msg('发布失败：' + r.msg,{icon:7,time:5000});
         }
-
-    })
+    });
 })
 
 

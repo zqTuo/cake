@@ -72,33 +72,7 @@ public class WxLoginController {
     @GetMapping("/mallAuth")
     public String auth(HttpServletRequest request) throws IOException {
         String url = ServletRequestUtils.getStringParameter(request,"p","");
-        return "redirect:" + getUrl(url);
-    }
-
-    private String getUrl(String o_url) throws UnsupportedEncodingException {
-        String content = Constant.WECHAT_LOGIN_SALT + DateUtil.getYYYYMMdd();
-        MD5 md5 = new MD5();
-        String cotent2Aes = md5.toDigest(content);
-        if(StringUtils.isNotBlank(o_url)){
-            log.info("原路径：" + o_url);
-            if(o_url.contains("&")){
-                String param = o_url.split("[?]")[1];
-                log.info("原链接参数：" + param);
-                param = aesHelper.AESEncode(param);
-                log.info("原链接参数密文：" + param);
-                o_url = o_url.split("[?]")[0] + "?paramCode=" + URLEncoder.encode(param,"UTF-8");
-                log.info("加密后原链接：" + o_url);
-            }
-            o_url = "?url=" + o_url;
-        }
-        String url = URLEncoder.encode(url_pre + "/cake-api/wx/wxAuthRedirect" + o_url,"UTF-8");
-        cotent2Aes = URLEncoder.encode(cotent2Aes,"UTF-8");
-        String tourl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + wechatConfig.getWeCatAppId() + "&redirect_uri=" + url
-                + "&response_type=code&scope=snsapi_userinfo&state=" + cotent2Aes + "&connect_redirect=1#wechat_redirect";
-
-        log.info("tourl:" + tourl);
-
-        return tourl;
+        return "redirect:" + wechatAuthService.getUrl(url);
     }
 
     //授权回调地址
