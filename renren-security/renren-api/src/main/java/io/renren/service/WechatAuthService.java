@@ -167,11 +167,18 @@ public class WechatAuthService {
     }
 
     public static void main(String[] args) {
-        Map<String,String> params = new HashMap<>();
-        params.put("access_token","24_hha9zgCBHad9CkEAHkVj263lfNopubgQzZHjIPqB5doLGIL5xUuCPEvq007bny8g2w-zqkpxR7x2onAbnUny6NHTFZbTRbZPu28kPuXbeSUZsadSbYXxtQDWEyY8pwgZXaM-7gGeqUlfVLbNRKDhAFAKDW");
-        params.put("type", "jsapi");
-        String ticketJson = HttpClientTool.getData("https://api.weixin.qq.com/cgi-bin/ticket/getticket", params);
-        System.out.println(ticketJson);
+        JSONObject msgJson = new JSONObject();
+        msgJson.put("touser", "oSAxEwolwMog2nOrX0Rb24lSVGF0");
+        msgJson.put("msgtype", "text");
+        JSONObject json = new JSONObject();
+        json.put("content", "(｡･∀･)ﾉﾞ嗨！今天又是元气满满的一天！\n" +
+                "系统已为您安排客服对接，请耐心等待...");
+        msgJson.put("text", json);
+
+
+        String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=25_y4AHodL1QuzqnsPVzktH6zMYQMtOptV27B-EGQaWzxrNOMFZO8F2HtejkbhAh2gs9v_3Z4F6zdJlNrQQz-1oOy0eC64j9jrrm0JxqFk_qVx-zTtrM8n8Mh_1OKD-wKEeCr4IAl9NHwwzI2WUPOEfAFAUTJ";
+        JSONObject result = HttpClientTool.httpRequest(url,"POST",msgJson.toString());
+        log.info("发送消息result:" + result);
     }
 
     /**
@@ -190,11 +197,11 @@ public class WechatAuthService {
         return res.getJSONArray("kf_online_list");
     }
 
-    public void sendMessageToUser(Map<String,Object> params) {
+    public void sendMessageToUser(JSONObject params) {
         String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + getLastAccessToken();
 
         log.info("发送消息参数:" + params);
-        String result = HttpClientTool.postData(url, params, "UTF-8","POST");
+        JSONObject result = HttpClientTool.httpRequest(url,"POST",params.toString());
         log.info("发送消息result:" + result);
     }
 }

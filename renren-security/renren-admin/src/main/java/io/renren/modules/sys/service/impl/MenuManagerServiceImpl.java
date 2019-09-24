@@ -21,9 +21,9 @@ public class MenuManagerServiceImpl implements MenuManagerService {
         btn11.setUrl(url_pre +"/cake.html");
 
         ViewButton btn21 = new ViewButton();
-        btn11.setName("课程预订");
-        btn11.setType("view");
-        btn11.setUrl(url_pre +"/course/index.html");
+        btn21.setName("课程预订");
+        btn21.setType("view");
+        btn21.setUrl(url_pre +"/course/index.html");
 
         CommonButton btn31 = new CommonButton();
         btn31.setName("我的客服");

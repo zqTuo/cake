@@ -130,9 +130,9 @@ public class WeCatServiceImpl implements WeCatService {
                 if (eventKey.equals("cakekf")) { //客服
 
                     //发送一条消息给用户
-                    Map<String,Object> params = new HashMap<>();
-                    params.put("touser", fromUserName);
-                    params.put("msgtype", "text");
+                    JSONObject msgJson = new JSONObject();
+                    msgJson.put("touser", fromUserName);
+                    msgJson.put("msgtype", "text");
                     JSONObject json = new JSONObject();
 
                     //判断是否在工作时间内
@@ -146,8 +146,8 @@ public class WeCatServiceImpl implements WeCatService {
                                 "休息时间回复较慢请耐心哟！咨询量较大的时候，您的消息可能要慢一丢丢~(/ω＼)");
                     }
 
-                    params.put("text", json);
-                    wechatAuthService.sendMessageToUser(params);
+                    msgJson.put("text", json);
+                    wechatAuthService.sendMessageToUser(msgJson);
 
                     //获取在线客服
                     String kfAccount = ""; // 分配客服账号

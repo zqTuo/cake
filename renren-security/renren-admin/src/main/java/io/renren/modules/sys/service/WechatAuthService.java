@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.renren.common.config.WechatConfig;
 import io.renren.common.utils.*;
-import io.renren.modules.sys.entity.wxMenu.Menu;
+import io.renren.modules.sys.entity.wxMenu.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -170,11 +170,50 @@ public class WechatAuthService {
     }
 
     public static void main(String[] args) {
-        Map<String,String> params = new HashMap<>();
-        params.put("access_token","24_hha9zgCBHad9CkEAHkVj263lfNopubgQzZHjIPqB5doLGIL5xUuCPEvq007bny8g2w-zqkpxR7x2onAbnUny6NHTFZbTRbZPu28kPuXbeSUZsadSbYXxtQDWEyY8pwgZXaM-7gGeqUlfVLbNRKDhAFAKDW");
-        params.put("type", "jsapi");
-        String ticketJson = HttpClientTool.getData("https://api.weixin.qq.com/cgi-bin/ticket/getticket", params);
-        System.out.println(ticketJson);
+//        Map<String,String> params = new HashMap<>();
+//        params.put("access_token","24_hha9zgCBHad9CkEAHkVj263lfNopubgQzZHjIPqB5doLGIL5xUuCPEvq007bny8g2w-zqkpxR7x2onAbnUny6NHTFZbTRbZPu28kPuXbeSUZsadSbYXxtQDWEyY8pwgZXaM-7gGeqUlfVLbNRKDhAFAKDW");
+//        params.put("type", "jsapi");
+//        String ticketJson = HttpClientTool.getData("https://api.weixin.qq.com/cgi-bin/ticket/getticket", params);
+//        System.out.println(ticketJson);
+
+        ViewButton btn11 = new ViewButton();
+        btn11.setName("蛋糕预订");
+        btn11.setType("view");
+        btn11.setUrl("/cake.html");
+
+        ViewButton btn21 = new ViewButton();
+        btn11.setName("课程预订");
+        btn11.setType("view");
+        btn11.setUrl("/course/index.html");
+
+        CommonButton btn31 = new CommonButton();
+        btn31.setName("我的客服");
+        btn31.setType("click");
+        btn31.setKey("31");
+
+//        CommonButton btn32 = new CommonButton();
+//        btn32.setName("售前售后");
+//        btn32.setType("click");
+//        btn32.setKey("32");
+
+        //主菜单
+        ComplexButton mainBtn3 = new ComplexButton();
+        mainBtn3.setName("咨询");
+        mainBtn3.setSub_button(new CommonButton[] { btn31});
+
+        /**
+         * 这是公众号xiaoqrobot目前的菜单结构，每个一级菜单都有二级菜单项<br>
+         *
+         * 在某个一级菜单下没有二级菜单的情况，menu该如何定义呢？<br>
+         * 比如，第三个一级菜单项不是“更多体验”，而直接是“幽默笑话”，那么menu应该这样定义：<br>
+         * menu.setButton(new Button[] { mainBtn1, mainBtn2, btn33 });
+         */
+        Menu menu = new Menu();
+        menu.setButton(new Button[] { btn11, btn21, mainBtn3 });
+
+
+        JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(menu));
+        System.out.println(params);
     }
 
     /**
@@ -212,10 +251,11 @@ public class WechatAuthService {
 
         // 拼装创建菜单的url
         String url = menu_create_url.replace("ACCESS_TOKEN", getLastAccessToken());
-        // 将菜单对象转换成json字符串
-        Map params = BeanMap.create(menu);
+        // 将菜单对象转换成map字符串
+        JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(menu));
+        log.info("创建菜单参数：" + params);
         // 调用接口创建菜单
-        String res = HttpClientTool.postData(url, params, "UTF-8","POST");
+        String res = HttpClientTool.postHttp(url,params);
         JSONObject jsonObject = JSONObject.parseObject(res);
 
         if (null != jsonObject) {
@@ -286,10 +326,11 @@ public class WechatAuthService {
         // 拼装创建菜单的url
         String url = material_get_url.replace("ACCESS_TOKEN", getLastAccessToken());
 
-        Map params = (Map)JSON.parse(requestJSON);
+        JSONObject params = JSONObject.parseObject(requestJSON);
+        log.info("创建菜单参数：" + params);
         // 调用接口创建菜单
-        String res = HttpClientTool.postData(url, params, "UTF-8","POST");
-
+        String res = HttpClientTool.postHttp(url,params);
+        log.info("创建菜单请求结果：" + res);
         return JSONObject.parseObject(res);
     }
 
@@ -300,6 +341,8 @@ public class WechatAuthService {
         String url = menu_get_url.replace("ACCESS_TOKEN", getLastAccessToken());
         // 调用接口创建菜单
         String res = HttpClientTool.postData(url, null, "UTF-8","POST");
+        log.info("菜单请求结果：" + res);
+
         JSONObject result = JSONObject.parseObject(res);
         if (null != result) {
             if (0 != result.getIntValue("errcode")) {
@@ -332,4 +375,6 @@ public class WechatAuthService {
 
         return jsonObject;
     }
+
+
 }

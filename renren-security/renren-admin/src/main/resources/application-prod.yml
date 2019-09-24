@@ -36,7 +36,7 @@ spring:
     database: 0
     host: localhost
     port: 6379
-    password:      # 密码（默认为空）
+    password: cake!5149330     # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:
@@ -47,9 +47,9 @@ spring:
 
 # 项目配置
 project:
-  url_pre: http://localhost
-  pic_pre: http://localhost/images/
-  video_pre: http://localhost/mv/
+  url_pre: http://www.zuoyanglife.com
+  pic_pre: http://www.zuoyanglife.com/images/
+  video_pre: http://www.zuoyanglife.com/mv/
   uploadFilePath: /home/www/images/
 
 # 微信公众号

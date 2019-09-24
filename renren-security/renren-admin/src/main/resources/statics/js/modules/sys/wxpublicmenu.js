@@ -7,7 +7,7 @@ layui.use('element', function(){
 var vm = new Vue({
     el:'#rrapp',
     data:{
-        menu:{}
+        menu:[]
     },
     mounted: function(){
         var that = this;
@@ -23,57 +23,73 @@ var vm = new Vue({
                 }
             });
         }
+    },
+    updated: function () {
+        this.$nextTick(function () {
+            var index=$("input[name='hello']:checked").val();
+            console.log("1-->" + index)
+            if(index == 1){
+                $("#edit").css("display","block");
+                $("#url").css("display","none");
+            }else{
+                $("#edit").css("display","none");
+                $("#url").css("display","block");
+            }
+            $("#menuList li").find("div").css("display",'none');
+            $("#menuList li").eq(0).find('div').css('display','block')
+            if( $("#menuList li").length >1){
+                var curName=$("#menuList li").eq(0).find('.menu_a').find('span').text()
+                $(".js_menu_name").val(curName);
+                var curType=$("#menuList li").eq(0).attr('data-type');
+                var curUrl=$("#menuList li").eq(0).attr('data-url');
+                var pagepath=$("#menuList li").eq(0).attr('data-pagepath');
+
+                console.log("2-->" + curType)
+                if(curType == 'TYPE_view'){ //跳转页面
+                    $(".typeIsShow").css('display','block');
+                    $("input[name='hello']").get(1).checked=true;
+                    $("#urlText").val(curUrl)
+                    $("#edit").css('display','none');
+                    $("#sendDiy").css('display','none');
+                    $("#url").css('display','block');
+                }else if(curType == 'TYPE_media_id'){ //发送消息
+                    $(".typeIsShow").css('display','block');
+                    $("input[name='hello']").get(0).checked=true;
+                    $("#edit").css('display','block');
+                    $("#url").css('display','none');
+                    $("#sendDiy").css('display','none');
+                }else if(curType == 'TYPE_'){ //类型为空 有子菜单
+                    $(".typeIsShow").css('display','none');
+                }else if(curType == 'TYPE_click'){ //类型为空 有子菜单
+                    $(".typeIsShow").css('display','block');
+                    $("input[name='hello']").get(2).checked=true;
+                    $("#edit").css('display','none');
+                    $("#url").css('display','none');
+                    $("#sendDiy").css('display','block');
+                }else if(curType == 'TYPE_miniprogram'){
+                    $(".typeIsShow").css('display','block');
+                    $("input[name='hello']").get(3).checked=true;
+                    $("#edit").css('display','none');
+                    $("#sendDiy").css('display','none');
+                    $("#url").css('display','none');
+                    $("#mini").css('display','block');
+                    $("#miniurlText").val(pagepath)
+                }
+            }
+
+            var subLen=$("#menuList li").eq(0).find('.sub_pre_menu_list li').length;
+            console.log("3-->" + subLen)
+            if(subLen >1){
+                $("#menuList li").eq(0).find('.sub_pre_menu_list li').eq(0).addClass('current');
+            }else{
+                $("#menuList li").eq(0).addClass('current');
+            }
+        })
     }
 })
 
 
-var index=$("input[name='hello']:checked").val();
-if(index == 1){
-    $("#edit").css("display","block");
-    $("#url").css("display","none");
-}else{
-    $("#edit").css("display","none");
-    $("#url").css("display","block");
-}
-$("#menuList li").find("div").css("display",'none');
-$("#menuList li").eq(0).find('div').css('display','block')
-if( $("#menuList li").length >1){
-    var curName=$("#menuList li").eq(0).find('.menu_a').find('span').text()
-    $(".js_menu_name").val(curName);
-    var curType=$("#menuList li").eq(0).attr('data-type');
-    var curUrl=$("#menuList li").eq(0).attr('data-url');
-    var pagepath=$("#menuList li").eq(0).attr('data-pagepath');
-    if(curType == 'TYPE_view'){ //跳转页面
-        $(".typeIsShow").css('display','block');
-        $("input[name='hello']").get(1).checked=true;
-        $("#urlText").val(curUrl)
-        $("#edit").css('display','none');
-        $("#sendDiy").css('display','none');
-        $("#url").css('display','block');
-    }else if(curType == 'TYPE_media_id'){ //发送消息
-        $(".typeIsShow").css('display','block');
-        $("input[name='hello']").get(0).checked=true;
-        $("#edit").css('display','block');
-        $("#url").css('display','none');
-        $("#sendDiy").css('display','none');
-    }else if(curType == 'TYPE_'){ //类型为空 有子菜单
-        $(".typeIsShow").css('display','none');
-    }else if(curType == 'TYPE_click'){ //类型为空 有子菜单
-        $(".typeIsShow").css('display','block');
-        $("input[name='hello']").get(2).checked=true;
-        $("#edit").css('display','none');
-        $("#url").css('display','none');
-        $("#sendDiy").css('display','block');
-    }else if(curType == 'TYPE_miniprogram'){
-        $(".typeIsShow").css('display','block');
-        $("input[name='hello']").get(3).checked=true;
-        $("#edit").css('display','none');
-        $("#sendDiy").css('display','none');
-        $("#url").css('display','none');
-        $("#mini").css('display','block');
-        $("#miniurlText").val(pagepath)
-    }
-}
+
 //修改菜单类型按钮
 $(".frm_radio").on("click",function () {
     var index=$("input[name='hello']:checked").val();
@@ -110,12 +126,7 @@ $(".frm_radio").on("click",function () {
     }
 })
 
-var subLen=$("#menuList li").eq(0).find('.sub_pre_menu_list li').length;
-if(subLen >1){
-    $("#menuList li").eq(0).find('.sub_pre_menu_list li').eq(0).addClass('current');
-}else{
-    $("#menuList li").eq(0).addClass('current');
-}
+
 
 
 //添加一级按钮
@@ -261,7 +272,7 @@ $(document).on('click',"#menuList li a",function () {
                 layer.msg('参数有误....',{icon:7,time:2000});
             }
         });
-    }else if(type == 'TYPE_'){ //类型为空
+    }else if(type == 'TYPE_undefined'){ //类型为空
         if($(this).parent().find('.sub_pre_menu_list li').length > 1){//有子菜单
             $(".typeIsShow").css('display','none');
         }else{
@@ -397,11 +408,13 @@ $(document).on('change','.wxPicUpload',function () {
 
 
 //发布
-$(".pubBt").click(function () {
+$(".pubBt").click(function (e) {
+    console.log(e)
     var len=$(".MenuLi").length;
     var isOk=true;
     for (var i=0;i< len;i++){
         var typeCheck=$(".MenuLi").eq(i).attr('data-type');
+        console.log("发布类型：" + typeCheck)
         var name_c=$(".MenuLi").eq(i).find('.js_l1Title').text();
         if(typeCheck == 'TYPE_click'){
             var key_c=$(".MenuLi").eq(i).attr('data-key');
@@ -435,6 +448,7 @@ $(".pubBt").click(function () {
                     var sub_name_c=$(".MenuLi").eq(i).find('.sub_pre_menu_list').find('.subLi').eq(j).find('.js_Title').text();
                     var subType=$(".MenuLi").eq(i).find('.sub_pre_menu_list').find('.subLi').eq(j).attr('data-type');
 
+                    console.log("子菜单类型：" + subType)
                     if(subType == 'TYPE_click'){
                         var sub_key_c=$(".MenuLi").eq(i).find('.sub_pre_menu_list').find('.subLi').eq(j).attr('data-key');
                         if(sub_key_c == "" || sub_name_c == ""){
@@ -492,6 +506,8 @@ $(".pubBt").click(function () {
     for (var i=0;i< menuLen;i++){
         var type=$(".MenuLi").eq(i).attr('data-type');
         var name=$(".MenuLi").eq(i).find('.js_l1Title').text();
+
+        console.log("遍历组装数据类型type:" + type)
         if(type == 'TYPE_click'){
             //点击用key值交互
             var key=$(".MenuLi").eq(i).attr('data-key');
@@ -514,6 +530,7 @@ $(".pubBt").click(function () {
             }
         }else if(type == 'TYPE_'){
             var subMenuLen=$(".MenuLi").eq(i).find('.sub_pre_menu_list').find('.subLi').length;
+            console.log("子菜单：" + subMenuLen)
             jsonStr += '{"name": "'+name+'","sub_button": [';
             for(var j=0;j<subMenuLen;j++){
 
@@ -552,11 +569,27 @@ $(".pubBt").click(function () {
     }
     jsonStr +=  ']}';
 
-    $.get(baseURL + "sys/wxpublicmenu/pushMenu?jsonStr="+jsonStr, function(r){
-        if(r.code === 0){
-            layer.msg('发布成功！将于24小时内生效...',{icon:1,time:3000});
-        }else{
-            layer.msg('发布失败：' + r.msg,{icon:7,time:5000});
+    // $.post(baseURL + "sys/wxpublicmenu/pushMenu?jsonStr="+jsonStr, function(r){
+    //     if(r.code === 0){
+    //         layer.msg('发布成功！将于24小时内生效...',{icon:1,time:3000});
+    //     }else{
+    //         layer.msg('发布失败：' + r.msg,{icon:7,time:5000});
+    //     }
+    // });
+
+    $.ajax({
+        type: "POST",
+        url: baseURL + "sys/wxpublicmenu/pushMenu",
+        data: {jsonStr:jsonStr},
+        dataType: "json", //返回数据形式为json
+        success: function(r){
+            if(r.code === 0){
+                layer.msg("操作成功", {icon: 1});
+
+            }else{
+                layer.alert(r.msg);
+
+            }
         }
     });
 })

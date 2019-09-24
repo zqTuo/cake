@@ -3,7 +3,7 @@
 <head>
     <title>微信公众号菜单管理</title>
 		<#include "/header.html">
-    <link href="${request.contextPath}/statics/css/wxMenu.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/css/wxMenu.css?_${.now?long}" type="text/css" rel="stylesheet"/>
     <link href="${request.contextPath}/statics/plugins/layui/css/layui.css" type="text/css" rel="stylesheet"/>
     <style>
         .select_Status {
@@ -15,11 +15,11 @@
     </style>
 </head>
 <body>
-<div class="page-container" id="rrapp">
+<div class="page-container" id="rrapp" v-cloak>
     <div class="col_main">
         <div>
             <div class="highlight_box">
-                <i class="Hui-iconfont info">&#xe6e0;</i>
+                <i class="layui-icon info">&#xe702;</i>
                 <p class="title">菜单编辑中</p>
                 <p class="desc">菜单未发布，请确认菜单编辑完成后点击“保存并发布”同步到手机。</p>
             </div>
@@ -31,55 +31,50 @@
 
                         <div class="mobile_bd">
                             <ul id="menuList" class="grid_line pre_menu_list">
-                                <c:choose>
-                                    <c:when test="${not empty menu}">
-                                        <c:forEach items="${menu.selfmenu_info.button}" var="item" varStatus="idx">
-                                            <li v-if="menu != " data-type="TYPE_${item.type}" data-key="${item.key}" data-url="${item.url}" data-mid="${item.media_id}" data-pagepath="${item.pagepath}" class="MenuLi publi jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3">
-                                                <a href="javascript:void(0);" class="pre_menu_link menu_a" draggable="false">
-                                                    <i class="icon_menu_dot js_icon_menu_dot dn" style="display: none;"></i>
+                                <li class="MenuLi publi jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3" v-if="menu.length != 0" v-for="(item,index) in menu" :data-type="'TYPE_' + item.type" :data-key="item.key" :data-url="item.url" :data-mid="item.media_id" :data-pagepath="item.pagepath" >
+                                    <a href="javascript:void(0);" class="pre_menu_link menu_a" draggable="false">
+                                        <i class="icon_menu_dot js_icon_menu_dot dn" style="display: none;"></i>
+                                        <i class="icon20_common sort_gray"></i>
+                                        <span class="js_l1Title js_Title">{{item.name}}</span>
+                                    </a>
+                                    <div class="sub_pre_menu_box js_l2TitleBox" style="">
+                                        <ul class="sub_pre_menu_list" v-if="item.sub_button">
+                                            <li v-for="(aitem,aidx) in item.sub_button.list" class="jslevel2 publi subLi" :data-lev="index + '_sub_' + aidx" :data-key="aitem.key" :data-type="'TYPE_' + aitem.type"  :data-mid="aitem.media_id" :data-url="aitem.url" :data-pagepath="aitem.pagepath">
+                                                <a href="javascript:void(0);" class="jsSubView" draggable="false">
+                                                <span class="sub_pre_menu_inner js_sub_pre_menu_inner">
                                                     <i class="icon20_common sort_gray"></i>
-                                                    <span class="js_l1Title js_Title">${item.name}</span>
+                                                    <span class="js_l2Title js_Title">{{aitem.name}}</span>
+                                                </span>
                                                 </a>
-                                                <div class="sub_pre_menu_box js_l2TitleBox" style="">
-                                                    <ul class="sub_pre_menu_list">
-                                                        <c:forEach items="${item.sub_button.list}" var="aitem" varStatus="aidx">
-                                                            <li class="jslevel2 publi subLi" data-lev="${idx.index}_sub_${aidx.index}" data-key="${aitem.key}" data-type="TYPE_${aitem.type}"  data-mid="${aitem.media_id}" data-url="${aitem.url}" data-pagepath="${aitem.pagepath}">
-                                                                <a href="javascript:void(0);" class="jsSubView" draggable="false">
-                                                                    <span class="sub_pre_menu_inner js_sub_pre_menu_inner">
-                                                                        <i class="icon20_common sort_gray"></i>
-                                                                        <span class="js_l2Title js_Title">${aitem.name}</span>
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                        </c:forEach>
-
-                                                        <li class="js_addMenuBox">
-                                                            <a href="javascript:void(0);" class="jsSubView js_addL2Btn" title="最多添加5个子菜单" draggable="false">
-                                                                <span class="sub_pre_menu_inner js_sub_pre_menu_inner"><i class="icon14_menu_add"></i></span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                    <i class="arrow arrow_out"></i>
-                                                    <i class="arrow arrow_in"></i>
-                                                </div>
                                             </li>
-                                        </c:forEach>
-                                    </c:when>
-                                </c:choose>
 
+                                            <li class="js_addMenuBox">
+                                                <a href="javascript:void(0);" class="jsSubView js_addL2Btn" title="最多添加5个子菜单" draggable="false">
+                                                    <span class="sub_pre_menu_inner js_sub_pre_menu_inner"><i class="icon14_menu_add"></i></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <ul class="sub_pre_menu_list" v-else>
+                                            <li class="js_addMenuBox">
+                                                <a href="javascript:void(0);" class="jsSubView js_addL2Btn" title="最多添加5个子菜单" draggable="false">
+                                                    <span class="sub_pre_menu_inner js_sub_pre_menu_inner"><i class="icon14_menu_add"></i></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <i class="arrow arrow_out"></i>
+                                        <i class="arrow arrow_in"></i>
+                                    </div>
+                                </li>
                                 <li class="pre_menu_item grid_item no_extra size1of3">
                                     <a href="javascript:void(0);" class="pre_menu_link js_addL1Btn add_big" title="最多添加3个一级菜单" draggable="false">
-                                        <i class="Hui-iconfont add_big">&#xe600;</i>
+                                        <i class="layui-icon">&#xe654;</i>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <%--<div class="sort_btn_wrp">--%>
-                    <%--<a id="orderBt" class="btn btn_default" href="javascript:void(0);" style="display: inline-block;">菜单排序</a>--%>
-                    <%--<span id="orderDis" class="dn btn btn_disabled" style="display: none;">菜单排序</span>--%>
-                    <%--<a id="finishBt" href="javascript:void(0);" class="dn btn btn_default" style="display: none;">完成</a>--%>
-                    <%--</div>--%>
                 </div>
 
 
@@ -226,7 +221,6 @@
                                                     <p class="frm_msg fail dn" id="urlUnSelect" style="display: none;">
                                                         <span for="urlText" class="frm_msg_content" style="display: inline;">请选择一篇文章</span>
                                                     </p>
-                                                    <%--<a href="javascript:;" id="js_appmsgPop">从公众号图文消息中选择</a>--%>
                                                     <a href="javascript:void(0);" class="dn btn btn_default" id="js_reChangeAppmsg" style="display: none;">重新选择</a>
                                                 </div>
                                             </div>

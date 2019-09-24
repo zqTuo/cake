@@ -1,9 +1,17 @@
 package io.renren.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -63,6 +71,46 @@ public class HttpClientTool {
         return postData(url, data, defaultEncoding, "POST");
     }
 
+    /**
+     * post请求-json参数
+     */
+    public static String postHttp(String url, JSONObject paramJson) {
+        return postHttp(url, new StringEntity(paramJson.toString(),"UTF-8"));
+    }
+
+    /**
+     * post请求
+     */
+    private static String postHttp(String url, HttpEntity formEntity) {
+        CloseableHttpClient client = null;
+        HttpPost post = null;
+        String result = "";
+        try {
+            client = HttpClients.createDefault();
+            //HttpClient httpClient = new DefaultHttpClient();
+            post = new HttpPost(url);
+            post.setEntity(formEntity);
+            HttpResponse resp = client.execute(post);
+            HttpEntity entity = resp.getEntity();
+            result = EntityUtils.toString(entity, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //关闭连接，释放资源
+            //httpClient.getConnectionManager().shutdown();httpClient = null;
+            if (post != null) {
+                post.releaseConnection();
+            }
+            if (client != null) {
+                try {
+                    client.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      * 发生HTTP请求。返回http请求内容文档。 参数的Map的值只能是String或者String的数组，Method暂时只支持POST和GET

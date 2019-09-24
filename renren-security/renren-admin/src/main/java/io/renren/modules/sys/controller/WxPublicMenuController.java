@@ -68,11 +68,15 @@ public class WxPublicMenuController {
         // 调用接口创建菜单
         try {
             jsonObject = wechatAuthService.getMenuOnline();
+
+            if(jsonObject.containsKey("errcode")){
+                return R.error(jsonObject.getString("errmsg"));
+            }
         } catch (Exception e) {
             log.error("获取线上菜单失败：" + e.getMessage());
             e.printStackTrace();
         }
-        return R.ok().put("menu",jsonObject);
+        return R.ok().put("menu",jsonObject.getJSONObject("selfmenu_info").getJSONArray("button"));
     }
 
     /**

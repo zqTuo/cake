@@ -36,7 +36,7 @@ spring:
     database: 0
     host: localhost
     port: 6379
-    password:      # 密码（默认为空）
+    password: cake!5149330     # 密码（默认为空）
     timeout: 6000ms  # 连接超时时长（毫秒）
     jedis:
       pool:
@@ -47,19 +47,28 @@ spring:
 
 # 项目配置
 project:
-  url_pre: http://localhost
-  pic_pre: http://localhost/images/
-  video_pre: http://localhost/mv/
+  url_pre: http://www.zuoyanglife.com
+  pic_pre: http://www.zuoyanglife.com/images/
+  video_pre: http://www.zuoyanglife.com/mv/
   uploadFilePath: /home/www/images/
 
 # 微信公众号
 weCat:
   appId: wx06bec68a22884722
-  appSecret: 6843ff60906c16f658f724a2fb894e43
+  appSecret: 5a9bc72b8e6d126757f4be79874bf54b
+  mchId: 1550620091
+  key: AABBCCDDEEFFGGHHJJKKLLMMNNOOQQPP
+  certP12: /opt/cert/apiclient_cert.p12
   accessTokenByCodeUrl: https://api.weixin.qq.com/sns/oauth2/access_token
   userInfoUrl: https://api.weixin.qq.com/sns/userinfo
   accessTokenUrl: https://api.weixin.qq.com/cgi-bin/token
   ticketUrl: https://api.weixin.qq.com/cgi-bin/ticket/getticket
+  payApi: https://api.mch.weixin.qq.com/pay/unifiedorder
+  enterprisesPay_API: https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
+  dnbx_token: weixinMsg
+  download_media_url: http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+  online_kf_list: https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist
+  cake_self_templateid: 4RVnkQ_aD2HPhJtd_EYU0slgIZY9sLXPQWFKxwMWPCY
 
 # 百度地图
 baiduMap:
