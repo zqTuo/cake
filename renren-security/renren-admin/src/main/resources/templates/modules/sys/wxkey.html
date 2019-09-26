@@ -3,61 +3,645 @@
 <head>
     <title>微信关键字表</title>
 		<#include "/header.html">
+    <link href="${request.contextPath}/statics/plugins/layui/css/layui.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/plugins/emoji/public/style/common.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/plugins/emoji/public/style/cssreset-min.css" type="text/css" rel="stylesheet"/>
+    <link href="${request.contextPath}/statics/css/wxMenu.css?_${.now?long}" type="text/css" rel="stylesheet"/>
+    <style>
+        .table>tbody>tr>td{
+            text-align:center;
+        }
+        a {
+            text-decoration: none;
+            color: #576B95;
+        }
+        /*td.details-control {*/
+        /*    background: url('../../../../statics/common/img/details_open.png') no-repeat center center;*/
+        /*    cursor: pointer;*/
+        /*}*/
+
+        /*tr.shown td.details-control {*/
+        /*    background: url('../../../../statics/common/img/details_close.png') no-repeat center center;*/
+        /*}*/
+        .weui-desktop-table__fold-context {
+            position: relative;
+        }
+        .weui-desktop-form__control-group {
+            margin-bottom: 30px;
+        }
+        .keywords_reply_detail .weui-desktop-form__label {
+            color: #9A9A9A;
+        }
+        .weui-desktop-form__label {
+            float: left;
+            margin: 0.48571429em 30px 0 0;
+            width: 5em;
+            text-align: left;
+        }
+        .weui-desktop-form__control-group_offset .weui-desktop-form__controls {
+            padding-top: 0.48571429em;
+        }
+        .keywords_rule_table .weui-desktop-form__controls {
+            width: 1997em;
+        }
+        .weui-desktop-form__controls {
+            display: table-cell;
+            width: 1%;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .keywords_name_list {
+            overflow: hidden;
+        }
+        ul, ol {
+            padding-left: 0;
+            list-style-type: none;
+        }
+        .keywords_name_item {
+            float: left;
+            /*max-width: 30%;*/
+        }
+        .keywords_name_status {
+            float: right;
+            color: #9A9A9A;
+            margin-left: 3px;
+            font-style: normal;
+            margin-right: 40px;
+        }
+        .keywords_name {
+            display: block;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+            font-weight: 400;
+        }
+        .keywords_reply_detail .weui-desktop-form__control-group:last-child {
+            margin-bottom: 0;
+        }
+        .weui-desktop-form__control-group {
+            margin-bottom: 30px;
+        }
+        .weui-desktop-media-text {
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            padding: 10px 0;
+        }
+        .weui-desktop-appmsg {
+            position: relative;
+        }
+        .weui-desktop-card {
+            width: 320px;
+        }
+        .weui-desktop-appmsg .weui-desktop-card__inner {
+            padding: 0;
+        }
+        .weui-desktop-card_inside .weui-desktop-card__inner {
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.05);
+        }
+        .weui-desktop-card__inner {
+            background: #FFFFFF;
+            box-shadow: 0 1px 20px 0 #E4E8EB;
+            border-radius: 2px;
+            padding: 12px 15px 0;
+        }
+        .weui-desktop-appmsg__cover-item {
+            word-wrap: break-word;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+            position: relative;
+            padding: 20px 15px 15px;
+            text-align: left;
+        }
+        .weui-desktop-appmsg__cover__title {
+            font-size: 16px;
+            font-weight: 400;
+            display: block;
+            line-height: 1.2;
+            color: #353535;
+        }
+
+
+        .weui-desktop-appmsg__cover__thumb {
+            width: 100%;
+            height: auto;
+            background-size: cover;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-color: #F6F8F9;
+            padding-bottom: 55.55555556%;
+            display: block;
+            margin-top: 20px;
+        }
+        .weui-desktop-appmsg__cover__desc {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            color: #9A9A9A;
+        }
+        .js_title a{
+            text-align: left;
+        }
+        .emotion_editor{
+            position: relative;
+            border: 1px solid #E4E8EB;
+        }
+        .edit_area {
+            padding: 14px 20px;
+            outline: 0;
+            word-wrap: break-word;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
+            background-color: #FFFFFF;
+            height: 227px;
+            overflow-y: auto;
+        }
+        .editor_toolbar {
+            padding: 0 20px;
+            line-height: 36px;
+            background-color: #FFFFFF;
+            border-top: 1px solid #E4E8EB;
+            height: 36px;
+        }
+        .editor_toolbar .weui-desktop-popover__wrp {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .weui-desktop-popover__wrp {
+            display: inline;
+            position: relative;
+            font-size: 14px;
+        }
+        .emotion_switch {
+            float: left;
+            height: 28px;
+            line-height: 999em;
+            overflow: hidden;
+            background: transparent url(https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/modules/reply/images/icon_emotion_switch.png) no-repeat 0 0;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            display: inline-block;
+        }
+        .emotion_switch:hover {
+            background: transparent url(https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/modules/reply/images/icon_emotion_switch_hl.png) no-repeat 0 0;
+        }
+        .editor_tip {
+            float: right;
+            color: #9A9A9A;
+        }
+        .editor_tip em {
+            font-style: normal;
+            margin: 0 3px;
+        }
+
+
+        .emoticons{
+            width: 525px;
+            margin-bottom:20px;
+        }
+        .emoticons .publisher{
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .emoticons .publisher textarea{
+            width: 500px;
+            height: 140px;
+            padding: 5px 10px;
+            border: 1px solid #dbdbdb;
+            resize: none;
+        }
+        .emoticons .publisher .trigger{
+            font-size: 24px;
+            font-weight: bold;
+            color: #666;
+        }
+        .emoticons .publisher .trigger-active{
+            color: #eb7350;
+        }
+        .emoticons .result{
+            padding: 10px 15px;
+            border: 1px dotted #dbdbdb;
+            margin-top: 10px;
+            height: 150px;
+            line-height: 24px;
+        }
+        .emoticons .result img{
+            vertical-align: middle;
+        }
+
+        .widget-layer{
+            position: relative;
+            width: 410px;
+            margin-top: 8px;
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 2px;
+        }
+        .widget-layer:before{
+            position: absolute;
+            top: -16px;
+            left: 2px;
+            display: block;
+            content: '';
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-bottom-color: #dbdbdb;
+        }
+        .widget-layer:after{
+            position: absolute;
+            top: -15px;
+            left: 2px;
+            display: block;
+            content: '';
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-bottom-color: #f0f0f0;
+        }
+        .widget-layer .widget-tool{
+            height: 28px;
+            background: #f0f0f0;
+        }
+        .widget-layer .widget-close{
+            float: right;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            font-family: Arial;
+        }
+        .widget-layer ul{
+            width: 372px;
+            margin: 0 auto;
+            padding: 15px 5px 20px;
+            overflow: hidden;
+        }
+        .widget-layer li{
+            position: relative;
+            z-index: 8;
+            float: left;
+            width: 32px;
+            height: 32px;
+            padding: 4px;
+            margin-left: -1px;
+            margin-top: -1px;
+            border: 1px solid #e8e8e8;
+            cursor: pointer;
+        }
+        .widget-layer li:hover{
+            z-index: 9;
+            border-color: #eb7350;
+        }
+        .weui-desktop-media-text {
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            padding: 10px 0;
+        }
+        .weui-desktop-media__opr {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            bottom: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .3s;
+            white-space: nowrap;
+        }
+        .weui-desktop-media__opr .weui-desktop-link:first-child {
+            margin-left: 1em;
+        }
+        .weui-desktop-tooltip__wrp {
+            position: relative;
+            display: inline-block;
+        }
+        .weui-desktop-tooltip {
+            padding: 0 8px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            cursor: initial;
+            word-wrap: break-word;
+            white-space: pre;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 3px;
+            color: #FFF;
+            line-height: 2;
+            display: inline-block;
+            font-weight: normal;
+            font-style: normal;
+            text-decoration: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 50000;
+            transition: all .3s .3s;
+        }
+        .weui-desktop-tooltip::before {
+            content: "";
+            width: 0px;
+            height: 0px;
+            left: 50%;
+            margin-left: -5px;
+            border: 5px solid transparent;
+            border-top-color: transparent;
+            border-top-color: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 100%;
+        }
+        .weui-desktop-msg-sender__tabs {
+            line-height: 38px;
+            background-color: #FFFFFF;
+        }
+        .weui-desktop-msg-sender__tab {
+            float: left;
+            padding: 0 20px;
+            cursor: pointer;
+        }
+        .weui-desktop-msg-sender__tab:hover, .weui-desktop-msg-sender__tab_selected {
+            color: #44B549;
+        }
+        .appmsg{
+            display: inline-block;
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
-    <div v-show="showList">
-        <div class="grid-btn">
-			<#if shiro.hasPermission("sys:wxkey:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			</#if>
-			<#if shiro.hasPermission("sys:wxkey:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			</#if>
-			<#if shiro.hasPermission("sys:wxkey:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			</#if>
-        </div>
-        <table id="jqGrid"></table>
-        <div id="jqGridPager"></div>
-    </div>
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">关键词回复</li>
+            <li>被关注回复</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div v-show="showList" style="margin-top: 30px;">
+                    <div class="grid-btn">
+                        <#if shiro.hasPermission("sys:wxkey:save")>
+                        <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                        </#if>
+                        <#if shiro.hasPermission("sys:wxkey:update")>
+                        <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+                        </#if>
+                        <#if shiro.hasPermission("sys:wxkey:delete")>
+                        <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                        </#if>
+                    </div>
+                    <table id="jqGrid"></table>
+                    <div id="jqGridPager"></div>
+                </div>
 
-    <div v-show="!showList" class="panel panel-default">
-        <div class="panel-heading">{{title}}</div>
-        <form class="form-horizontal">
-														                    <div class="form-group">
-                        <div class="col-sm-2 control-label">关键字,多个中间用英文逗号隔开</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxKey.keyword" placeholder="关键字,多个中间用英文逗号隔开"/>
-                        </div>
+                <div v-show="!showList" class="panel panel-default" style="margin-top: 30px;">
+                        <div class="panel-heading">{{title}}</div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">关键字</div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="wxKey.keyword" placeholder="关键字,多个中间用英文逗号隔开"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">消息类型</div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="wxKey.msgType" placeholder="消息类型（text/news/image）"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">回复内容</div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="wxKey.content" placeholder="回复内容"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">图文ID</div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" v-model="wxKey.mediaid" placeholder="图文ID"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label"></div>
+                                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
+                                       @click="saveOrUpdate" value="确定"/>
+                                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+                            </div>
+                        </form>
                     </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">消息类型（text/news/image）</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxKey.msgType" placeholder="消息类型（text/news/image）"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">回复内容</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxKey.content" placeholder="回复内容"/>
-                        </div>
-                    </div>
-											                    <div class="form-group">
-                        <div class="col-sm-2 control-label">图文ID</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="wxKey.mediaid" placeholder="图文ID"/>
-                        </div>
-                    </div>
-							            <div class="form-group">
-                <div class="col-sm-2 control-label"></div>
-                <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..." @click="saveOrUpdate" value="确定"/>
-                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
             </div>
-        </form>
+
+            <div class="layui-tab-item">
+                <div class="careRes">
+                    <div v-if="resMsgArr.length == 0" class="cl" style="margin-top:30px;padding: 0px 20px;">
+                        <div style="height: 35px;border: 1px solid #E4E8EB;">
+                            <ul class="weui-desktop-msg-sender__tabs">
+                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_text weui-desktop-msg-sender__tab_selected">
+                                    文字
+                                </li>
+                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_img">图片</li>
+                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_audio">图文</li>
+                            </ul>
+                            <div class="layui-layer-btn" style="float: right;">
+                                <a class="layui-layer-btn0  btn_del btn-danger"
+                                   style="background-color: #c62b26;border-color: #c62b26;">删除</a>
+                            </div>
+                        </div>
+                        <div class="emotion_editor publisher">
+                            <div class="weui_tab">
+                                <textarea name="content" class="edit_area"
+                                          style="width: 100%;border: 0;resize:none">{{resText}}</textarea>
+                                <div class="editor_toolbar">
+                                    <div class="weui-desktop-popover__wrp">
+                                        <span>
+                                            <a href="javascript:void(0);" class="icon_emotion emotion_switch trigger">表情</a>
+                                        </span>
+                                    </div>
+                                    <p class="editor_tip opr_tips">，按下Enter键换行</p>
+                                    <p class="editor_tip">还可以输入<em>300</em>字</p>
+                                    <div class="emotion_wrp"></div>
+                                </div>
+                            </div>
+                            <div class="weui_tab resPic" style="display: none;padding: 17px 20px;min-height: 215px;">
+                                <div class="tab_cont_cover jsMsgSendTab" data-index="0" style="width: 100%;">
+                                    <div style="width: 48.6%;float: left;">
+                                                <span class="create_access choosePic" data-resIdx="0">
+                                                    <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;" data-type="10"
+                                                       data-index="0">
+                                                        <i class="icon36_common add_gray"></i>
+                                                        <strong>从素材库中选择</strong>
+                                                    </a>
+                                                </span>
+                                    </div>
+                                    <div style="width: 48.6%;float: right;">
+                                                <span class="create_access img_upload">
+                                                    <a class="add_gray_wrp create_new_appmsg" href="javascript:;">
+                                                        <i class="icon36_common add_gray"></i>
+                                                        <strong>上传图片</strong>
+                                                    </a>
+                                                </span>
+                                        <div style="position: absolute; top: 42px; left: 78.5625px; width: 56px; height: 57px; overflow: hidden; bottom: auto; right: auto;">
+                                            <input class="wxPicUpload" type="file"
+                                                   accept="image/bmp,image/png,image/jpeg,image/jpg,image/gif"
+                                                   style="display: none;">
+                                            <label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weui_tab resPicAndText" style="display: none;padding: 17px 20px;min-height: 215px;">
+                                <div class="tab_cont_cover jsMsgSendTab" data-index="0" style="width: 100%;">
+                                    <div style="width: 48.6%;float: left;">
+                                                <span class="create_access chooseMedia" data-resIdx="0">
+                                                    <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;" data-type="10"
+                                                       data-index="0">
+                                                        <i class="icon36_common add_gray"></i>
+                                                        <strong>从素材库中选择</strong>
+                                                    </a>
+                                                </span>
+                                    </div>
+                                    <div style="width: 48.6%;float: right;">
+                                                <span class="create_access">
+                                                    <a target="_blank" class="add_gray_wrp create_new_appmsg" href="javascript:;">
+                                                        <i class="icon36_common add_gray"></i>
+                                                        <strong>新建图文消息</strong>
+                                                    </a>
+                                                    <a target="_blank"
+                                                       href="/cgi-bin/appmsg?t=media/appmsg_edit&amp;action=edit&amp;type=10&amp;isMul=1&amp;isNew=1&amp;lang=zh_CN&amp;token=2027588817"><i
+                                                            class="icon_appmsg_selfcreate"></i><strong>自建图文</strong></a>
+                                                    <a target="_blank"
+                                                       href="/cgi-bin/appmsg?t=media/appmsg_edit&amp;action=edit&amp;type=10&amp;isMul=1&amp;isNew=1&amp;share=1&amp;lang=zh_CN&amp;token=2027588817"><i
+                                                            class="icon_appmsg_share"></i><strong>分享图文</strong></a>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-else v-for="(item,idx) in resMsgArr" class="cl" :data-mid="item.mediaID" :data-msgType="item.msgType"
+                         style="margin-top:30px;padding: 0px 20px;">
+                        <div style="height: 35px;border: 1px solid #E4E8EB;">
+                            <ul class="weui-desktop-msg-sender__tabs">
+                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_text {{item.msgType == 'text' ? 'weui-desktop-msg-sender__tab_selected':''}}">
+                                    文字
+                                </li>
+                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_img {{item.msgType == 'image' ? 'weui-desktop-msg-sender__tab_selected':''}}">
+                                    图片
+                                </li>
+                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_audio {{item.msgType == 'news' ? 'weui-desktop-msg-sender__tab_selected':''}}">
+                                    图文
+                                </li>
+                            </ul>
+                            <div class="layui-layer-btn" style="float: right;">
+                                <a class="layui-layer-btn0 btn_del btn-danger"
+                                   style="background-color: #c62b26;border-color: #c62b26;">删除</a>
+                            </div>
+                        </div>
+                        <div class="emotion_editor publisher">
+                            <div class="weui_tab" v-if="item.msgType == 'text'">
+                                <textarea name="content" class="edit_area" style="width: 100%;border: 0;resize:none">{{item.resText}}</textarea>
+                                <div class="editor_toolbar">
+                                    <div class="weui-desktop-popover__wrp">
+                                        <span>
+                                            <a href="javascript:void(0);"
+                                               class="icon_emotion emotion_switch trigger">表情</a>
+                                        </span>
+                                    </div>
+                                    <p class="editor_tip opr_tips">，按下Enter键换行</p>
+                                    <p class="editor_tip">还可以输入<em>300</em>字</p>
+                                    <div class="emotion_wrp"></div>
+                                </div>
+                            </div>
+                            <div class="weui_tab resPic" v-if="item.msgType == 'image'"
+                                 style="padding: 17px 20px;min-height: 215px;">
+                                <div class="msg_sender_media" :data-mid="item.mediaID" :data-msgType="image">
+                                    <div class="tab_cont_cover jsMsgSendTab" :data-index="0" style="width: 100%;">
+                                        <div style="width: 48.6%;float: left;">
+                                                    <span class="create_access choosePic" :data-resIdx="idx">
+                                                        <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;"
+                                                           data-type="10" data-index="0">
+                                                            <i class="icon36_common add_gray"></i>
+                                                            <strong>从素材库中选择</strong>
+                                                        </a>
+                                                    </span>
+                                        </div>
+                                        <div style="width: 48.6%;float: right;">
+                                                    <span class="create_access img_upload">
+                                                        <a class="add_gray_wrp create_new_appmsg"
+                                                           href="javascript:;">
+                                                            <i class="icon36_common add_gray"></i>
+                                                            <strong>上传图片</strong>
+                                                        </a>
+                                                    </span>
+                                            <div style="position: absolute; top: 42px; left: 78.5625px; width: 56px; height: 57px; overflow: hidden; bottom: auto; right: auto;">
+                                                <input class="wxPicUpload" type="file"
+                                                       accept="image/bmp,image/png,image/jpeg,image/jpg,image/gif"
+                                                       style="display: none;">
+                                                <label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weui_tab resPicAndText" v-if="msgType == 'news'"
+                                 style="padding: 17px 20px;min-height: 215px;">
+                                <div class="msg_sender_media" :data-mid="item.mediaID" :data-msgType="news">
+                                    <div class="tab_cont_cover jsMsgSendTab" :data-index="0" style="width: 100%;">
+                                        <div style="width: 48.6%;float: left;">
+                                            <span class="create_access chooseMedia" :data-resIdx="idx">
+                                                <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;"
+                                                   data-type="10" data-index="0">
+                                                    <i class="icon36_common add_gray"></i>
+                                                    <strong>从素材库中选择</strong>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <div style="width: 48.6%;float: right;">
+                                            <span class="create_access">
+                                                <a target="_blank" class="add_gray_wrp create_new_appmsg"
+                                                   href="javascript:;">
+                                                    <i class="icon36_common add_gray"></i>
+                                                    <strong>新建图文消息</strong>
+                                                </a>
+                                                <a target="_blank"
+                                                   href="/cgi-bin/appmsg?t=media/appmsg_edit&amp;action=edit&amp;type=10&amp;isMul=1&amp;isNew=1&amp;lang=zh_CN&amp;token=2027588817"><i
+                                                        class="icon_appmsg_selfcreate"></i><strong>自建图文</strong></a>
+                                                <a target="_blank"
+                                                   href="/cgi-bin/appmsg?t=media/appmsg_edit&amp;action=edit&amp;type=10&amp;isMul=1&amp;isNew=1&amp;share=1&amp;lang=zh_CN&amp;token=2027588817"><i
+                                                        class="icon_appmsg_share"></i><strong>分享图文</strong></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cl">
+                    <div class="layui-layer-btn" style="text-align: left;margin-top: 10px;">
+                        <a class="layui-layer-btn0" style="margin-bottom: 10px;background-color: #5eb95e;border-color: #5eb95e;" id="btn_confirm_add">新增一条消息</a>
+                    </div>
+
+                    <div class="layui-layer-btn" style="text-align: center;margin-top: 56px;">
+                        <a class="layui-layer-btn0" id="btn_confirm">确定</a>
+                        <a class="layui-layer-btn1">取消</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${request.contextPath}/statics/plugins/emoji/code/jquery.emoticons.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/wxkey.js?_${.now?long}"></script>
 </body>
 </html>

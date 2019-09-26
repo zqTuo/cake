@@ -79,16 +79,16 @@ public class WxPublicMenuController {
         return R.ok().put("menu",jsonObject.getJSONObject("selfmenu_info").getJSONArray("button"));
     }
 
-    /**
-     * 进入获取线上素材页面
-     * @return
-     */
-    @RequestMapping("/wxMaterialForm")
-    public String wxMaterialForm (HttpServletRequest request,Model model){
-        int idx = ServletRequestUtils.getIntParameter(request,"idx",0);
-        model.addAttribute("idx",idx);
-        return "admin/manager/wxMedia";
-    }
+//    /**
+//     * 进入获取线上素材页面
+//     * @return
+//     */
+//    @RequestMapping("/wxMaterialForm")
+//    public String wxMaterialForm (HttpServletRequest request,Model model){
+//        int idx = ServletRequestUtils.getIntParameter(request,"idx",0);
+//        model.addAttribute("idx",idx);
+//        return "modules/sys/wxmedia.html";
+//    }
 
     /**
      * 进入获取线上图片页面
