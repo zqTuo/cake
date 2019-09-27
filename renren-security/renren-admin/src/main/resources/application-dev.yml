@@ -8,7 +8,7 @@ spring:
 #      username: zuofang_cake
 #      password: 5149330
       username: root
-      password: 123456
+      password: 2710482
       initial-size: 10
       max-active: 100
       min-idle: 10

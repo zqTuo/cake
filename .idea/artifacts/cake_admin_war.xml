@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cake-admin:war">
+    <output-path>$PROJECT_DIR$/renren-security/renren-admin/target</output-path>
+    <root id="archive" name="cake-admin.war">
+      <element id="artifact" artifact-name="cake-admin:war exploded" />
+    </root>
+  </artifact>
+</component>

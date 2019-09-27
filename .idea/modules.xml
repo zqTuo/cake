@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-admin/cake-admin.iml" filepath="$PROJECT_DIR$/renren-security/renren-admin/cake-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-api/cake-api.iml" filepath="$PROJECT_DIR$/renren-security/renren-api/cake-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cake_zuofang.iml" filepath="$PROJECT_DIR$/.idea/cake_zuofang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-common/renren-common.iml" filepath="$PROJECT_DIR$/renren-security/renren-common/renren-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-dynamic-datasource/renren-dynamic-datasource.iml" filepath="$PROJECT_DIR$/renren-security/renren-dynamic-datasource/renren-dynamic-datasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-generator/renren-generator.iml" filepath="$PROJECT_DIR$/renren-security/renren-generator/renren-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-security/renren-security.iml" filepath="$PROJECT_DIR$/renren-security/renren-security.iml" />
+    </modules>
+  </component>
+</project>

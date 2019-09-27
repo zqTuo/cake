@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cake-api:war">
+    <output-path>$PROJECT_DIR$/renren-security/renren-api/target</output-path>
+    <root id="archive" name="cake-api.war">
+      <element id="artifact" artifact-name="cake-api:war exploded" />
+    </root>
+  </artifact>
+</component>

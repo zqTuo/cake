@@ -40,5 +40,15 @@ public class WxKeyEntity implements Serializable {
 	 * 图文ID
 	 */
 	private String mediaid;
+	/*
+	* 匹配度 0:半匹配 1全匹配
+	* */
+	private String matched;
+	/*
+	* 状态 0:停用 1:启用
+	* */
+	private String status;
+
+
 
 }
