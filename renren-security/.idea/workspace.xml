@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3fe8eece-a808-4956-9b3e-c54412e952d4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxPublicMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxPublicMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxkey.js" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxkey.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxkey.html" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxkey.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/renren-admin/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/test-classes/io/renren/DynamicDataSourceTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/test-classes/io/renren/RedisTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/renren-admin/target/test-classes/io/renren/service/DynamicDataSourceTestService.class" beforeDir="false" />
-    </list>
+    <list default="true" id="3fe8eece-a808-4956-9b3e-c54412e952d4" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/renren-admin/target/" />
     <ignored path="$PROJECT_DIR$/renren-dynamic-datasource/target/" />
@@ -47,15 +37,16 @@
     </checked>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.496">
+    <splitter split-orientation="horizontal" split-proportion="0.41078562">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxkey.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="591">
-                  <caret line="401" column="22" lean-forward="true" selection-start-line="401" selection-start-column="22" selection-end-line="401" selection-end-column="22" />
+                <state relative-caret-position="399">
+                  <caret line="635" column="26" lean-forward="true" selection-start-line="635" selection-start-column="26" selection-end-line="635" selection-end-column="26" />
                   <folding>
+                    <element signature="n#style#0;n#head#0;n#html#0;n#!!top" />
                     <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -83,7 +74,7 @@
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/custom.html">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="648">
-                  <caret line="24" column="10" lean-forward="true" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+                  <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
                 </state>
               </provider>
             </entry>
@@ -106,11 +97,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxMedia.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="351">
-                  <caret line="13" column="30" lean-forward="true" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+                  <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
                   <folding>
                     <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -133,40 +124,10 @@
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxuser.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="702">
-                  <caret line="26" column="18" selection-start-line="20" selection-start-column="79" selection-end-line="26" selection-end-column="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxKeyController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="695">
-                  <caret line="77" column="22" lean-forward="true" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/service/impl/MenuManagerServiceImpl.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="999">
-                  <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxpublicmenu.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="245">
-                  <caret line="362" column="13" lean-forward="true" selection-start-line="362" selection-start-column="13" selection-end-line="362" selection-end-column="13" />
+                <state relative-caret-position="9504">
+                  <caret line="362" column="13" selection-start-line="362" selection-start-column="13" selection-end-line="362" selection-end-column="13" />
                   <folding>
                     <element signature="e#294#579#0" />
                   </folding>
@@ -177,11 +138,9 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxkey.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="267">
-                  <caret line="182" column="39" selection-start-line="182" selection-start-column="39" selection-end-line="182" selection-end-column="39" />
+                <state relative-caret-position="-675">
+                  <caret line="15" column="69" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
                   <folding>
-                    <element signature="e#14#1329#0" />
-                    <element signature="e#1350#4114#0" />
                     <element signature="n#!!block;n#detail_format#0" />
                     <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                     <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -193,10 +152,17 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/common.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-2339" />
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxPublicMenuController.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="347">
-                  <caret line="126" column="18" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="18" />
+                  <caret line="42" column="7" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#pushMenu#0;class#WxPublicMenuController#0" />
@@ -207,9 +173,45 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/login.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="540">
+                  <caret line="20" column="14" selection-end-line="124" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/AdminApplication.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="513">
+                  <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/setcourse.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="540">
+                  <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/product.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="290">
+                  <caret line="79" column="91" selection-start-line="79" selection-start-column="91" selection-end-line="79" selection-end-column="91" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-648">
+                <state relative-caret-position="1296">
                   <caret line="48" column="19" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="19" />
                 </state>
               </provider>
@@ -218,7 +220,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/SysPageController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="298">
+                <state relative-caret-position="432">
                   <caret line="24" selection-start-line="24" selection-end-line="24" />
                 </state>
               </provider>
@@ -238,9 +240,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>title</find>
-      <find>tab</find>
-      <find>CommonPre.url_pre</find>
       <find>aes</find>
       <find>getMediaByID</find>
       <find>wxMediaUpload</find>
@@ -268,6 +267,9 @@
       <find>.widget-layer li</find>
       <find>wxm</find>
       <find>idx</find>
+      <find>layui.use('element', function(){</find>
+      <find>@change</find>
+      <find>formatter:function</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -394,6 +396,36 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
+              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
+              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
+              <item name="statics" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
+              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
+              <item name="statics" type="1f31426a:PackageElementNode" />
+              <item name="libs" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
+              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
+              <item name="statics" type="1f31426a:PackageElementNode" />
+              <item name="libs" type="1f31426a:PackageElementNode" />
+              <item name="ueditor.1.4.3" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -455,61 +487,6 @@
               <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="sys" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="sys" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="renren" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="sys" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
-              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -553,6 +530,27 @@
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="sys" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
+              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="renren-security" type="462c0819:PsiDirectoryNode" />
+              <item name="renren-admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="statics" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="layui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="renren-security" type="b2602c69:ProjectViewProjectNode" />
@@ -670,36 +668,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
-              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
-              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
-              <item name="statics" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
-              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
-              <item name="statics" type="1f31426a:PackageElementNode" />
-              <item name="libs" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="renren-security" type="58d84e3e:PackageViewProjectNode" />
-              <item name="renren-admin" type="616d4139:PackageViewModuleNode" />
-              <item name="statics" type="1f31426a:PackageElementNode" />
-              <item name="libs" type="1f31426a:PackageElementNode" />
-              <item name="ueditor.1.4.3" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -876,11 +844,12 @@
       <workItem from="1569289186791" duration="26249000" />
       <workItem from="1569376525310" duration="9997000" />
       <workItem from="1569461807507" duration="14503000" />
+      <workItem from="1569489084270" duration="7317000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="448740000" />
+    <option name="totallyTimeSpent" value="456057000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -895,7 +864,7 @@
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19893333" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19893333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -991,69 +960,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/renren-api/pom.xml">
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="51" column="21" lean-forward="true" selection-start-line="44" selection-start-column="8" selection-end-line="51" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/common/utils/AESHelper.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="121" column="6" lean-forward="true" selection-start-line="115" selection-start-column="4" selection-end-line="121" selection-end-column="6" />
-          <folding>
-            <element signature="e#4919#6959#0" />
-            <element signature="e#6985#7909#0" />
-            <element signature="e#7934#10312#0" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#section#0;n#div#0;n#div#1;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#section#0;n#div#0;n#div#1;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#section#0;n#div#0;n#div#1;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#4;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#4;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxuserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="28" selection-start-line="28" selection-end-line="29" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/ShopOrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="54" column="9" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/pom.xml">
-      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4266">
-          <caret line="158" selection-start-line="158" selection-end-line="158" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/shoporder.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4293">
-          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
-          <folding>
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application-dev.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-835" />
@@ -1191,13 +1097,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/db/api.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10665">
-          <caret line="395" column="8" selection-start-line="395" selection-start-column="8" selection-end-line="395" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/renren-api/src/main/resources/application.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -1221,13 +1120,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxuser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="26" column="18" selection-start-line="20" selection-start-column="79" selection-end-line="26" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/service/WechatAuthService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4401">
@@ -1239,16 +1131,6 @@
             <element signature="method#getMaterialOnlineByID#0;class#WechatAuthService#0" />
             <element signature="method#addMaterialEver#0;class#WechatAuthService#0" />
             <element signature="method#getMaterialOnline#0;class#WechatAuthService#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/service/impl/MenuManagerServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="999">
-          <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1278,13 +1160,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxuser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="11" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxpublicmenu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="91">
@@ -1302,31 +1177,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxKeyController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="695">
-          <caret line="77" column="22" lean-forward="true" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxkey.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="401" column="22" lean-forward="true" selection-start-line="401" selection-start-column="22" selection-end-line="401" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/SysMenuController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
@@ -1334,64 +1184,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/db/api.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10665">
+          <caret line="395" column="8" selection-start-line="395" selection-start-column="8" selection-end-line="395" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/custom.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
-          <caret line="24" column="10" lean-forward="true" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxmedia.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="46" column="66" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxpublicmenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="362" column="13" lean-forward="true" selection-start-line="362" selection-start-column="13" selection-end-line="362" selection-end-column="13" />
-          <folding>
-            <element signature="e#294#579#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxkey.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="182" column="39" selection-start-line="182" selection-start-column="39" selection-end-line="182" selection-end-column="39" />
-          <folding>
-            <element signature="e#14#1329#0" />
-            <element signature="e#1350#4114#0" />
-            <element signature="n#!!block;n#detail_format#0" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/SysPageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-648">
-          <caret line="48" column="19" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="19" />
+          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxMedia.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
-          <caret line="13" column="30" lean-forward="true" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+          <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1408,16 +1218,155 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxuser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="26" column="18" selection-start-line="20" selection-start-column="79" selection-end-line="26" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxKeyController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1674">
+          <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/service/impl/MenuManagerServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="999">
+          <caret line="40" column="60" selection-start-line="40" selection-start-column="60" selection-end-line="40" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxpublicmenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9504">
+          <caret line="362" column="13" selection-start-line="362" selection-start-column="13" selection-end-line="362" selection-end-column="13" />
+          <folding>
+            <element signature="e#294#579#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/application-dev.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1296">
+          <caret line="48" column="19" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/SysPageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/modules/sys/controller/WxPublicMenuController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
-          <caret line="126" column="18" selection-start-line="126" selection-start-column="18" selection-end-line="126" selection-end-column="18" />
+          <caret line="42" column="7" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#pushMenu#0;class#WxPublicMenuController#0" />
             <element signature="method#wxMediaUpload#0;class#WxPublicMenuController#0" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="20" column="14" selection-end-line="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/java/io/renren/AdminApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxmedia.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="642">
+          <caret line="46" column="66" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxuser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/pom.xml">
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="158" selection-start-line="158" selection-end-line="158" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/plugins/layui/layui.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/wxkey.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="635" column="26" lean-forward="true" selection-start-line="635" selection-start-column="26" selection-end-line="635" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#textarea#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/setcourse.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/templates/modules/sys/product.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="79" column="91" selection-start-line="79" selection-start-column="91" selection-end-line="79" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/modules/sys/wxkey.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-675">
+          <caret line="15" column="69" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
+          <folding>
+            <element signature="n#!!block;n#detail_format#0" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/renren-admin/src/main/resources/statics/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2339" />
       </provider>
     </entry>
   </component>
