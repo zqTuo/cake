@@ -58,6 +58,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		wxKey: {},
+        keyList:[],
         resMsgArr:[],
         resText:''
 	},
@@ -65,10 +66,24 @@ var vm = new Vue({
 		query: function () {
 			vm.reload();
 		},
+        addMessage:function(){
+		    var a =new Array()
+
+            for(var index in vm.keyList){
+                var item = vm.keyList[index]
+
+                a[index]=parseInt(item.name)
+            }
+            vm.wxKey.keyword =a.join(",")
+        },
+        addKey:function(){
+		  this.keyList.push({})
+        },
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
 			vm.wxKey = {};
+			vm.keyList=[];
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -81,6 +96,8 @@ var vm = new Vue({
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
+		    this.addMessage()
+            console.log(vm.wxKey)
 		    $('#btnSaveOrUpdate').button('loading').delay(1000).queue(function() {
                 var url = vm.wxKey.id == null ? "sys/wxkey/save" : "sys/wxkey/update";
                 $.ajax({
@@ -147,6 +164,7 @@ var vm = new Vue({
 
 	}
 });
+//shanch
 
 $(document).on('click','.weui-desktop-msg-sender__tab',function () {
     $(this).parent().find('.weui-desktop-msg-sender__tab').removeClass('weui-desktop-msg-sender__tab_selected');

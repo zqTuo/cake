@@ -2,69 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>动态添加输入框</title>
-
-    <!--<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />-->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->
+    <title>Title</title>
 </head>
+<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
 <body>
-<h1>动态添加输入框</h1>
-<div class="container">
-
-    <h2>第二种简单的实现方式</h2>
-    <div class="input-dyna-add">
-        <div class="col-xs-4 col-sm-3">
-            <input type="text" class="form-control" v-model="wxKey.keyword" placeholder="关键字,多个中间用英文逗号隔开"/>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div id="app">
+    <div v-for="(d,index) in counter">
+        <input type="text" placeholder="我是输入框">
     </div>
+    <button @click="add">点我</button>
 
-    <input type="button" onclick="addInput()" value="添加"/>
-    <input type="button" onclick="getValue()" value="获取值"/>
 </div>
 
-<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    var vm =new Vue({
+        el:'#app',
+        data:{
+          counter:[]
+        },
+        methods:{
+            add(){
+                this.counter.push({})
+            }
+        }
 
-<script>
-
-    function addInput()
-    {
-        var input = $(" <div class=\"col-xs-8 col-sm-5\">\n" +
-            "        <input type=\"text\" class=\"form-control\" v-model=\"wxKey.keyword\" placeholder=\"关键字,多个中间用英文逗号隔开\"/>&nbsp;&nbsp;&nbsp;&nbsp;<button class='removeclass btn btn-default' type='button'><span class='glyphicon glyphicon-minus'></span></button></div>");
-
-
-        // append 表示添加在标签内， appendTo 表示添加在元素外尾
-
-        $(".input-dyna-add").append(input);
-
-    }
-
-    function getValue() {
-        var valArr = new Array;
-        $("input[name='desc[]']").each(function(index, item){
-            valArr[index] = $(this).val();
-
-            var priv = valArr.join(',');
-            alert(priv);
-
-        });
-
-        // console.log(desc);
-    }
-
-    $("body").on("click",".removeclass", function(e){
-
-        // remove text box
-        $(this).parent('div').remove();
-
-        return false;
     })
-
 </script>
+
 </body>
 </html>

@@ -404,12 +404,16 @@
                 <div v-show="!showList" class="panel panel-default" style="margin-top: 30px;">
                         <div class="panel-heading">{{title}}</div>
                         <form class="form-horizontal">
+                            {{keyList}}
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">关键字</div>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="wxKey.keyword" placeholder="关键字,多个中间用英文逗号隔开"/>
+                                <div class="col-sm-10" v-for="(key,index) in keyList">
+                                    <input type="text" class="form-control" v-model="key.name" placeholder="关键字,多个中间用英文逗号隔开"/>
                                 </div>
+                                <div @click="addKey">点我</div>
+                                <div @click="addMessage">获取值</div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">匹配度</div>
                                 <div class="col-sm-10">
@@ -422,18 +426,40 @@
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">回复内容</div>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" v-model="wxKey.content" placeholder="回复内容"/>
+
+                                    <div class="menu_content send jsMain" id="edit" style="display: none;">
+                                        <div class="msg_sender" id="editDiv">
+                                            <div class="tab_content">
+                                                <div class="js_appmsgArea inner " style="min-height: 40px">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="msg_sender_area jsMsgSendTab" style="height: 35px;width: 500px;">
+                                        <!--todo 写成div 样式就可以了-->
+                                        <button class="weui-desktop-opr-btn weui-desktop-opr-btn_add weui-desktop-opr-btn_primary msg_sender_switch" style="position: relative;float: left;">添加</button>
+                                        <div class="msg_sender_wrp" style="display: none;">
+                                            <ul class="weui-desktop-msg-sender__tabs">
+                                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_appmsg"><i class="Hui-iconfont">&#xe685;</i> 图文消息</li>
+                                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_text">T 文字</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">状态</div>
                                 <div class="col-sm-10">
-                                    <select class="form-control" v-model="wxKey.status">
+                                    <select class="form-control" v-model="wxKey.matched">
                                         <option :value="1" >启用</option>
-                                        <option :value="0">停用</option>
+                                        <option :value="0">禁用</option>
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-2 control-label"></div>
                                 <input type="button" class="btn btn-primary" id="btnSaveOrUpdate" data-loading-text="保存中..."
@@ -649,5 +675,147 @@
 <script type="text/javascript" src="${request.contextPath}/statics/plugins/layui/layui.js"></script>
 <script type="text/javascript" src="${request.contextPath}/statics/plugins/emoji/code/jquery.emoticons.js?_${.now?long}"></script>
 <script src="${request.contextPath}/statics/js/modules/sys/wxkey.js?_${.now?long}"></script>
+<script>
+
+    //关键词 删除按钮移入移除
+    $(document).on('mouseover mouseout','.keyword',function (event){
+        var len = $(".keyword").length;
+        if(len > 1){
+            if(event.type == "mouseover"){
+                $(this).find('.weui-desktop-opr-btn_remove').parent().css('display','initial');
+            }else if(event.type == "mouseout"){
+                $(this).find('.weui-desktop-opr-btn_remove').parent().css('display','none');
+            }
+        }
+    })
+    $(document).on('mouseover mouseout','.inner',function (event){
+        $(".weui-desktop-media__opr").css('display','block')
+        if(event.type == "mouseover"){
+            $(".weui-desktop-media__opr").css('display','block')
+        }else if(event.type == "mouseout"){
+            $(".weui-desktop-media__opr").css('display','none')
+        }
+    })
+
+    //回复内容选择条
+    $(document).on('mouseover mouseout','.msg_sender_area',function (event){
+        if(event.type == "mouseover"){
+            $(".msg_sender_wrp").css('display','initial');
+        }else if(event.type == "mouseout"){
+            $(".msg_sender_wrp").css('display','none');
+        }
+    })
+
+    $(document).on('click','.keyword_add',function () {
+        var addhtml = '<div class="formControls col-xs-8 col-sm-5 keyword addFormControls"> ' +
+            '<input class="keywords input-text" autocomplete="off" placeholder="关键词" type="text"> ' +
+            '<span class="weui-desktop-form__input-append-out"> <div class="weui-desktop-link-group"> ' +
+            '<div class="weui-desktop-tooltip__wrp weui-desktop-link"> ' +
+            '<button href="javascript:;" title="添加" class="weui-desktop-opr-btn weui-desktop-opr-btn_add keyword_add">添加</button> ' +
+            '</div> <div class="weui-desktop-tooltip__wrp weui-desktop-link" style="display: none;"> ' +
+            '<button href="javascript:;" title="删除" class="weui-desktop-opr-btn weui-desktop-opr-btn_remove keywords_del">删除</button> </div> ' +
+            '</div> </span> </div>';
+
+        $(this).closest('.row').append(addhtml);
+        $(this).parent().css('display','none');
+    })
+    //关键字删除
+    $(document).on('click','.keywords_del',function () {
+        $(this).closest('.formControls').remove();
+        $(".keyword").eq(0).removeClass('addFormControls');
+        var len = $(".keyword").length;
+        if(len == 1){
+            $(".keyword").eq(0).find('.keyword_add').parent().css('display','inline-block');
+        }
+    })
+    //回复内容 文字删除
+    $(document).on('click','.textbtn_del',function () {
+        $(this).closest('.weui-desktop-media').remove();
+        $(".send").css('display','none');
+        var len = $(".keyword").length;
+        if(len == 1){
+            $('.msg_sender_area').css('display','block');
+        }
+    })
+
+
+    //添加图文回复
+    $(document).on('click','.weui-desktop-msg-sender__tab_appmsg',function () {
+        var url="wxMaterialForm";
+        layer_show('选择素材',url,'1000','820');
+    })
+
+    //添加文字回复
+    $(document).on('click','.weui-desktop-msg-sender__tab_text',function () {
+        var url="addKeyWordTextForm";
+        layer_show('添加回复文字',url,'800','600');
+    })
+    //修改文字回复
+    $(document).on('click','.textbtn_update',function () {
+        var resText = $(".resText").text();
+        resText = encodeURI(encodeURI(resText));
+        var url="updateKeyWordTextForm?resText=" + resText;
+        layer_show('修改回复文字',url,'800','600');
+    })
+
+
+    //删除素材
+    $(document).on('click','.jsmsgSenderDelBt',function () {
+        $(this).parent().remove();
+        $(".send").css('display','none');
+        $(".msg_sender_area").css('display','block');
+    })
+
+
+    $("#btn_confirm").click(function () {
+        var keywords = "";
+        $.each($(".keywords"),function (index) {
+            if(index == 0){
+                keywords += $(".keywords").eq(index).val();
+            }else{
+                keywords += "," + $(".keywords").eq(index).val();
+            }
+        })
+        if (keywords == "") {
+            layer.msg("关键字不能为空",{icon:7,time:2000})
+            return;
+        }
+        var mediaID = $(".appmsg").attr('data-mid');
+        if(mediaID == undefined){
+            mediaID = "";
+        }
+        var resText = $(".resText").html();
+        if(resText == undefined){
+            resText = "";
+        }
+
+        var degree = $("#degree").val();
+
+        if (mediaID == "" && resText == "") {
+            layer.msg("回复内容不能为空",{icon:7,time:2000})
+            return;
+        }
+        var status = $("#status").val();
+        var data = {
+            keywords: keywords,
+            degree:degree,
+            mediaID:mediaID,
+            resText:resText,
+            status:status
+        }
+        layer.confirm('请仔细核对添加内容，确认添加？',function(index){
+            postData("addKeyWords", data, function (result) {
+                if (result.status == "1") {
+                    parent.window.location.href="allKeyWordsForm";//刷新父窗口
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);//关闭窗口
+                } else {
+                    layer.msg("添加失败",{icon:7,time:2000})
+                }
+            })
+        });
+    })
+
+</script>
 </body>
 </html>
