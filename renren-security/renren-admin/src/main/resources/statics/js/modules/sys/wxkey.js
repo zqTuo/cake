@@ -12,7 +12,7 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/wxkey/list',
         datatype: "json",
-        colModel: [			
+        colModel: [
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '关键字', name: 'keyword', index: 'keyword', width: 80 },
 			{ label: '消息类型', name: 'msgType', index: 'msg_type', width: 80 ,formatter:function (cellValue) {
@@ -23,14 +23,19 @@ $(function () {
                     }else{
                         return '图片消息';
                     }
-                } }
+                } },
+            { label: '状态', name: 'status', index: 'status', width: 80,  formatter: function(value, options, row){
+                    return value === 0 ?
+                        '<span class="label label-danger">禁用</span>' :
+                        '<span class="label label-success">启用</span>';
+                }},
         ],
 		viewrecords: true,
         height: 385,
         rowNum: 10,
 		rowList : [10,30,50],
-        rownumbers: true, 
-        rownumWidth: 25, 
+        rownumbers: true,
+        rownumWidth: 25,
         autowidth:true,
         multiselect: true,
         pager: "#jqGridPager",
@@ -41,13 +46,13 @@ $(function () {
             records: "page.totalCount"
         },
         prmNames : {
-            page:"page", 
-            rows:"limit", 
+            page:"page",
+            rows:"limit",
             order: "order"
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
         }
     });
 });
@@ -55,35 +60,47 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+        q:{name: null},
 		showList: true,
 		title: null,
 		wxKey: {},
-        keyList:[],
+        keyList: [],
         resMsgArr:[],
+        msg:'',
         resText:''
 	},
 	methods: {
+	    //根据关键字进行查询
 		query: function () {
 			vm.reload();
 		},
         addMessage:function(){
+		    //将关键字以键值对的方式存到数组对象里面  转化成数值类型的数组  在将数组转化成字符串
 		    var a =new Array()
 
             for(var index in vm.keyList){
                 var item = vm.keyList[index]
 
-                a[index]=parseInt(item.name)
+                a[index]=item.name
             }
+            console.log(a)
             vm.wxKey.keyword =a.join(",")
+            console.log(vm.wxKey.keyword)
         },
+        //添加输入框
         addKey:function(){
 		  this.keyList.push({})
+
+        },
+        //删除输入框
+        delKey:function(index){
+		   this.keyList.splice(index,1)
         },
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
 			vm.wxKey = {};
-			vm.keyList=[];
+			vm.keyList=[{}];
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -92,7 +109,7 @@ var vm = new Vue({
 			}
 			vm.showList = false;
             vm.title = "修改";
-            
+
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
@@ -157,7 +174,8 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+                postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
 		}

@@ -10,6 +10,7 @@
         <result property="msgType" column="msg_type"/>
         <result property="content" column="content"/>
         <result property="mediaid" column="mediaID"/>
+        <result property="status" column="status"/>
     </resultMap>
 
 

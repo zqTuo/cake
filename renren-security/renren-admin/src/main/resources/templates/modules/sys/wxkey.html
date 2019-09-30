@@ -383,10 +383,16 @@
             <li class="layui-this">关键词回复</li>
             <li>被关注回复</li>
         </ul>
+
+
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <div v-show="showList" style="margin-top: 30px;">
+                    <div class="form-group col-sm-2">
+                        <input type="text" class="form-control" v-model="q.name" @keyup.enter="query" placeholder="关键字">
+                    </div>
                     <div class="grid-btn">
+                        <a class="btn btn-default" @click="query">查询</a>
                         <#if shiro.hasPermission("sys:wxkey:save")>
                         <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
                         </#if>
@@ -399,19 +405,18 @@
                     </div>
                     <table id="jqGrid"></table>
                     <div id="jqGridPager"></div>
-                </div>
+    </div>
 
                 <div v-show="!showList" class="panel panel-default" style="margin-top: 30px;">
                         <div class="panel-heading">{{title}}</div>
                         <form class="form-horizontal">
-                            {{keyList}}
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">关键字</div>
                                 <div class="col-sm-10" v-for="(key,index) in keyList">
-                                    <input type="text" class="form-control" v-model="key.name" placeholder="关键字,多个中间用英文逗号隔开"/>
+
+                                    <input type="text" class="form-control" v-model="key.name" placeholder="关键字,多个中间用英文逗号隔开"/> <div @click="delKey(index)" class="glyphicon glyphicon-minus-sign"></div>
                                 </div>
-                                <div @click="addKey">点我</div>
-                                <div @click="addMessage">获取值</div>
+                                <div @click="addKey" class="glyphicon glyphicon-plus-sign"></div>
                             </div>
 
                             <div class="form-group">
@@ -425,29 +430,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">回复内容</div>
-                                <div class="col-sm-10">
-
-                                    <div class="menu_content send jsMain" id="edit" style="display: none;">
-                                        <div class="msg_sender" id="editDiv">
-                                            <div class="tab_content">
-                                                <div class="js_appmsgArea inner " style="min-height: 40px">
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="msg_sender_area jsMsgSendTab" style="height: 35px;width: 500px;">
-                                        <!--todo 写成div 样式就可以了-->
-                                        <button class="weui-desktop-opr-btn weui-desktop-opr-btn_add weui-desktop-opr-btn_primary msg_sender_switch" style="position: relative;float: left;">添加</button>
-                                        <div class="msg_sender_wrp" style="display: none;">
-                                            <ul class="weui-desktop-msg-sender__tabs">
-                                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_appmsg"><i class="Hui-iconfont">&#xe685;</i> 图文消息</li>
-                                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_text">T 文字</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
+                                <div class="col-sm-10 ">
+                                    <textarea cols="50" rows="10" v-model="wxKey.content"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -489,7 +473,7 @@
                         <div class="emotion_editor publisher">
                             <div class="weui_tab">
                                 <textarea name="content" class="edit_area"
-                                          style="width: 100%;border: 0;resize:none">{{resText}}</textarea>
+                                                 style="width: 100%;border: 0;resize:none">{{resText}}</textarea>
                                 <div class="editor_toolbar">
                                     <div class="weui-desktop-popover__wrp">
                                         <span>
@@ -557,105 +541,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div v-else v-for="(item,idx) in resMsgArr" class="cl" :data-mid="item.mediaID" :data-msgType="item.msgType"
-                         style="margin-top:30px;padding: 0px 20px;">
-                        <div style="height: 35px;border: 1px solid #E4E8EB;">
-                            <ul class="weui-desktop-msg-sender__tabs">
-                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_text {{item.msgType == 'text' ? 'weui-desktop-msg-sender__tab_selected':''}}">
-                                    文字
-                                </li>
-                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_img {{item.msgType == 'image' ? 'weui-desktop-msg-sender__tab_selected':''}}">
-                                    图片
-                                </li>
-                                <li class="weui-desktop-msg-sender__tab weui-desktop-msg-sender__tab_audio {{item.msgType == 'news' ? 'weui-desktop-msg-sender__tab_selected':''}}">
-                                    图文
-                                </li>
-                            </ul>
-                            <div class="layui-layer-btn" style="float: right;">
-                                <a class="layui-layer-btn0 btn_del btn-danger"
-                                   style="background-color: #c62b26;border-color: #c62b26;">删除</a>
-                            </div>
-                        </div>
-                        <div class="emotion_editor publisher">
-                            <div class="weui_tab" v-if="item.msgType == 'text'">
-                                <textarea name="content" class="edit_area" style="width: 100%;border: 0;resize:none">{{item.resText}}</textarea>
-                                <div class="editor_toolbar">
-                                    <div class="weui-desktop-popover__wrp">
-                                        <span>
-                                            <a href="javascript:void(0);"
-                                               class="icon_emotion emotion_switch trigger">表情</a>
-                                        </span>
-                                    </div>
-                                    <p class="editor_tip opr_tips">，按下Enter键换行</p>
-                                    <p class="editor_tip">还可以输入<em>300</em>字</p>
-                                    <div class="emotion_wrp"></div>
-                                </div>
-                            </div>
-                            <div class="weui_tab resPic" v-if="item.msgType == 'image'"
-                                 style="padding: 17px 20px;min-height: 215px;">
-                                <div class="msg_sender_media" :data-mid="item.mediaID" :data-msgType="image">
-                                    <div class="tab_cont_cover jsMsgSendTab" :data-index="0" style="width: 100%;">
-                                        <div style="width: 48.6%;float: left;">
-                                                    <span class="create_access choosePic" :data-resIdx="idx">
-                                                        <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;"
-                                                           data-type="10" data-index="0">
-                                                            <i class="icon36_common add_gray"></i>
-                                                            <strong>从素材库中选择</strong>
-                                                        </a>
-                                                    </span>
-                                        </div>
-                                        <div style="width: 48.6%;float: right;">
-                                                    <span class="create_access img_upload">
-                                                        <a class="add_gray_wrp create_new_appmsg"
-                                                           href="javascript:;">
-                                                            <i class="icon36_common add_gray"></i>
-                                                            <strong>上传图片</strong>
-                                                        </a>
-                                                    </span>
-                                            <div style="position: absolute; top: 42px; left: 78.5625px; width: 56px; height: 57px; overflow: hidden; bottom: auto; right: auto;">
-                                                <input class="wxPicUpload" type="file"
-                                                       accept="image/bmp,image/png,image/jpeg,image/jpg,image/gif"
-                                                       style="display: none;">
-                                                <label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="weui_tab resPicAndText" v-if="msgType == 'news'"
-                                 style="padding: 17px 20px;min-height: 215px;">
-                                <div class="msg_sender_media" :data-mid="item.mediaID" :data-msgType="news">
-                                    <div class="tab_cont_cover jsMsgSendTab" :data-index="0" style="width: 100%;">
-                                        <div style="width: 48.6%;float: left;">
-                                            <span class="create_access chooseMedia" :data-resIdx="idx">
-                                                <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;"
-                                                   data-type="10" data-index="0">
-                                                    <i class="icon36_common add_gray"></i>
-                                                    <strong>从素材库中选择</strong>
-                                                </a>
-                                            </span>
-                                        </div>
-                                        <div style="width: 48.6%;float: right;">
-                                            <span class="create_access">
-                                                <a target="_blank" class="add_gray_wrp create_new_appmsg"
-                                                   href="javascript:;">
-                                                    <i class="icon36_common add_gray"></i>
-                                                    <strong>新建图文消息</strong>
-                                                </a>
-                                                <a target="_blank"
-                                                   href="/cgi-bin/appmsg?t=media/appmsg_edit&amp;action=edit&amp;type=10&amp;isMul=1&amp;isNew=1&amp;lang=zh_CN&amp;token=2027588817"><i
-                                                        class="icon_appmsg_selfcreate"></i><strong>自建图文</strong></a>
-                                                <a target="_blank"
-                                                   href="/cgi-bin/appmsg?t=media/appmsg_edit&amp;action=edit&amp;type=10&amp;isMul=1&amp;isNew=1&amp;share=1&amp;lang=zh_CN&amp;token=2027588817"><i
-                                                        class="icon_appmsg_share"></i><strong>分享图文</strong></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="cl">
                     <div class="layui-layer-btn" style="text-align: left;margin-top: 10px;">
@@ -696,16 +581,6 @@
             $(".weui-desktop-media__opr").css('display','none')
         }
     })
-
-    //回复内容选择条
-    $(document).on('mouseover mouseout','.msg_sender_area',function (event){
-        if(event.type == "mouseover"){
-            $(".msg_sender_wrp").css('display','initial');
-        }else if(event.type == "mouseout"){
-            $(".msg_sender_wrp").css('display','none');
-        }
-    })
-
     $(document).on('click','.keyword_add',function () {
         var addhtml = '<div class="formControls col-xs-8 col-sm-5 keyword addFormControls"> ' +
             '<input class="keywords input-text" autocomplete="off" placeholder="关键词" type="text"> ' +
@@ -719,102 +594,7 @@
         $(this).closest('.row').append(addhtml);
         $(this).parent().css('display','none');
     })
-    //关键字删除
-    $(document).on('click','.keywords_del',function () {
-        $(this).closest('.formControls').remove();
-        $(".keyword").eq(0).removeClass('addFormControls');
-        var len = $(".keyword").length;
-        if(len == 1){
-            $(".keyword").eq(0).find('.keyword_add').parent().css('display','inline-block');
-        }
-    })
-    //回复内容 文字删除
-    $(document).on('click','.textbtn_del',function () {
-        $(this).closest('.weui-desktop-media').remove();
-        $(".send").css('display','none');
-        var len = $(".keyword").length;
-        if(len == 1){
-            $('.msg_sender_area').css('display','block');
-        }
-    })
 
-
-    //添加图文回复
-    $(document).on('click','.weui-desktop-msg-sender__tab_appmsg',function () {
-        var url="wxMaterialForm";
-        layer_show('选择素材',url,'1000','820');
-    })
-
-    //添加文字回复
-    $(document).on('click','.weui-desktop-msg-sender__tab_text',function () {
-        var url="addKeyWordTextForm";
-        layer_show('添加回复文字',url,'800','600');
-    })
-    //修改文字回复
-    $(document).on('click','.textbtn_update',function () {
-        var resText = $(".resText").text();
-        resText = encodeURI(encodeURI(resText));
-        var url="updateKeyWordTextForm?resText=" + resText;
-        layer_show('修改回复文字',url,'800','600');
-    })
-
-
-    //删除素材
-    $(document).on('click','.jsmsgSenderDelBt',function () {
-        $(this).parent().remove();
-        $(".send").css('display','none');
-        $(".msg_sender_area").css('display','block');
-    })
-
-
-    $("#btn_confirm").click(function () {
-        var keywords = "";
-        $.each($(".keywords"),function (index) {
-            if(index == 0){
-                keywords += $(".keywords").eq(index).val();
-            }else{
-                keywords += "," + $(".keywords").eq(index).val();
-            }
-        })
-        if (keywords == "") {
-            layer.msg("关键字不能为空",{icon:7,time:2000})
-            return;
-        }
-        var mediaID = $(".appmsg").attr('data-mid');
-        if(mediaID == undefined){
-            mediaID = "";
-        }
-        var resText = $(".resText").html();
-        if(resText == undefined){
-            resText = "";
-        }
-
-        var degree = $("#degree").val();
-
-        if (mediaID == "" && resText == "") {
-            layer.msg("回复内容不能为空",{icon:7,time:2000})
-            return;
-        }
-        var status = $("#status").val();
-        var data = {
-            keywords: keywords,
-            degree:degree,
-            mediaID:mediaID,
-            resText:resText,
-            status:status
-        }
-        layer.confirm('请仔细核对添加内容，确认添加？',function(index){
-            postData("addKeyWords", data, function (result) {
-                if (result.status == "1") {
-                    parent.window.location.href="allKeyWordsForm";//刷新父窗口
-                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
-                    parent.layer.close(index);//关闭窗口
-                } else {
-                    layer.msg("添加失败",{icon:7,time:2000})
-                }
-            })
-        });
-    })
 
 </script>
 </body>

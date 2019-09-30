@@ -1,5 +1,6 @@
 package io.renren.modules.sys.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,9 +19,11 @@ public class WxKeyServiceImpl extends ServiceImpl<WxKeyDao, WxKeyEntity> impleme
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        String name = (String)params.get("name");
         IPage<WxKeyEntity> page = this.page(
                 new Query<WxKeyEntity>().getPage(params),
                 new QueryWrapper<WxKeyEntity>()
+                        .like(StringUtils.isNotBlank(name),"keyword", name)
         );
 
         return new PageUtils(page);
