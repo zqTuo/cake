@@ -64,7 +64,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		wxKey: {},
-        keyList: [],
+        keyList: [{name:''}],
         resMsgArr:[],
         msg:'',
         resText:''
@@ -80,12 +80,10 @@ var vm = new Vue({
 
             for(var index in vm.keyList){
                 var item = vm.keyList[index]
-
                 a[index]=item.name
             }
-            console.log(a)
             vm.wxKey.keyword =a.join(",")
-            console.log(vm.wxKey.keyword)
+
         },
         //添加输入框
         addKey:function(){
@@ -107,6 +105,7 @@ var vm = new Vue({
 			if(id == null){
 				return ;
 			}
+            vm.keyList=[];
 			vm.showList = false;
             vm.title = "修改";
 
@@ -168,6 +167,13 @@ var vm = new Vue({
 		},
 		getInfo: function(id){
 			$.get(baseURL + "sys/wxkey/info/"+id, function(r){
+			   // 将字符串转换成数组
+                var array =r.wxKey.keyword.split(',')
+                   for (var i = 0; i < array.length; i++) {
+                       vm.keyList.push({"name":array[i]})
+
+               }
+                console.log(vm.keyList)
                 vm.wxKey = r.wxKey;
             });
 		},
